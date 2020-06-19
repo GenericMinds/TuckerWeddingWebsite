@@ -7,7 +7,7 @@ const { PORT } = process.env;
 
 const app = new Koa();
 
-app.use(koaStatic('/public'));
+app.use(koaStatic('public/'));
 
 app.use(connect((req, res, next) => {
   req.originalUrl = req.url;
