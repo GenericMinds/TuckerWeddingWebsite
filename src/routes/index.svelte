@@ -27,5 +27,6 @@
         font-family: 'Princess Sofia';
         font-weight: 100;
         text-align: center;
+        font-size: 42px;
     }
 </style>
