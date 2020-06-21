@@ -5,7 +5,6 @@
     import Family from './_components/Family.svelte';
     import Toasts from './_components/Toasts.svelte';
     import ProposeToastForm from './_components/ProposeToastForm.svelte';
-
 </script>
 
 <SectionHeader isNav={true} />
@@ -17,9 +16,16 @@
 <ProposeToastForm />
 
 <style lang="scss">
+    @import 'https://fonts.googleapis.com/css?family=Princess+Sofia';
     $background-color: #fff9ea;
     :global(body) {
         background-color: $background-color;
         margin: 0;
+    }
+
+    :global(h1) {
+        font-family: 'Princess Sofia';
+        font-weight: 100;
+        text-align: center;
     }
 </style>
