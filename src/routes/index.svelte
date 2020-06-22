@@ -9,11 +9,10 @@
 
 <SectionHeader isNav={true} />
 <Jumbotron />
-<SectionHeader isNav={false} />
 <Story />
 <Family />
 <Toasts />
-<ProposeToastForm />
+<ProposeToastForm/>
 
 <style lang="scss">
     @import 'https://fonts.googleapis.com/css?family=Princess+Sofia';
@@ -21,6 +20,7 @@
     :global(body) {
         background-color: $background-color;
         margin: 0;
+        font-size: 0;
     }
 
     :global(h1) {

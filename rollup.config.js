@@ -5,17 +5,8 @@ import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
+import autoPreprocess from "svelte-preprocess"; // add this
 import pkg from './package.json';
-import sveltePreprocess from 'svelte-preprocess';
-
-const preprocess=sveltePreprocess({
-	scss: {
-		includePaths: ['src'],
-	},
-	postcss: {
-		plugins: [require('autoprefixer'),]
-	},
-});
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -25,7 +16,7 @@ const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && /
 
 export default {
 	client: {
-		input: config.client.input().replace(/\.js$/, '.ts'),
+		input: config.client.input(),
 		output: config.client.output(),
 		plugins: [
 			replace({
@@ -36,7 +27,7 @@ export default {
 				dev,
 				hydratable: true,
 				emitCss: true,
-				preprocess
+				preprocess: autoPreprocess()
 			}),
 			resolve({
 				browser: true,
@@ -45,7 +36,7 @@ export default {
 			commonjs(),
 
 			legacy && babel({
-				extensions: ['.js', '.mjs', '.ts', '.html', '.svelte'],
+				extensions: ['.js', '.mjs', '.html', '.svelte'],
 				babelHelpers: 'runtime',
 				exclude: ['node_modules/@babel/**'],
 				presets: [
@@ -71,7 +62,7 @@ export default {
 	},
 
 	server: {
-		input: { server: config.server.input().server.replace(/\.js$/, '.ts') },
+		input: config.server.input(),
 		output: config.server.output(),
 		plugins: [
 			replace({
@@ -81,7 +72,7 @@ export default {
 			svelte({
 				generate: 'ssr',
 				dev,
-				preprocess
+				preprocess: autoPreprocess(), // add this
 			}),
 			resolve({
 				dedupe: ['svelte']
@@ -93,6 +84,23 @@ export default {
 		),
 
 		preserveEntrySignatures: 'strict',
-		onwarn
+		onwarn,
+	},
+
+	serviceworker: {
+		input: config.serviceworker.input(),
+		output: config.serviceworker.output(),
+		plugins: [
+			resolve(),
+			replace({
+				'process.browser': true,
+				'process.env.NODE_ENV': JSON.stringify(mode)
+			}),
+			commonjs(),
+			!dev && terser()
+		],
+
+		preserveEntrySignatures: false,
+		onwarn,
 	}
 };
