@@ -28,5 +28,6 @@
         font-weight: 100;
         text-align: center;
         font-size: 42px;
+        color: #375637;
     }
 </style>

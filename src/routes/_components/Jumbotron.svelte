@@ -5,5 +5,6 @@
         width: 100%;
         height: 50%;
         border: 2px solid #ddd499;
+        box-sizing: border-box;
     }
 </style>
