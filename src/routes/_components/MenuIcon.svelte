@@ -1,8 +1,8 @@
 <script>
     import Overlay from 'svelte-overlay';
     import * as animateScroll from "svelte-scrollto";
-    console.log("this sucks");
-    console.log("like furreal");
+    alert("this sucks");
+    alert("like furreal");
     let isOpen = false;
  
     function handleToggle() {
