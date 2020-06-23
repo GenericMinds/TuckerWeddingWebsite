@@ -19,7 +19,7 @@
 <ProposeToastForm/>
 
 <button on:click={killme}>dfsdf</button>
-<p>x is  {x}</p>
+<h1>x is  {x}</h1>
 
 <style lang="scss">
     @import 'https://fonts.googleapis.com/css?family=Princess+Sofia';
@@ -40,5 +40,5 @@
 
     :global(div) {
         overflow:hidden;
-    }
+    } 
 </style>
