@@ -30,4 +30,8 @@
         font-size: 42px;
         color: #375637;
     }
+
+    :global(div) {
+        overflow:hidden;
+    }
 </style>
