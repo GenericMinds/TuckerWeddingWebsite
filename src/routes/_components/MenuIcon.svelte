@@ -5,6 +5,7 @@
     let isOpen = false;
  
     function handleToggle() {
+        console.log("hi")
         isOpen = !isOpen;
     }
 
