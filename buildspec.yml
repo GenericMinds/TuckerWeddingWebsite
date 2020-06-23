@@ -18,7 +18,7 @@ phases:
         commands:
             - echo Build...
             - yarn build
-    export: 
+    post_build: 
         commands:
             - echo Export...
             - yarn export
