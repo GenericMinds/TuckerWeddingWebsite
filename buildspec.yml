@@ -22,4 +22,4 @@ artifacts:
     files:
         - "**/*"
     discard-paths: no
-    base-directory: __sapper__
+    base-directory: __sapper__/export
