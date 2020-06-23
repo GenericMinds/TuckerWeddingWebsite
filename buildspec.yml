@@ -18,6 +18,10 @@ phases:
         commands:
             - echo Build...
             - yarn build
+    export: 
+        commands:
+            - echo Export...
+            - yarn export
 artifacts:
     files:
         - "**/*"
