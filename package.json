@@ -5,10 +5,7 @@
     "build": "sapper build",
     "dev": "sapper dev",
     "export": "sapper export",
-    "start": "node __sapper__/build",
-    "cy:run": "cypress run",
-    "cy:open": "cypress open",
-    "test": "run-p --race dev cy:run"
+    "start": "node __sapper__/build"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^7.1.3",
