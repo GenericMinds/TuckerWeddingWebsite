@@ -1,7 +1,7 @@
 <section>
     <div class='form'>
         <div class='header'>
-        <p class='heading'>Propose a Toast...</p>
+            <p class='heading'>Propose a Toast...</p>
         </div>
         <input type='text' placeholder='Name'/>
         <div class='container'>

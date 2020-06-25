@@ -1,6 +1,6 @@
 <section>
     <h1>Our Family</h1>
-    <img alt='Heading Decoration' src='./divider-36080.png'/>
+    <img alt='Heading Decoration' src='./HeadingDecorator.png'/>
 </section>
 
 <style lang='scss'>
