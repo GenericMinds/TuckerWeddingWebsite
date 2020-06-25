@@ -5,7 +5,6 @@
     "build": "sapper build",
     "dev": "sapper dev",
     "export": "sapper export",
-    "prestart": "npm run build",
     "start": "node __sapper__/build"
   },
   "devDependencies": {
