@@ -1,0 +1,39 @@
+@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';
+@import './theme.scss';
+
+body {
+	background-color: $background-color;
+	margin: 0;
+	font-size: 0;
+	font-family: 'Princess Sofia';
+}
+
+h1 {
+	font-weight: 100;
+	text-align: center;
+	font-size: $default-line-height;
+	color: $accent-color-cream;
+	margin-bottom: 0;
+}
+
+div {
+	overflow:hidden;
+} 
+
+section {
+	text-align: center;
+	div {
+		padding: 20px;
+	}
+}
+
+img {
+	width: $full-size/2;
+	margin-top: -20px;
+}
+
+p {
+	font-size: $small-font-size;
+	font-family: 'serif';
+}
+

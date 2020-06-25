@@ -1,18 +1,18 @@
-<script>
+<script lang='typescript'>
     import Overlay from 'svelte-overlay';
-    import * as animateScroll from "svelte-scrollto";
-    let isOpen = false;
+    import * as animateScroll from 'svelte-scrollto';
+    let isOpen: boolean = false;
  
-    function handleToggle() {
+    function handleToggle(): void {
         isOpen = !isOpen;
     }
 
-    function handleHomeSelection() {
+    function handleHomeSelection(): void {
         isOpen = false;
         animateScroll.scrollToTop();
     }
 
-    function handleSectionSelection(section) {
+    function handleSectionSelection(section): void {
         isOpen = false;
         if (section == 'home') {
             animateScroll.scrollToTop();
@@ -23,32 +23,29 @@
 </script>
 
 {#if isOpen}
-    <div class="backdrop"/>
+    <div />
 {/if}
  
-<Overlay
-  on:toggle={handleToggle}
-  zIndex={100}
-  bind:isOpen={isOpen}>    
-    
-    <svg slot="parent" on:click={handleToggle} x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve" height="40px" width="40px">
-          <path fill="#ddd499" d="M8.667,15h30c0.552,0,1-0.447,1-1s-0.448-1-1-1h-30c-0.552,0-1,0.447-1,1S8.114,15,8.667,15z"/>
-          <path fill="#ddd499" d="M8.667,37h30c0.552,0,1-0.447,1-1s-0.448-1-1-1h-30c-0.552,0-1,0.447-1,1S8.114,37,8.667,37z"/>
-          <path fill="#ddd499" d="M8.667,26h30c0.552,0,1-0.447,1-1s-0.448-1-1-1h-30c-0.552,0-1,0.447-1,1S8.114,26,8.667,26z"/>
-      </svg>
-    <ul slot="content" class="content">
-        <li class="home" on:click={() => {handleSectionSelection("home")}}>Home</li>
-        <li on:click={() => {handleSectionSelection("story")}}>Our Story</li>
-        <li on:click={() => {handleSectionSelection("family")}}>Our Family</li>
-        <li on:click={() => {handleSectionSelection("toasts")}}>Remembering the Day</li>
-        <li on:click={() => {handleSectionSelection("propose")}}>Propose a Toast</li>
+<Overlay on:toggle={handleToggle} zIndex={100} bind:isOpen={isOpen}>    
+    <svg slot='parent' on:click={handleToggle} x='0px' y='0px' viewBox='0 0 50 50' enable-background='new 0 0 50 50' xml:space='preserve' height='40px' width='40px'>
+            <path fill='#ddd499' d='M8.667,15h30c0.552,0,1-0.447,1-1s-0.448-1-1-1h-30c-0.552,0-1,0.447-1,1S8.114,15,8.667,15z'/>
+            <path fill='#ddd499' d='M8.667,37h30c0.552,0,1-0.447,1-1s-0.448-1-1-1h-30c-0.552,0-1,0.447-1,1S8.114,37,8.667,37z'/>
+            <path fill='#ddd499' d='M8.667,26h30c0.552,0,1-0.447,1-1s-0.448-1-1-1h-30c-0.552,0-1,0.447-1,1S8.114,26,8.667,26z'/>
+     </svg>
+    <ul slot='content'>
+        <li class='home' on:click={() => {handleSectionSelection('home')}}>Home</li>
+        <li on:click={() => {handleSectionSelection('story')}}>Our Story</li>
+        <li on:click={() => {handleSectionSelection('family')}}>Our Family</li>
+        <li on:click={() => {handleSectionSelection('toasts')}}>Remembering the Day</li>
+        <li on:click={() => {handleSectionSelection('propose')}}>Propose a Toast</li>
     </ul>
 </Overlay>
 
-<style lang="scss">
+<style lang='scss'>
     @import 'https://fonts.googleapis.com/css?family=Princess+Sofia';
-    
-    .backdrop {
+    @import '../../../static/theme.scss';
+
+    div {
         z-index: 99;
         position: fixed;
         top: 0;
@@ -60,19 +57,18 @@
         background: rgba(0, 0, 0, .7);
     }
  
-    .content {
+    ul {
         position:fixed;
         top: 40px;
         right: 0;
         bottom: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: #375637;
-        color: #ddd499;
+        width: $full-size;
+        height: $full-size;
+        background: $accent-color-green;
+        color: $accent-color-cream;
         text-align: center;
         font-size: 40px;
-        line-height: 40px;
         overflow: hidden;
         padding: 0;
         margin: 0;
@@ -82,7 +78,6 @@
     li {
         height: 15vh;
         padding-top: 3vh;
-        font-family: 'Princess Sofia';
     }
 
     svg {

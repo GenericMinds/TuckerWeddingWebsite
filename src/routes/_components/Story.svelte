@@ -1,12 +1,11 @@
 <script>
-    import HeadingDecoration from './HeadingDecoration.svelte';
     import SectionHeader from './SectionHeader.svelte';
 </script>
 
-<section class="story">
+<section>
     <SectionHeader isNav={false} />
     <h1>Our Story</h1>
-    <img alt="divider" src='./divider-36080.png'/>
+    <img alt='Heading Decoration' src='./divider-36080.png'/>
     <div>
         <p>Once upon a time there was a king and a viking princess. They did not know it, but the gods had set the table for them to be together.</p>
         <p>As the gods planned out their destiny, they couldn't quite agree on the path these two should take to get there. One of the gods set up their first meeting. As they were both looking to learn more about the world around them, they attended the Academy at the same time. The first god set it up so that they lived in close proximity. Once the other gods noticed, they intervened and kept them from meeting each other. It was not their time yet.</p>
@@ -21,26 +20,10 @@
     </div>
 </section>
 
-<style>
+<style lang='scss'>
+    @import '../../../static/theme.scss';
+    
     p {
-        font-size: 24px;
         text-align: left;
-    }
-
-    div {
-        padding: 20px;
-    }
-
-    h1 {
-        margin-bottom: 0;
-    }
-
-    section {
-        text-align: center;
-    }
-
-    img {
-        width: 50%;
-        margin-top: -20px;
     }
 </style>

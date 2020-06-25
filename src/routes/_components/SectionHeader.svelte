@@ -1,7 +1,7 @@
-<script>
+<script lang='typescript'>
     import MenuIcon from './MenuIcon.svelte';
 
-    export let isNav;
+    export let isNav: boolean;
 </script>
 
 <div>
@@ -11,17 +11,18 @@
     {/if}
 </div>
 
-<style>
+<style lang='scss'>
+    @import '../../../static/theme.scss';
     div {
-        background-color: #375637;
-        height: 40px;
-        line-height: 40px;
+        background-color: $accent-color-green;
+        height: $default-line-height;
+        line-height: $default-line-height;
     }
 
         p {
         display: initial;
-        color: #ddd499;
+        color: $accent-color-cream;
         font-weight: bold;
-        font-size: 18px;
+        font-size: $small-font-size;
     }
 </style>

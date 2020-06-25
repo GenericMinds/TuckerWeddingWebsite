@@ -14,24 +14,6 @@
 <Toasts />
 <ProposeToastForm/>
 
-<style lang="scss">
-    @import 'https://fonts.googleapis.com/css?family=Princess+Sofia';
-    $background-color: #fff9ea;
-    :global(body) {
-        background-color: $background-color;
-        margin: 0;
-        font-size: 0;
-    }
-
-    :global(h1) {
-        font-family: 'Princess Sofia';
-        font-weight: 100;
-        text-align: center;
-        font-size: 42px;
-        color: #375637;
-    }
-
-    :global(div) {
-        overflow:hidden;
-    } 
+<style global lang='scss'>
+    @import '../../static/global.scss';
 </style>
