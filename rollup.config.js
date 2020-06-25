@@ -4,6 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
+import typescript from 'rollup-plugin-typescript'; 
 import config from 'sapper/config/rollup.js';
 import autoPreprocess from 'svelte-preprocess'; 
 import pkg from './package.json';
@@ -16,7 +17,7 @@ const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && /
 
 export default {
 	client: {
-		input: config.client.input(),
+		input: config.client.input().replace(/\.js$/, ".ts"),
 		output: config.client.output(),
 		plugins: [
 			replace({
@@ -34,9 +35,10 @@ export default {
 				dedupe: ['svelte']
 			}),
 			commonjs(),
+			typescript(),
 
 			legacy && babel({
-				extensions: ['.js', '.mjs', '.html', '.svelte'],
+				extensions: ['.js', '.ts', '.mjs', '.html', '.svelte'],
 				babelHelpers: 'runtime',
 				exclude: ['node_modules/@babel/**'],
 				presets: [
@@ -62,7 +64,7 @@ export default {
 	},
 
 	server: {
-		input: config.server.input(),
+		input: config.server.input().server.replace(/\.js$/, ".ts"),
 		output: config.server.output(),
 		plugins: [
 			replace({
@@ -77,13 +79,30 @@ export default {
 			resolve({
 				dedupe: ['svelte']
 			}),
-			commonjs()
+			commonjs(),
+			typescript(),
 		],
 		external: Object.keys(pkg.dependencies).concat(
 			require('module').builtinModules || Object.keys(process.binding('natives'))
 		),
 
 		preserveEntrySignatures: 'strict',
+		onwarn,
+	},
+	serviceworker: {
+		input: config.serviceworker.input().replace(/\.js$/, ".ts"),
+		output: config.serviceworker.output(),
+		plugins: [
+			resolve(),
+			replace({
+				'process.browser': true,
+				'process.env.NODE_ENV': JSON.stringify(mode)
+			}),
+			commonjs(),
+			!dev && terser()
+		],
+
+		preserveEntrySignatures: false,
 		onwarn,
 	}
 };
