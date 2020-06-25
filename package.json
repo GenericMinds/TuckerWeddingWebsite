@@ -5,7 +5,8 @@
     "build": "sapper build",
     "dev": "sapper dev",
     "export": "sapper export",
-    "start": "node __sapper__/build"
+    "start": "node __sapper__/build",
+    "prod": "sapper build && node __sapper__/build"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^7.1.3",
