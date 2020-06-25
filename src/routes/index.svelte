@@ -5,10 +5,6 @@
     import Family from './_components/Family.svelte';
     import Toasts from './_components/Toasts.svelte';
     import ProposeToastForm from './_components/ProposeToastForm.svelte';
-    let x = 0;
-    function killme() {
-        x = x+1;
-    }
 </script>
 
 <SectionHeader isNav={true} />
@@ -17,9 +13,6 @@
 <Family />
 <Toasts />
 <ProposeToastForm/>
-
-<button on:click={killme}>dfsdf</button>
-<h1>x is {x}</h1>
 
 <style lang="scss">
     @import 'https://fonts.googleapis.com/css?family=Princess+Sofia';
