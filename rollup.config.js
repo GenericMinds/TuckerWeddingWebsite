@@ -79,7 +79,7 @@ export default {
 			}),
 			commonjs()
 		],
-		external: Object.keys(pkg.dependencies).concat(
+		external: [].concat(
 			require('module').builtinModules || Object.keys(process.binding('natives'))
 		),
 
