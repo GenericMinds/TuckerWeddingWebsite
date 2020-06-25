@@ -1,4 +1,4 @@
-<section>
+<section class='family'>
     <h1>Our Family</h1>
     <img alt='Heading Decoration' src='./HeadingDecorator.png'/>
 </section>

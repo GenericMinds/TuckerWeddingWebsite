@@ -7,12 +7,8 @@
         isOpen = !isOpen;
     }
 
-    function handleHomeSelection(): void {
-        isOpen = false;
-        animateScroll.scrollToTop();
-    }
-
     function handleSectionSelection(section): void {
+        console.log("reached");
         isOpen = false;
         if (section == 'home') {
             animateScroll.scrollToTop();

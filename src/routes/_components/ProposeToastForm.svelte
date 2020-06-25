@@ -1,4 +1,4 @@
-<section>
+<section class='propose'>
     <div class='form'>
         <div class='header'>
             <p class='heading'>Propose a Toast...</p>

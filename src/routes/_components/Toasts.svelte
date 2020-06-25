@@ -1,4 +1,4 @@
-<section>
+<section class='toasts'>
     <h1>Toasts</h1>
     <img alt='Heading Decoration' src='./HeadingDecorator.png'/>
     <div>
