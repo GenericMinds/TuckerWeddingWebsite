@@ -1,9 +1,18 @@
+<script>
+    import Carousel from '@beyonk/svelte-carousel';
+	import { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons'
+</script>
+
 <section class='family'>
     <h1>Our Family</h1>
     <img alt='Heading Decoration' src='./HeadingDecorator.png'/>
-    <div>
+<Carousel>
+  <div class="slide-content"><img alt='hi' src='./LisaTimMainPhoto.jpg'/></div>
+  <div class="slide-content">Slide 2</div>
+  <div class="slide-content">Slide 3</div>
+  <div class="slide-content">Slide 4</div>
+</Carousel>
 
-    </div>
 </section>
 
 <style lang='scss'>
