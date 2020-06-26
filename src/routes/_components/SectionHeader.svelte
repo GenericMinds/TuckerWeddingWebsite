@@ -17,6 +17,7 @@
         background-color: $accent-color-green;
         height: $default-line-height;
         line-height: $default-line-height;
+        padding: 0;
     }
 
         p {

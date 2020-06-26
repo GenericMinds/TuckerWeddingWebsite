@@ -1,38 +1,64 @@
+<script lang='typescript'> 
+    import { ToastModel } from '../_models/ToastModel';
+    let toast: ToastModel = {
+        toasterName: '',
+        toasterRelationship: '',
+        toasterAssociation: '',
+        toastContent: ''
+    };
+    
+    async function proposeToast () {
+        if (toast.toasterName == '' || toast.toastContent == ''){
+            return;
+        }
+
+        await fetch('/api/toastController', {
+            method: 'POST', 
+            body: JSON.stringify({toast}), 
+            headers: {"Content-type": "application/json"}
+        });
+    };
+
+
+</script>
+
 <section class='propose'>
     <div class='form'>
         <div class='header'>
             <p class='heading'>Propose a Toast...</p>
         </div>
-        <input type='text' placeholder='Name'/>
+        <input type='text' placeholder='Name' bind:value={toast.toasterName}/>
         <div class='container'>
         <div class='selectstuff'>
-            <select>
-                <option>Father</option>
-                <option>Mother</option>
-                <option>Brother</option>
-                <option>Sister</option>
-                <option>Son</option>
-                <option>Daughter</option>
-                <option>Relative</option>
-                <option>Friend</option>
+            <select bind:value={toast.toasterRelationship}>
+                <option value='Father' selected>Father</option>
+                <option value='Mother'>Mother</option>
+                <option value='Brother'>Brother</option>
+                <option value='Sister'>Sister</option>
+                <option value='Son'>Son</option>
+                <option value='Daughter'>Daughter</option>
+                <option value='Relative'>Relative</option>
+                <option value='Friend'>Friend</option>
             </select>
         </div>
         <div class='selectstuff'>of the</div>
         <div class='selectstuff'>
-            <select>
-                <option>Groom</option>
-                <option>Bride</option>
+            <select bind:value={toast.toasterAssociation}>
+                <option value='Groom' selected>Groom</option>
+                <option value='Bride'>Bride</option>
             </select>
         </div>
         </div>
-        <textarea rows='7' placeholder='Message'></textarea>
+        <textarea bind:value={toast.toastContent} rows='7' placeholder='Message'></textarea>
+        <br/>
+        <button on:click={proposeToast}>Propose!</button>
     </div>
 </section>
 
 <style lang='scss'>
     @import '../../../static/theme.scss';
     section {
-        height: 60vh;
+        height: 65vh;
         width: $full-size;
         margin-bottom: 40px;
     }

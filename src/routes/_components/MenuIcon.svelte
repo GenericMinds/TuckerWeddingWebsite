@@ -8,7 +8,6 @@
     }
 
     function handleSectionSelection(section): void {
-        console.log("reached");
         isOpen = false;
         if (section == 'home') {
             animateScroll.scrollToTop();
@@ -32,7 +31,7 @@
         <li class='home' on:click={() => {handleSectionSelection('home')}}>Home</li>
         <li on:click={() => {handleSectionSelection('story')}}>Our Story</li>
         <li on:click={() => {handleSectionSelection('family')}}>Our Family</li>
-        <li on:click={() => {handleSectionSelection('toasts')}}>Remembering the Day</li>
+        <li on:click={() => {handleSectionSelection('toasts')}}>Toasts</li>
         <li on:click={() => {handleSectionSelection('propose')}}>Propose a Toast</li>
     </ul>
 </Overlay>
