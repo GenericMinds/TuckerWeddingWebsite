@@ -16,10 +16,10 @@ var bodyParser = _interopDefault(require('body-parser'));
 
 var sql = require("mssql");
 const config = {
-    server: 'aa1g1gmfozz0sat.cadofo8p7xec.us-east-1.rds.amazonaws.com',
-    user: 'admin',
-    password: 'Freelmc2468',
-    port: 1433,
+    server: process.env.RDS_HOSTNAME,
+    user: process.env.RDS_USERNAME,
+    password: process.env.PASSWORD,
+    port: parseInt(process.env.RDS_PORT),
     database: 'TuckerWeddingWebsite'
 };
 async function get(req, res) {
