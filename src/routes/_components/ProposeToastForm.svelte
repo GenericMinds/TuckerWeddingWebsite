@@ -57,7 +57,6 @@
 <style lang='scss'>
     @import '../../../static/theme.scss';
     section {
-        height: 65vh;
         width: $full-size;
         margin-bottom: 40px;
     }
@@ -120,5 +119,9 @@
 
     select {
         width: 65px;
+    }
+
+    button {
+        margin-bottom: 20px;
     }
 </style>
