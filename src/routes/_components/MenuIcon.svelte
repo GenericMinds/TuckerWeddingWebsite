@@ -66,9 +66,12 @@
         position: fixed;
         -webkit-overflow-scrolling: touch;
         -webkit-transform: translateZ(0);
+        -webkit-backface-visibility: hidden;  
         right: 0;
         top: 0;
         overflow: hidden;
+        height: 32px;
+        width:32px;
     }
 
     img:hover, li:hover {
