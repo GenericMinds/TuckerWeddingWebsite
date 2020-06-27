@@ -36,11 +36,9 @@
     @import '../../../static/theme.scss';
 
     div,ul {
-        position: absolute !important;
+        position: absolute;
         top: 40px;
         right: 0;
-        bottom: 0;
-        left: 0;
         width: 100vw;
         height: 100vh;
         background-color: $accent-color-green;
@@ -61,22 +59,16 @@
 
     img {
         position: fixed;
-        right:0;
-        top: 0;
+        right: 30px;
+        top: 3px;
         height: 32px;
         width:32px;
         z-index: 999;
-        -webkit-backface-visibility: hidden;  
+        -webkit-backface-visibility: hidden;
         margin: 0;
     }
 
     img:hover, li:hover {
         cursor: pointer;
-    }
-
-    div{ 
-        position: relative;
-        width: 100%;
-        height: 100%;
     }
 </style>

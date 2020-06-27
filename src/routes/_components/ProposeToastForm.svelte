@@ -16,7 +16,8 @@
             method: 'POST', 
             body: JSON.stringify({toast}), 
             headers: {"Content-type": "application/json"}
-        });
+        }).then(response => window.location.reload());
+        
     };
 
 </script>
