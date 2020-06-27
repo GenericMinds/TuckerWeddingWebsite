@@ -21,7 +21,7 @@
 </section>
 <div class="demo">
     {#each carousels as carousel}
-    <Carousel on:change={changed} {...carousel}>
+    <Carousel on:change={changed} {...carousel} dots={false}>
         <span class="control" slot="left-control">
             <ChevronLeftIcon />
         </span>

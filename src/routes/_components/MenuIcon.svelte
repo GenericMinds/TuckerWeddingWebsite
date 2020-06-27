@@ -17,9 +17,6 @@
     }
 </script>
 
-{#if isOpen}
-    <div />
-{/if}
  
 <Overlay on:toggle={handleToggle} zIndex={100} bind:isOpen={isOpen}>    
     <svg slot='parent' on:click={handleToggle} x='0px' y='0px' viewBox='0 0 50 50' enable-background='new 0 0 50 50' xml:space='preserve' height='40px' width='40px'>
@@ -39,18 +36,6 @@
 <style lang='scss'>
     @import 'https://fonts.googleapis.com/css?family=Princess+Sofia';
     @import '../../../static/theme.scss';
-
-    div {
-        z-index: 99;
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0, 0, 0, .7);
-    }
  
     ul {
         position:fixed;
@@ -79,7 +64,6 @@
         position: fixed;
         right: 0;
         top: 0;
-        z-index: 999;
     }
 
     svg:hover, li:hover {
