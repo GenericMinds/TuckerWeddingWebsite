@@ -12,6 +12,56 @@ var http = _interopDefault(require('http'));
 var Url = _interopDefault(require('url'));
 var https = _interopDefault(require('https'));
 var zlib = _interopDefault(require('zlib'));
+var bodyParser = _interopDefault(require('body-parser'));
+
+var sql = require("mssql");
+const config = {
+    server: 'tucker-wedding-website-db.cadofo8p7xec.us-east-1.rds.amazonaws.com',
+    user: 'admin',
+    password: 'Freelmc2468',
+    port: 1433,
+    database: 'TuckerWeddingWebsite'
+};
+async function get(req, res) {
+    let toasts;
+    sql.connect(config, function (err) {
+        if (err) {
+            throw err;
+        }
+        var request = new sql.Request();
+        request.query('select * from Toast', function (err, recordset) {
+            if (err) {
+                throw err;
+            }
+            toasts = recordset.recordset;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(toasts));
+        });
+    });
+}
+async function post(req, res) {
+    sql.connect(config, function (err) {
+        if (err) {
+            throw err;
+        }
+        var request = new sql.Request();
+        request.input('toasterName', sql.VarChar(50), req.body.toast.toasterName);
+        request.input('toasterRelationship', sql.VarChar(15), req.body.toast.toasterRelationship);
+        request.input('toasterAssociation', sql.Bit, req.body.toast.toasterAssociation);
+        request.input('toastContent', sql.VarChar(sql.MAX), req.body.toast.toastContent);
+        request.query("insert into Toast (toasterName, toasterRelationship, toasterAssociation, toastContent) VALUES (@toasterName, @toasterRelationship, @toasterAssociation, @toastContent);", function (err, recordset) {
+            if (err) {
+                throw err;
+            }
+        });
+    });
+}
+
+var route_0 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  get: get,
+  post: post
+});
 
 function noop() { }
 function run(fn) {
@@ -157,6 +207,13 @@ const escaped = {
 };
 function escape(html) {
     return String(html).replace(/["'&<>]/g, match => escaped[match]);
+}
+function each(items, fn) {
+    let str = '';
+    for (let i = 0; i < items.length; i += 1) {
+        str += fn(items[i], i);
+    }
+    return str;
 }
 const missing_component = {
     $$render: () => ''
@@ -450,7 +507,7 @@ const Overlay = create_ssr_component(($$result, $$props, $$bindings, $$slots) =>
 
 const css$1 = {
 	code: "@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';div.svelte-1jaf61n{z-index:99;position:fixed;top:0;right:0;bottom:0;left:0;width:100vw;height:100vh;background:rgba(0, 0, 0, 0.7)}ul.svelte-1jaf61n{position:fixed;top:40px;right:0;bottom:0;left:0;width:100%;height:100%;background:#375637;color:#ddd499;text-align:center;font-size:40px;overflow:hidden;padding:0;margin:0;list-style:none}li.svelte-1jaf61n{height:15vh;padding-top:3vh}svg.svelte-1jaf61n{position:fixed;right:0;top:0}svg.svelte-1jaf61n:hover,li.svelte-1jaf61n:hover{cursor:pointer}",
-	map: "{\"version\":3,\"file\":\"MenuIcon.svelte\",\"sources\":[\"MenuIcon.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>import Overlay from 'svelte-overlay';\\r\\nimport * as animateScroll from 'svelte-scrollto';\\r\\nlet isOpen = false;\\r\\nfunction handleToggle() {\\r\\n    isOpen = !isOpen;\\r\\n}\\r\\nfunction handleSectionSelection(section) {\\r\\n    console.log(\\\"reached\\\");\\r\\n    isOpen = false;\\r\\n    if (section == 'home') {\\r\\n        animateScroll.scrollToTop();\\r\\n        return;\\r\\n    }\\r\\n    animateScroll.scrollTo({ element: '.' + section });\\r\\n}\\r\\n</script>\\r\\n\\r\\n{#if isOpen}\\r\\n    <div />\\r\\n{/if}\\r\\n \\r\\n<Overlay on:toggle={handleToggle} zIndex={100} bind:isOpen={isOpen}>    \\r\\n    <svg slot='parent' on:click={handleToggle} x='0px' y='0px' viewBox='0 0 50 50' enable-background='new 0 0 50 50' xml:space='preserve' height='40px' width='40px'>\\r\\n            <path fill='#ddd499' d='M8.667,15h30c0.552,0,1-0.447,1-1s-0.448-1-1-1h-30c-0.552,0-1,0.447-1,1S8.114,15,8.667,15z'/>\\r\\n            <path fill='#ddd499' d='M8.667,37h30c0.552,0,1-0.447,1-1s-0.448-1-1-1h-30c-0.552,0-1,0.447-1,1S8.114,37,8.667,37z'/>\\r\\n            <path fill='#ddd499' d='M8.667,26h30c0.552,0,1-0.447,1-1s-0.448-1-1-1h-30c-0.552,0-1,0.447-1,1S8.114,26,8.667,26z'/>\\r\\n     </svg>\\r\\n    <ul slot='content'>\\r\\n        <li class='home' on:click={() => {handleSectionSelection('home')}}>Home</li>\\r\\n        <li on:click={() => {handleSectionSelection('story')}}>Our Story</li>\\r\\n        <li on:click={() => {handleSectionSelection('family')}}>Our Family</li>\\r\\n        <li on:click={() => {handleSectionSelection('toasts')}}>Remembering the Day</li>\\r\\n        <li on:click={() => {handleSectionSelection('propose')}}>Propose a Toast</li>\\r\\n    </ul>\\r\\n</Overlay>\\r\\n\\r\\n<style lang='scss'>@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';\\ndiv {\\n  z-index: 99;\\n  position: fixed;\\n  top: 0;\\n  right: 0;\\n  bottom: 0;\\n  left: 0;\\n  width: 100vw;\\n  height: 100vh;\\n  background: rgba(0, 0, 0, 0.7); }\\n\\nul {\\n  position: fixed;\\n  top: 40px;\\n  right: 0;\\n  bottom: 0;\\n  left: 0;\\n  width: 100%;\\n  height: 100%;\\n  background: #375637;\\n  color: #ddd499;\\n  text-align: center;\\n  font-size: 40px;\\n  overflow: hidden;\\n  padding: 0;\\n  margin: 0;\\n  list-style: none; }\\n\\nli {\\n  height: 15vh;\\n  padding-top: 3vh; }\\n\\nsvg {\\n  position: fixed;\\n  right: 0;\\n  top: 0; }\\n\\nsvg:hover, li:hover {\\n  cursor: pointer; }</style>\"],\"names\":[],\"mappings\":\"AAoCmB,QAAQ,wDAAwD,CAAC,AACpF,GAAG,eAAC,CAAC,AACH,OAAO,CAAE,EAAE,CACX,QAAQ,CAAE,KAAK,CACf,GAAG,CAAE,CAAC,CACN,KAAK,CAAE,CAAC,CACR,MAAM,CAAE,CAAC,CACT,IAAI,CAAE,CAAC,CACP,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,KAAK,CACb,UAAU,CAAE,KAAK,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,GAAG,CAAC,AAAE,CAAC,AAEnC,EAAE,eAAC,CAAC,AACF,QAAQ,CAAE,KAAK,CACf,GAAG,CAAE,IAAI,CACT,KAAK,CAAE,CAAC,CACR,MAAM,CAAE,CAAC,CACT,IAAI,CAAE,CAAC,CACP,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,OAAO,CACnB,KAAK,CAAE,OAAO,CACd,UAAU,CAAE,MAAM,CAClB,SAAS,CAAE,IAAI,CACf,QAAQ,CAAE,MAAM,CAChB,OAAO,CAAE,CAAC,CACV,MAAM,CAAE,CAAC,CACT,UAAU,CAAE,IAAI,AAAE,CAAC,AAErB,EAAE,eAAC,CAAC,AACF,MAAM,CAAE,IAAI,CACZ,WAAW,CAAE,GAAG,AAAE,CAAC,AAErB,GAAG,eAAC,CAAC,AACH,QAAQ,CAAE,KAAK,CACf,KAAK,CAAE,CAAC,CACR,GAAG,CAAE,CAAC,AAAE,CAAC,AAEX,kBAAG,MAAM,CAAE,iBAAE,MAAM,AAAC,CAAC,AACnB,MAAM,CAAE,OAAO,AAAE,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"MenuIcon.svelte\",\"sources\":[\"MenuIcon.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>import Overlay from 'svelte-overlay';\\r\\nimport * as animateScroll from 'svelte-scrollto';\\r\\nlet isOpen = false;\\r\\nfunction handleToggle() {\\r\\n    isOpen = !isOpen;\\r\\n}\\r\\nfunction handleSectionSelection(section) {\\r\\n    isOpen = false;\\r\\n    if (section == 'home') {\\r\\n        animateScroll.scrollToTop();\\r\\n        return;\\r\\n    }\\r\\n    animateScroll.scrollTo({ element: '.' + section });\\r\\n}\\r\\n</script>\\r\\n\\r\\n{#if isOpen}\\r\\n    <div />\\r\\n{/if}\\r\\n \\r\\n<Overlay on:toggle={handleToggle} zIndex={100} bind:isOpen={isOpen}>    \\r\\n    <svg slot='parent' on:click={handleToggle} x='0px' y='0px' viewBox='0 0 50 50' enable-background='new 0 0 50 50' xml:space='preserve' height='40px' width='40px'>\\r\\n            <path fill='#ddd499' d='M8.667,15h30c0.552,0,1-0.447,1-1s-0.448-1-1-1h-30c-0.552,0-1,0.447-1,1S8.114,15,8.667,15z'/>\\r\\n            <path fill='#ddd499' d='M8.667,37h30c0.552,0,1-0.447,1-1s-0.448-1-1-1h-30c-0.552,0-1,0.447-1,1S8.114,37,8.667,37z'/>\\r\\n            <path fill='#ddd499' d='M8.667,26h30c0.552,0,1-0.447,1-1s-0.448-1-1-1h-30c-0.552,0-1,0.447-1,1S8.114,26,8.667,26z'/>\\r\\n     </svg>\\r\\n    <ul slot='content'>\\r\\n        <li class='home' on:click={() => {handleSectionSelection('home')}}>Home</li>\\r\\n        <li on:click={() => {handleSectionSelection('story')}}>Our Story</li>\\r\\n        <li on:click={() => {handleSectionSelection('family')}}>Our Family</li>\\r\\n        <li on:click={() => {handleSectionSelection('toasts')}}>Toasts</li>\\r\\n        <li on:click={() => {handleSectionSelection('propose')}}>Propose a Toast</li>\\r\\n    </ul>\\r\\n</Overlay>\\r\\n\\r\\n<style lang='scss'>@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';\\ndiv {\\n  z-index: 99;\\n  position: fixed;\\n  top: 0;\\n  right: 0;\\n  bottom: 0;\\n  left: 0;\\n  width: 100vw;\\n  height: 100vh;\\n  background: rgba(0, 0, 0, 0.7); }\\n\\nul {\\n  position: fixed;\\n  top: 40px;\\n  right: 0;\\n  bottom: 0;\\n  left: 0;\\n  width: 100%;\\n  height: 100%;\\n  background: #375637;\\n  color: #ddd499;\\n  text-align: center;\\n  font-size: 40px;\\n  overflow: hidden;\\n  padding: 0;\\n  margin: 0;\\n  list-style: none; }\\n\\nli {\\n  height: 15vh;\\n  padding-top: 3vh; }\\n\\nsvg {\\n  position: fixed;\\n  right: 0;\\n  top: 0; }\\n\\nsvg:hover, li:hover {\\n  cursor: pointer; }</style>\"],\"names\":[],\"mappings\":\"AAmCmB,QAAQ,wDAAwD,CAAC,AACpF,GAAG,eAAC,CAAC,AACH,OAAO,CAAE,EAAE,CACX,QAAQ,CAAE,KAAK,CACf,GAAG,CAAE,CAAC,CACN,KAAK,CAAE,CAAC,CACR,MAAM,CAAE,CAAC,CACT,IAAI,CAAE,CAAC,CACP,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,KAAK,CACb,UAAU,CAAE,KAAK,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,GAAG,CAAC,AAAE,CAAC,AAEnC,EAAE,eAAC,CAAC,AACF,QAAQ,CAAE,KAAK,CACf,GAAG,CAAE,IAAI,CACT,KAAK,CAAE,CAAC,CACR,MAAM,CAAE,CAAC,CACT,IAAI,CAAE,CAAC,CACP,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,OAAO,CACnB,KAAK,CAAE,OAAO,CACd,UAAU,CAAE,MAAM,CAClB,SAAS,CAAE,IAAI,CACf,QAAQ,CAAE,MAAM,CAChB,OAAO,CAAE,CAAC,CACV,MAAM,CAAE,CAAC,CACT,UAAU,CAAE,IAAI,AAAE,CAAC,AAErB,EAAE,eAAC,CAAC,AACF,MAAM,CAAE,IAAI,CACZ,WAAW,CAAE,GAAG,AAAE,CAAC,AAErB,GAAG,eAAC,CAAC,AACH,QAAQ,CAAE,KAAK,CACf,KAAK,CAAE,CAAC,CACR,GAAG,CAAE,CAAC,AAAE,CAAC,AAEX,kBAAG,MAAM,CAAE,iBAAE,MAAM,AAAC,CAAC,AACnB,MAAM,CAAE,OAAO,AAAE,CAAC\"}"
 };
 
 const MenuIcon = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
@@ -479,7 +536,7 @@ ${validate_component(Overlay, "Overlay").$$render(
 				content: () => `<ul slot="${"content"}" class="${"svelte-1jaf61n"}"><li class="${"home svelte-1jaf61n"}">Home</li>
         <li class="${"svelte-1jaf61n"}">Our Story</li>
         <li class="${"svelte-1jaf61n"}">Our Family</li>
-        <li class="${"svelte-1jaf61n"}">Remembering the Day</li>
+        <li class="${"svelte-1jaf61n"}">Toasts</li>
         <li class="${"svelte-1jaf61n"}">Propose a Toast</li></ul>`,
 				default: () => `
     
@@ -494,8 +551,8 @@ ${validate_component(Overlay, "Overlay").$$render(
 /* src\routes\_components\SectionHeader.svelte generated by Svelte v3.23.2 */
 
 const css$2 = {
-	code: "div.svelte-ik2d4k{background-color:#375637;height:40px;line-height:40px}p.svelte-ik2d4k{display:initial;color:#ddd499;font-weight:bold;font-size:20px}",
-	map: "{\"version\":3,\"file\":\"SectionHeader.svelte\",\"sources\":[\"SectionHeader.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>import MenuIcon from './MenuIcon.svelte';\\r\\nexport let isNav;\\r\\n</script>\\r\\n\\r\\n<div>\\r\\n    {#if isNav === true}\\r\\n        <p>#blameitonfate</p>\\r\\n        <MenuIcon />\\r\\n    {/if}\\r\\n</div>\\r\\n\\r\\n<style lang='scss'>div {\\n  background-color: #375637;\\n  height: 40px;\\n  line-height: 40px; }\\n\\np {\\n  display: initial;\\n  color: #ddd499;\\n  font-weight: bold;\\n  font-size: 20px; }</style>\"],\"names\":[],\"mappings\":\"AAWmB,GAAG,cAAC,CAAC,AACtB,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,IAAI,CACZ,WAAW,CAAE,IAAI,AAAE,CAAC,AAEtB,CAAC,cAAC,CAAC,AACD,OAAO,CAAE,OAAO,CAChB,KAAK,CAAE,OAAO,CACd,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC\"}"
+	code: "div.svelte-10nrjo8{background-color:#375637;height:40px;line-height:40px;padding:0}p.svelte-10nrjo8{display:initial;color:#ddd499;font-weight:bold;font-size:20px}",
+	map: "{\"version\":3,\"file\":\"SectionHeader.svelte\",\"sources\":[\"SectionHeader.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>import MenuIcon from './MenuIcon.svelte';\\r\\nexport let isNav;\\r\\n</script>\\r\\n\\r\\n<div>\\r\\n    {#if isNav === true}\\r\\n        <p>#blameitonfate</p>\\r\\n        <MenuIcon />\\r\\n    {/if}\\r\\n</div>\\r\\n\\r\\n<style lang='scss'>div {\\n  background-color: #375637;\\n  height: 40px;\\n  line-height: 40px;\\n  padding: 0; }\\n\\np {\\n  display: initial;\\n  color: #ddd499;\\n  font-weight: bold;\\n  font-size: 20px; }</style>\"],\"names\":[],\"mappings\":\"AAWmB,GAAG,eAAC,CAAC,AACtB,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,IAAI,CACZ,WAAW,CAAE,IAAI,CACjB,OAAO,CAAE,CAAC,AAAE,CAAC,AAEf,CAAC,eAAC,CAAC,AACD,OAAO,CAAE,OAAO,CAChB,KAAK,CAAE,OAAO,CACd,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC\"}"
 };
 
 const SectionHeader = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
@@ -503,8 +560,8 @@ const SectionHeader = create_ssr_component(($$result, $$props, $$bindings, $$slo
 	if ($$props.isNav === void 0 && $$bindings.isNav && isNav !== void 0) $$bindings.isNav(isNav);
 	$$result.css.add(css$2);
 
-	return `<div class="${"svelte-ik2d4k"}">${isNav === true
-	? `<p class="${"svelte-ik2d4k"}">#blameitonfate</p>
+	return `<div class="${"svelte-10nrjo8"}">${isNav === true
+	? `<p class="${"svelte-10nrjo8"}">#blameitonfate</p>
         ${validate_component(MenuIcon, "MenuIcon").$$render($$result, {}, {}, {})}`
 	: ``}
 </div>`;
@@ -548,61 +605,240 @@ const Story = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
 </section>`;
 });
 
-/* src\routes\_components\Family.svelte generated by Svelte v3.23.2 */
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function unwrapExports (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
+
+function createCommonjsModule(fn, basedir, module) {
+	return module = {
+	  path: basedir,
+	  exports: {},
+	  require: function (path, base) {
+      return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+    }
+	}, fn(module, module.exports), module.exports;
+}
+
+function commonjsRequire () {
+	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+}
+
+var siema_min = createCommonjsModule(function (module, exports) {
+!function(e,t){module.exports=t();}("undefined"!=typeof self?self:commonjsGlobal,function(){return function(e){function t(r){if(i[r])return i[r].exports;var n=i[r]={i:r,l:!1,exports:{}};return e[r].call(n.exports,n,n.exports,t),n.l=!0,n.exports}var i={};return t.m=e,t.c=i,t.d=function(e,i,r){t.o(e,i)||Object.defineProperty(e,i,{configurable:!1,enumerable:!0,get:r});},t.n=function(e){var i=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(i,"a",i),i},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,i){function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0});var n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},s=function(){function e(e,t){for(var i=0;i<t.length;i++){var r=t[i];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r);}}return function(t,i,r){return i&&e(t.prototype,i),r&&e(t,r),t}}(),l=function(){function e(t){var i=this;if(r(this,e),this.config=e.mergeSettings(t),this.selector="string"==typeof this.config.selector?document.querySelector(this.config.selector):this.config.selector,null===this.selector)throw new Error("Something wrong with your selector 😭");this.resolveSlidesNumber(),this.selectorWidth=this.selector.offsetWidth,this.innerElements=[].slice.call(this.selector.children),this.currentSlide=this.config.loop?this.config.startIndex%this.innerElements.length:Math.max(0,Math.min(this.config.startIndex,this.innerElements.length-this.perPage)),this.transformProperty=e.webkitOrNot(),["resizeHandler","touchstartHandler","touchendHandler","touchmoveHandler","mousedownHandler","mouseupHandler","mouseleaveHandler","mousemoveHandler","clickHandler"].forEach(function(e){i[e]=i[e].bind(i);}),this.init();}return s(e,[{key:"attachEvents",value:function(){window.addEventListener("resize",this.resizeHandler),this.config.draggable&&(this.pointerDown=!1,this.drag={startX:0,endX:0,startY:0,letItGo:null,preventClick:!1},this.selector.addEventListener("touchstart",this.touchstartHandler),this.selector.addEventListener("touchend",this.touchendHandler),this.selector.addEventListener("touchmove",this.touchmoveHandler),this.selector.addEventListener("mousedown",this.mousedownHandler),this.selector.addEventListener("mouseup",this.mouseupHandler),this.selector.addEventListener("mouseleave",this.mouseleaveHandler),this.selector.addEventListener("mousemove",this.mousemoveHandler),this.selector.addEventListener("click",this.clickHandler));}},{key:"detachEvents",value:function(){window.removeEventListener("resize",this.resizeHandler),this.selector.removeEventListener("touchstart",this.touchstartHandler),this.selector.removeEventListener("touchend",this.touchendHandler),this.selector.removeEventListener("touchmove",this.touchmoveHandler),this.selector.removeEventListener("mousedown",this.mousedownHandler),this.selector.removeEventListener("mouseup",this.mouseupHandler),this.selector.removeEventListener("mouseleave",this.mouseleaveHandler),this.selector.removeEventListener("mousemove",this.mousemoveHandler),this.selector.removeEventListener("click",this.clickHandler);}},{key:"init",value:function(){this.attachEvents(),this.selector.style.overflow="hidden",this.selector.style.direction=this.config.rtl?"rtl":"ltr",this.buildSliderFrame(),this.config.onInit.call(this);}},{key:"buildSliderFrame",value:function(){var e=this.selectorWidth/this.perPage,t=this.config.loop?this.innerElements.length+2*this.perPage:this.innerElements.length;this.sliderFrame=document.createElement("div"),this.sliderFrame.style.width=e*t+"px",this.enableTransition(),this.config.draggable&&(this.selector.style.cursor="-webkit-grab");var i=document.createDocumentFragment();if(this.config.loop)for(var r=this.innerElements.length-this.perPage;r<this.innerElements.length;r++){var n=this.buildSliderFrameItem(this.innerElements[r].cloneNode(!0));i.appendChild(n);}for(var s=0;s<this.innerElements.length;s++){var l=this.buildSliderFrameItem(this.innerElements[s]);i.appendChild(l);}if(this.config.loop)for(var o=0;o<this.perPage;o++){var a=this.buildSliderFrameItem(this.innerElements[o].cloneNode(!0));i.appendChild(a);}this.sliderFrame.appendChild(i),this.selector.innerHTML="",this.selector.appendChild(this.sliderFrame),this.slideToCurrent();}},{key:"buildSliderFrameItem",value:function(e){var t=document.createElement("div");return t.style.cssFloat=this.config.rtl?"right":"left",t.style.float=this.config.rtl?"right":"left",t.style.width=(this.config.loop?100/(this.innerElements.length+2*this.perPage):100/this.innerElements.length)+"%",t.appendChild(e),t}},{key:"resolveSlidesNumber",value:function(){if("number"==typeof this.config.perPage)this.perPage=this.config.perPage;else if("object"===n(this.config.perPage)){this.perPage=1;for(var e in this.config.perPage)window.innerWidth>=e&&(this.perPage=this.config.perPage[e]);}}},{key:"prev",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:1,t=arguments[1];if(!(this.innerElements.length<=this.perPage)){var i=this.currentSlide;if(this.config.loop){if(this.currentSlide-e<0){this.disableTransition();var r=this.currentSlide+this.innerElements.length,n=this.perPage,s=r+n,l=(this.config.rtl?1:-1)*s*(this.selectorWidth/this.perPage),o=this.config.draggable?this.drag.endX-this.drag.startX:0;this.sliderFrame.style[this.transformProperty]="translate3d("+(l+o)+"px, 0, 0)",this.currentSlide=r-e;}else this.currentSlide=this.currentSlide-e;}else this.currentSlide=Math.max(this.currentSlide-e,0);i!==this.currentSlide&&(this.slideToCurrent(this.config.loop),this.config.onChange.call(this),t&&t.call(this));}}},{key:"next",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:1,t=arguments[1];if(!(this.innerElements.length<=this.perPage)){var i=this.currentSlide;if(this.config.loop){if(this.currentSlide+e>this.innerElements.length-this.perPage){this.disableTransition();var r=this.currentSlide-this.innerElements.length,n=this.perPage,s=r+n,l=(this.config.rtl?1:-1)*s*(this.selectorWidth/this.perPage),o=this.config.draggable?this.drag.endX-this.drag.startX:0;this.sliderFrame.style[this.transformProperty]="translate3d("+(l+o)+"px, 0, 0)",this.currentSlide=r+e;}else this.currentSlide=this.currentSlide+e;}else this.currentSlide=Math.min(this.currentSlide+e,this.innerElements.length-this.perPage);i!==this.currentSlide&&(this.slideToCurrent(this.config.loop),this.config.onChange.call(this),t&&t.call(this));}}},{key:"disableTransition",value:function(){this.sliderFrame.style.webkitTransition="all 0ms "+this.config.easing,this.sliderFrame.style.transition="all 0ms "+this.config.easing;}},{key:"enableTransition",value:function(){this.sliderFrame.style.webkitTransition="all "+this.config.duration+"ms "+this.config.easing,this.sliderFrame.style.transition="all "+this.config.duration+"ms "+this.config.easing;}},{key:"goTo",value:function(e,t){if(!(this.innerElements.length<=this.perPage)){var i=this.currentSlide;this.currentSlide=this.config.loop?e%this.innerElements.length:Math.min(Math.max(e,0),this.innerElements.length-this.perPage),i!==this.currentSlide&&(this.slideToCurrent(),this.config.onChange.call(this),t&&t.call(this));}}},{key:"slideToCurrent",value:function(e){var t=this,i=this.config.loop?this.currentSlide+this.perPage:this.currentSlide,r=(this.config.rtl?1:-1)*i*(this.selectorWidth/this.perPage);e?requestAnimationFrame(function(){requestAnimationFrame(function(){t.enableTransition(),t.sliderFrame.style[t.transformProperty]="translate3d("+r+"px, 0, 0)";});}):this.sliderFrame.style[this.transformProperty]="translate3d("+r+"px, 0, 0)";}},{key:"updateAfterDrag",value:function(){var e=(this.config.rtl?-1:1)*(this.drag.endX-this.drag.startX),t=Math.abs(e),i=this.config.multipleDrag?Math.ceil(t/(this.selectorWidth/this.perPage)):1,r=e>0&&this.currentSlide-i<0,n=e<0&&this.currentSlide+i>this.innerElements.length-this.perPage;e>0&&t>this.config.threshold&&this.innerElements.length>this.perPage?this.prev(i):e<0&&t>this.config.threshold&&this.innerElements.length>this.perPage&&this.next(i),this.slideToCurrent(r||n);}},{key:"resizeHandler",value:function(){this.resolveSlidesNumber(),this.currentSlide+this.perPage>this.innerElements.length&&(this.currentSlide=this.innerElements.length<=this.perPage?0:this.innerElements.length-this.perPage),this.selectorWidth=this.selector.offsetWidth,this.buildSliderFrame();}},{key:"clearDrag",value:function(){this.drag={startX:0,endX:0,startY:0,letItGo:null,preventClick:this.drag.preventClick};}},{key:"touchstartHandler",value:function(e){-1!==["TEXTAREA","OPTION","INPUT","SELECT"].indexOf(e.target.nodeName)||(e.stopPropagation(),this.pointerDown=!0,this.drag.startX=e.touches[0].pageX,this.drag.startY=e.touches[0].pageY);}},{key:"touchendHandler",value:function(e){e.stopPropagation(),this.pointerDown=!1,this.enableTransition(),this.drag.endX&&this.updateAfterDrag(),this.clearDrag();}},{key:"touchmoveHandler",value:function(e){if(e.stopPropagation(),null===this.drag.letItGo&&(this.drag.letItGo=Math.abs(this.drag.startY-e.touches[0].pageY)<Math.abs(this.drag.startX-e.touches[0].pageX)),this.pointerDown&&this.drag.letItGo){e.preventDefault(),this.drag.endX=e.touches[0].pageX,this.sliderFrame.style.webkitTransition="all 0ms "+this.config.easing,this.sliderFrame.style.transition="all 0ms "+this.config.easing;var t=this.config.loop?this.currentSlide+this.perPage:this.currentSlide,i=t*(this.selectorWidth/this.perPage),r=this.drag.endX-this.drag.startX,n=this.config.rtl?i+r:i-r;this.sliderFrame.style[this.transformProperty]="translate3d("+(this.config.rtl?1:-1)*n+"px, 0, 0)";}}},{key:"mousedownHandler",value:function(e){-1!==["TEXTAREA","OPTION","INPUT","SELECT"].indexOf(e.target.nodeName)||(e.preventDefault(),e.stopPropagation(),this.pointerDown=!0,this.drag.startX=e.pageX);}},{key:"mouseupHandler",value:function(e){e.stopPropagation(),this.pointerDown=!1,this.selector.style.cursor="-webkit-grab",this.enableTransition(),this.drag.endX&&this.updateAfterDrag(),this.clearDrag();}},{key:"mousemoveHandler",value:function(e){if(e.preventDefault(),this.pointerDown){"A"===e.target.nodeName&&(this.drag.preventClick=!0),this.drag.endX=e.pageX,this.selector.style.cursor="-webkit-grabbing",this.sliderFrame.style.webkitTransition="all 0ms "+this.config.easing,this.sliderFrame.style.transition="all 0ms "+this.config.easing;var t=this.config.loop?this.currentSlide+this.perPage:this.currentSlide,i=t*(this.selectorWidth/this.perPage),r=this.drag.endX-this.drag.startX,n=this.config.rtl?i+r:i-r;this.sliderFrame.style[this.transformProperty]="translate3d("+(this.config.rtl?1:-1)*n+"px, 0, 0)";}}},{key:"mouseleaveHandler",value:function(e){this.pointerDown&&(this.pointerDown=!1,this.selector.style.cursor="-webkit-grab",this.drag.endX=e.pageX,this.drag.preventClick=!1,this.enableTransition(),this.updateAfterDrag(),this.clearDrag());}},{key:"clickHandler",value:function(e){this.drag.preventClick&&e.preventDefault(),this.drag.preventClick=!1;}},{key:"remove",value:function(e,t){if(e<0||e>=this.innerElements.length)throw new Error("Item to remove doesn't exist 😭");var i=e<this.currentSlide,r=this.currentSlide+this.perPage-1===e;(i||r)&&this.currentSlide--,this.innerElements.splice(e,1),this.buildSliderFrame(),t&&t.call(this);}},{key:"insert",value:function(e,t,i){if(t<0||t>this.innerElements.length+1)throw new Error("Unable to inset it at this index 😭");if(-1!==this.innerElements.indexOf(e))throw new Error("The same item in a carousel? Really? Nope 😭");var r=t<=this.currentSlide>0&&this.innerElements.length;this.currentSlide=r?this.currentSlide+1:this.currentSlide,this.innerElements.splice(t,0,e),this.buildSliderFrame(),i&&i.call(this);}},{key:"prepend",value:function(e,t){this.insert(e,0),t&&t.call(this);}},{key:"append",value:function(e,t){this.insert(e,this.innerElements.length+1),t&&t.call(this);}},{key:"destroy",value:function(){var e=arguments.length>0&&void 0!==arguments[0]&&arguments[0],t=arguments[1];if(this.detachEvents(),this.selector.style.cursor="auto",e){for(var i=document.createDocumentFragment(),r=0;r<this.innerElements.length;r++)i.appendChild(this.innerElements[r]);this.selector.innerHTML="",this.selector.appendChild(i),this.selector.removeAttribute("style");}t&&t.call(this);}}],[{key:"mergeSettings",value:function(e){var t={selector:".siema",duration:200,easing:"ease-out",perPage:1,startIndex:0,draggable:!0,multipleDrag:!0,threshold:20,loop:!1,rtl:!1,onInit:function(){},onChange:function(){}},i=e;for(var r in i)t[r]=i[r];return t}},{key:"webkitOrNot",value:function(){return "string"==typeof document.documentElement.style.transform?"transform":"WebkitTransform"}}]),e}();t.default=l,e.exports=t.default;}])});
+});
+
+var Siema = /*@__PURE__*/unwrapExports(siema_min);
+
+/* node_modules\@beyonk\svelte-carousel\src\Carousel.svelte generated by Svelte v3.23.2 */
 
 const css$5 = {
-	code: "img.svelte-ij2qc1{width:50%;margin-top:-20px}",
-	map: "{\"version\":3,\"file\":\"Family.svelte\",\"sources\":[\"Family.svelte\"],\"sourcesContent\":[\"<section class='family'>\\r\\n    <h1>Our Family</h1>\\r\\n    <img alt='Heading Decoration' src='./HeadingDecorator.png'/>\\r\\n</section>\\r\\n\\r\\n<style lang='scss'>img {\\n  width: 50%;\\n  margin-top: -20px; }</style>\\r\\n\"],\"names\":[],\"mappings\":\"AAKmB,GAAG,cAAC,CAAC,AACtB,KAAK,CAAE,GAAG,CACV,UAAU,CAAE,KAAK,AAAE,CAAC\"}"
+	code: ".carousel.svelte-1d83jxb.svelte-1d83jxb{position:relative;width:100%;justify-content:center;align-items:center}button.svelte-1d83jxb.svelte-1d83jxb{position:absolute;width:40px;height:40px;top:50%;z-index:50;margin-top:-20px;border:none;background-color:transparent}button.svelte-1d83jxb.svelte-1d83jxb:focus{outline:none}.left.svelte-1d83jxb.svelte-1d83jxb{left:2vw}.right.svelte-1d83jxb.svelte-1d83jxb{right:2vw}ul.svelte-1d83jxb.svelte-1d83jxb{list-style-type:none;position:absolute;display:flex;justify-content:center;width:100%;margin-top:-30px;padding:0}ul.svelte-1d83jxb li.svelte-1d83jxb{margin:6px;border-radius:100%;background-color:rgba(255,255,255,0.5);height:8px;width:8px}ul.svelte-1d83jxb li.svelte-1d83jxb:hover{background-color:rgba(255,255,255,0.85)}ul.svelte-1d83jxb li.active.svelte-1d83jxb{background-color:rgba(255,255,255,1)}",
+	map: "{\"version\":3,\"file\":\"Carousel.svelte\",\"sources\":[\"Carousel.svelte\"],\"sourcesContent\":[\"\\n<div class=\\\"carousel\\\">\\n\\t<div class=\\\"slides\\\" bind:this={siema}>\\n\\t\\t<slot></slot>\\n\\t</div>\\n\\t{#if controls}\\n\\t<button class=\\\"left\\\" on:click={left} aria-label=\\\"left\\\">\\n\\t\\t<slot name=\\\"left-control\\\"></slot>\\n\\t</button>\\n\\t<button class=\\\"right\\\" on:click={right} aria-label=\\\"right\\\">\\n\\t\\t<slot name=\\\"right-control\\\"></slot>\\n\\t</button>\\n\\t{/if}\\n    {#if dots}\\n\\t<ul>\\n\\t\\t{#each {length: totalDots} as _, i}\\n\\t\\t<li on:click={() => go(i*currentPerPage)} class={isDotActive(currentIndex, i) ? \\\"active\\\" : \\\"\\\"}></li>\\n\\t\\t{/each}\\n\\t</ul>\\n    {/if}\\n</div>\\n\\n<style>\\n.carousel {\\n\\tposition: relative;\\n\\twidth: 100%;\\n\\tjustify-content: center;\\n\\talign-items: center;\\n}\\n\\nbutton {\\n\\tposition: absolute;\\n\\twidth: 40px;\\n\\theight: 40px;\\n\\ttop: 50%;\\n\\tz-index: 50;\\n\\tmargin-top: -20px;\\n\\tborder: none;\\n\\tbackground-color: transparent;\\n}\\n\\n button:focus {\\n   outline: none;\\n }\\n\\n.left {\\n\\tleft: 2vw;\\n}\\n\\n.right {\\n\\tright: 2vw;\\n}\\n\\nul {\\n\\tlist-style-type: none;\\n\\tposition: absolute;\\n\\tdisplay: flex;\\n\\tjustify-content: center;\\n\\twidth: 100%;\\n\\tmargin-top: -30px;\\n\\tpadding: 0;\\n}\\n\\nul li {\\n\\tmargin: 6px;\\n\\tborder-radius: 100%;\\n\\tbackground-color: rgba(255,255,255,0.5);\\n\\theight: 8px;\\n\\twidth: 8px;\\n}\\n\\nul li:hover {\\n\\tbackground-color: rgba(255,255,255,0.85);\\n}\\n\\nul li.active {\\n\\tbackground-color: rgba(255,255,255,1);\\n}\\n</style>\\n\\n<script>\\n\\timport Siema from 'siema'\\n\\timport { onMount, createEventDispatcher } from 'svelte'\\n\\t\\n\\texport let perPage = 3\\n\\texport let loop = true\\n\\texport let autoplay = 0\\n\\texport let duration = 200\\n\\texport let easing = 'ease-out'\\n\\texport let startIndex = 0\\n\\texport let draggable = true\\n\\texport let multipleDrag = true\\t\\n\\texport let dots = true\\t\\n\\texport let controls = true\\n\\texport let threshold = 20\\n\\texport let rtl = false\\n\\tlet currentIndex = startIndex;\\n\\t\\n\\tlet siema\\n\\tlet controller\\n\\tlet timer\\n\\n\\tconst dispatch = createEventDispatcher()\\n\\n\\t$: pips = controller ? controller.innerElements : []\\n\\t$: currentPerPage = controller ? controller.perPage : perPage\\n\\t$: totalDots = controller ? Math.ceil(controller.innerElements.length / currentPerPage) : []\\n\\t\\n\\tonMount(() => {\\n\\t\\tcontroller = new Siema({\\n\\t\\t\\tselector: siema,\\n\\t\\t\\tperPage: typeof perPage === 'object' ? perPage : Number(perPage),\\n\\t\\t\\tloop,\\n  \\t\\t\\tduration,\\n  \\t\\t\\teasing,\\n  \\t\\t\\tstartIndex,\\n  \\t\\t\\tdraggable,\\n \\t\\t\\tmultipleDrag,\\n  \\t\\t\\tthreshold,\\n  \\t\\t\\trtl,\\n\\t\\t\\tonChange: handleChange\\n\\t\\t})\\n\\t\\t\\n\\t\\tif(autoplay) {\\n\\t\\t\\ttimer = setInterval(right, autoplay);\\n\\t\\t}\\n\\n\\t\\treturn () => {\\n\\t\\t\\tautoplay && clearInterval(timer)\\n\\t\\t\\tcontroller.destroy()\\n\\t\\t}\\n\\t})\\n\\n\\texport function isDotActive (currentIndex, dotIndex) {\\n        if (currentIndex < 0) currentIndex = pips.length + currentIndex;\\n        return currentIndex >= dotIndex*currentPerPage && currentIndex < (dotIndex*currentPerPage)+currentPerPage\\n    }\\n\\t\\n\\texport function left () {\\n\\t\\tcontroller.prev()\\n\\t}\\n\\t\\n\\texport function right () {\\n\\t\\tcontroller.next()\\n\\t}\\n\\n\\texport function go (index) {\\n\\t\\tcontroller.goTo(index)\\n\\t}\\n\\t\\n\\texport function pause() {\\n\\t\\tclearInterval(timer);\\n\\t}\\n\\n\\texport function resume() {\\n\\t\\tif (autoplay) {\\n\\t\\t\\ttimer = setInterval(right, autoplay);\\n\\t\\t}\\n\\t}\\n\\n\\tfunction handleChange (event) {\\n\\t\\tcurrentIndex = controller.currentSlide\\n\\n\\t\\tdispatch('change', {\\n\\t\\t\\tcurrentSlide: controller.currentSlide,\\n\\t\\t\\tslideCount: controller.innerElements.length\\n\\t\\t} )\\n\\t}\\n</script>\\n\"],\"names\":[],\"mappings\":\"AAuBA,SAAS,8BAAC,CAAC,AACV,QAAQ,CAAE,QAAQ,CAClB,KAAK,CAAE,IAAI,CACX,eAAe,CAAE,MAAM,CACvB,WAAW,CAAE,MAAM,AACpB,CAAC,AAED,MAAM,8BAAC,CAAC,AACP,QAAQ,CAAE,QAAQ,CAClB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACZ,GAAG,CAAE,GAAG,CACR,OAAO,CAAE,EAAE,CACX,UAAU,CAAE,KAAK,CACjB,MAAM,CAAE,IAAI,CACZ,gBAAgB,CAAE,WAAW,AAC9B,CAAC,AAEA,oCAAM,MAAM,AAAC,CAAC,AACZ,OAAO,CAAE,IAAI,AACf,CAAC,AAEF,KAAK,8BAAC,CAAC,AACN,IAAI,CAAE,GAAG,AACV,CAAC,AAED,MAAM,8BAAC,CAAC,AACP,KAAK,CAAE,GAAG,AACX,CAAC,AAED,EAAE,8BAAC,CAAC,AACH,eAAe,CAAE,IAAI,CACrB,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CACb,eAAe,CAAE,MAAM,CACvB,KAAK,CAAE,IAAI,CACX,UAAU,CAAE,KAAK,CACjB,OAAO,CAAE,CAAC,AACX,CAAC,AAED,iBAAE,CAAC,EAAE,eAAC,CAAC,AACN,MAAM,CAAE,GAAG,CACX,aAAa,CAAE,IAAI,CACnB,gBAAgB,CAAE,KAAK,GAAG,CAAC,GAAG,CAAC,GAAG,CAAC,GAAG,CAAC,CACvC,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,GAAG,AACX,CAAC,AAED,iBAAE,CAAC,iBAAE,MAAM,AAAC,CAAC,AACZ,gBAAgB,CAAE,KAAK,GAAG,CAAC,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,AACzC,CAAC,AAED,iBAAE,CAAC,EAAE,OAAO,eAAC,CAAC,AACb,gBAAgB,CAAE,KAAK,GAAG,CAAC,GAAG,CAAC,GAAG,CAAC,CAAC,CAAC,AACtC,CAAC\"}"
+};
+
+const Carousel = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
+	let { perPage = 3 } = $$props;
+	let { loop = true } = $$props;
+	let { autoplay = 0 } = $$props;
+	let { duration = 200 } = $$props;
+	let { easing = "ease-out" } = $$props;
+	let { startIndex = 0 } = $$props;
+	let { draggable = true } = $$props;
+	let { multipleDrag = true } = $$props;
+	let { dots = true } = $$props;
+	let { controls = true } = $$props;
+	let { threshold = 20 } = $$props;
+	let { rtl = false } = $$props;
+	let currentIndex = startIndex;
+	let siema;
+	let controller;
+	let timer;
+	const dispatch = createEventDispatcher();
+
+	onMount(() => {
+		controller = new Siema({
+				selector: siema,
+				perPage: typeof perPage === "object" ? perPage : Number(perPage),
+				loop,
+				duration,
+				easing,
+				startIndex,
+				draggable,
+				multipleDrag,
+				threshold,
+				rtl,
+				onChange: handleChange
+			});
+
+		if (autoplay) {
+			timer = setInterval(right, autoplay);
+		}
+
+		return () => {
+			autoplay && clearInterval(timer);
+			controller.destroy();
+		};
+	});
+
+	function isDotActive(currentIndex, dotIndex) {
+		if (currentIndex < 0) currentIndex = pips.length + currentIndex;
+		return currentIndex >= dotIndex * currentPerPage && currentIndex < dotIndex * currentPerPage + currentPerPage;
+	}
+
+	function left() {
+		controller.prev();
+	}
+
+	function right() {
+		controller.next();
+	}
+
+	function go(index) {
+		controller.goTo(index);
+	}
+
+	function pause() {
+		clearInterval(timer);
+	}
+
+	function resume() {
+		if (autoplay) {
+			timer = setInterval(right, autoplay);
+		}
+	}
+
+	function handleChange(event) {
+		currentIndex = controller.currentSlide;
+
+		dispatch("change", {
+			currentSlide: controller.currentSlide,
+			slideCount: controller.innerElements.length
+		});
+	}
+
+	if ($$props.perPage === void 0 && $$bindings.perPage && perPage !== void 0) $$bindings.perPage(perPage);
+	if ($$props.loop === void 0 && $$bindings.loop && loop !== void 0) $$bindings.loop(loop);
+	if ($$props.autoplay === void 0 && $$bindings.autoplay && autoplay !== void 0) $$bindings.autoplay(autoplay);
+	if ($$props.duration === void 0 && $$bindings.duration && duration !== void 0) $$bindings.duration(duration);
+	if ($$props.easing === void 0 && $$bindings.easing && easing !== void 0) $$bindings.easing(easing);
+	if ($$props.startIndex === void 0 && $$bindings.startIndex && startIndex !== void 0) $$bindings.startIndex(startIndex);
+	if ($$props.draggable === void 0 && $$bindings.draggable && draggable !== void 0) $$bindings.draggable(draggable);
+	if ($$props.multipleDrag === void 0 && $$bindings.multipleDrag && multipleDrag !== void 0) $$bindings.multipleDrag(multipleDrag);
+	if ($$props.dots === void 0 && $$bindings.dots && dots !== void 0) $$bindings.dots(dots);
+	if ($$props.controls === void 0 && $$bindings.controls && controls !== void 0) $$bindings.controls(controls);
+	if ($$props.threshold === void 0 && $$bindings.threshold && threshold !== void 0) $$bindings.threshold(threshold);
+	if ($$props.rtl === void 0 && $$bindings.rtl && rtl !== void 0) $$bindings.rtl(rtl);
+	if ($$props.isDotActive === void 0 && $$bindings.isDotActive && isDotActive !== void 0) $$bindings.isDotActive(isDotActive);
+	if ($$props.left === void 0 && $$bindings.left && left !== void 0) $$bindings.left(left);
+	if ($$props.right === void 0 && $$bindings.right && right !== void 0) $$bindings.right(right);
+	if ($$props.go === void 0 && $$bindings.go && go !== void 0) $$bindings.go(go);
+	if ($$props.pause === void 0 && $$bindings.pause && pause !== void 0) $$bindings.pause(pause);
+	if ($$props.resume === void 0 && $$bindings.resume && resume !== void 0) $$bindings.resume(resume);
+	$$result.css.add(css$5);
+	let pips = controller ? controller.innerElements : [];
+	let currentPerPage = controller ? controller.perPage : perPage;
+
+	let totalDots = controller
+	? Math.ceil(controller.innerElements.length / currentPerPage)
+	: [];
+
+	return `<div class="${"carousel svelte-1d83jxb"}"><div class="${"slides"}"${add_attribute("this", siema, 1)}>${$$slots.default ? $$slots.default({}) : ``}</div>
+	${controls
+	? `<button class="${"left svelte-1d83jxb"}" aria-label="${"left"}">${$$slots["left-control"]
+		? $$slots["left-control"]({})
+		: ``}</button>
+	<button class="${"right svelte-1d83jxb"}" aria-label="${"right"}">${$$slots["right-control"]
+		? $$slots["right-control"]({})
+		: ``}</button>`
+	: ``}
+    ${dots
+	? `<ul class="${"svelte-1d83jxb"}">${each({ length: totalDots }, (_, i) => `<li class="${escape(null_to_empty(isDotActive(currentIndex, i) ? "active" : "")) + " svelte-1d83jxb"}"></li>`)}</ul>`
+	: ``}
+</div>`;
+});
+
+/* src\routes\_components\Family.svelte generated by Svelte v3.23.2 */
+
+const css$6 = {
+	code: "img.svelte-zc4ase{width:50%;margin-top:-20px}div.svelte-zc4ase{background-color:#375637;height:80vh;width:100%}",
+	map: "{\"version\":3,\"file\":\"Family.svelte\",\"sources\":[\"Family.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import Carousel from '@beyonk/svelte-carousel';\\r\\n\\timport { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons'\\r\\n</script>\\r\\n\\r\\n<section class='family'>\\r\\n    <h1>Our Family</h1>\\r\\n    <img alt='Heading Decoration' src='./HeadingDecorator.png'/>\\r\\n<Carousel>\\r\\n  <div class=\\\"slide-content\\\"><img alt='hi' src='./LisaTimMainPhoto.jpg'/></div>\\r\\n  <div class=\\\"slide-content\\\">Slide 2</div>\\r\\n  <div class=\\\"slide-content\\\">Slide 3</div>\\r\\n  <div class=\\\"slide-content\\\">Slide 4</div>\\r\\n</Carousel>\\r\\n\\r\\n</section>\\r\\n\\r\\n<style lang='scss'>img {\\n  width: 50%;\\n  margin-top: -20px; }\\n\\ndiv {\\n  background-color: #375637;\\n  height: 80vh;\\n  width: 100%; }</style>\\r\\n\"],\"names\":[],\"mappings\":\"AAiBmB,GAAG,cAAC,CAAC,AACtB,KAAK,CAAE,GAAG,CACV,UAAU,CAAE,KAAK,AAAE,CAAC,AAEtB,GAAG,cAAC,CAAC,AACH,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,AAAE,CAAC\"}"
 };
 
 const Family = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
-	$$result.css.add(css$5);
+	$$result.css.add(css$6);
 
 	return `<section class="${"family"}"><h1>Our Family</h1>
-    <img alt="${"Heading Decoration"}" src="${"./HeadingDecorator.png"}" class="${"svelte-ij2qc1"}">
+    <img alt="${"Heading Decoration"}" src="${"./HeadingDecorator.png"}" class="${"svelte-zc4ase"}">
+${validate_component(Carousel, "Carousel").$$render($$result, {}, {}, {
+		default: () => `<div class="${"slide-content svelte-zc4ase"}"><img alt="${"hi"}" src="${"./LisaTimMainPhoto.jpg"}" class="${"svelte-zc4ase"}"></div>
+  <div class="${"slide-content svelte-zc4ase"}">Slide 2</div>
+  <div class="${"slide-content svelte-zc4ase"}">Slide 3</div>
+  <div class="${"slide-content svelte-zc4ase"}">Slide 4</div>`
+	})}
+
 </section>`;
 });
 
 /* src\routes\_components\Toasts.svelte generated by Svelte v3.23.2 */
 
 const Toasts = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
+	
+	let toasts = [];
+
+	onMount(async () => {
+		await fetch("api/toastController", { method: "GET" }).then(toasts => toasts.json()).then(toastsData => {
+			toasts = toastsData;
+		});
+	});
+
 	return `<section class="${"toasts"}"><h1>Toasts</h1>
     <img alt="${"Heading Decoration"}" src="${"./HeadingDecorator.png"}">
-    <div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-        </p>
-        <br>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p></div></section>`;
+    <div>${each(toasts, toast => `<p>${escape(toast.toastContent)}</p>
+            <p>- ${escape(toast.toasterName)}, ${escape(toast.toasterRelationship)} of the ${escape(toast.toasterAssociation == true ? "Bride" : "Groom")}</p>`)}</div></section>`;
 });
 
 /* src\routes\_components\ProposeToastForm.svelte generated by Svelte v3.23.2 */
 
-const css$6 = {
-	code: "section.svelte-1o41sfh{height:60vh;width:100%;margin-bottom:40px}div.svelte-1o41sfh{padding:0}.form.svelte-1o41sfh{background-color:#ded599;height:100%;margin:20px;border-radius:20px}.header.svelte-1o41sfh{border-radius:20px 20px 0 0;height:20%;background-color:#375637;position:relative}.heading.svelte-1o41sfh{font-size:32px;margin:0;position:absolute;top:50%;transform:translate(0, -50%);padding-left:10px;color:#ddd499}input.svelte-1o41sfh,textarea.svelte-1o41sfh{width:80%;padding-left:10px;padding-right:10px;line-height:40px;font-size:20px}input.svelte-1o41sfh{margin-top:25px}textarea.svelte-1o41sfh{margin-bottom:25px}.selectstuff.svelte-1o41sfh{display:table-cell;line-height:40px;font-size:20px}.container.svelte-1o41sfh{display:table;width:100%;table-layout:fixed}",
-	map: "{\"version\":3,\"file\":\"ProposeToastForm.svelte\",\"sources\":[\"ProposeToastForm.svelte\"],\"sourcesContent\":[\"<section class='propose'>\\r\\n    <div class='form'>\\r\\n        <div class='header'>\\r\\n            <p class='heading'>Propose a Toast...</p>\\r\\n        </div>\\r\\n        <input type='text' placeholder='Name'/>\\r\\n        <div class='container'>\\r\\n        <div class='selectstuff'>\\r\\n            <select>\\r\\n                <option>Father</option>\\r\\n                <option>Mother</option>\\r\\n                <option>Brother</option>\\r\\n                <option>Sister</option>\\r\\n                <option>Son</option>\\r\\n                <option>Daughter</option>\\r\\n                <option>Relative</option>\\r\\n                <option>Friend</option>\\r\\n            </select>\\r\\n        </div>\\r\\n        <div class='selectstuff'>of the</div>\\r\\n        <div class='selectstuff'>\\r\\n            <select>\\r\\n                <option>Groom</option>\\r\\n                <option>Bride</option>\\r\\n            </select>\\r\\n        </div>\\r\\n        </div>\\r\\n        <textarea rows='7' placeholder='Message'></textarea>\\r\\n    </div>\\r\\n</section>\\r\\n\\r\\n<style lang='scss'>section {\\n  height: 60vh;\\n  width: 100%;\\n  margin-bottom: 40px; }\\n\\ndiv {\\n  padding: 0; }\\n\\n.form {\\n  background-color: #ded599;\\n  height: 100%;\\n  margin: 20px;\\n  border-radius: 20px; }\\n\\n.header {\\n  border-radius: 20px 20px 0 0;\\n  height: 20%;\\n  background-color: #375637;\\n  position: relative; }\\n\\n.heading {\\n  font-size: 32px;\\n  margin: 0;\\n  position: absolute;\\n  top: 50%;\\n  transform: translate(0, -50%);\\n  padding-left: 10px;\\n  color: #ddd499; }\\n\\ninput, textarea {\\n  width: 80%;\\n  padding-left: 10px;\\n  padding-right: 10px;\\n  line-height: 40px;\\n  font-size: 20px; }\\n\\ninput {\\n  margin-top: 25px; }\\n\\ntextarea {\\n  margin-bottom: 25px; }\\n\\n.selectstuff {\\n  display: table-cell;\\n  line-height: 40px;\\n  font-size: 20px; }\\n\\n.container {\\n  display: table;\\n  width: 100%;\\n  table-layout: fixed; }</style>\"],\"names\":[],\"mappings\":\"AA+BmB,OAAO,eAAC,CAAC,AAC1B,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,GAAG,eAAC,CAAC,AACH,OAAO,CAAE,CAAC,AAAE,CAAC,AAEf,KAAK,eAAC,CAAC,AACL,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,IAAI,CACZ,MAAM,CAAE,IAAI,CACZ,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,OAAO,eAAC,CAAC,AACP,aAAa,CAAE,IAAI,CAAC,IAAI,CAAC,CAAC,CAAC,CAAC,CAC5B,MAAM,CAAE,GAAG,CACX,gBAAgB,CAAE,OAAO,CACzB,QAAQ,CAAE,QAAQ,AAAE,CAAC,AAEvB,QAAQ,eAAC,CAAC,AACR,SAAS,CAAE,IAAI,CACf,MAAM,CAAE,CAAC,CACT,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,GAAG,CACR,SAAS,CAAE,UAAU,CAAC,CAAC,CAAC,IAAI,CAAC,CAC7B,YAAY,CAAE,IAAI,CAClB,KAAK,CAAE,OAAO,AAAE,CAAC,AAEnB,oBAAK,CAAE,QAAQ,eAAC,CAAC,AACf,KAAK,CAAE,GAAG,CACV,YAAY,CAAE,IAAI,CAClB,aAAa,CAAE,IAAI,CACnB,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC,AAEpB,KAAK,eAAC,CAAC,AACL,UAAU,CAAE,IAAI,AAAE,CAAC,AAErB,QAAQ,eAAC,CAAC,AACR,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,YAAY,eAAC,CAAC,AACZ,OAAO,CAAE,UAAU,CACnB,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC,AAEpB,UAAU,eAAC,CAAC,AACV,OAAO,CAAE,KAAK,CACd,KAAK,CAAE,IAAI,CACX,YAAY,CAAE,KAAK,AAAE,CAAC\"}"
+const css$7 = {
+	code: "section.svelte-jozr7y{height:65vh;width:100%;margin-bottom:40px}div.svelte-jozr7y{padding:0}.form.svelte-jozr7y{background-color:#ded599;height:100%;margin:20px;border-radius:20px}.header.svelte-jozr7y{border-radius:20px 20px 0 0;height:20%;background-color:#375637;position:relative}.heading.svelte-jozr7y{font-size:32px;margin:0;position:absolute;top:50%;transform:translate(0, -50%);padding-left:10px;color:#ddd499}input.svelte-jozr7y,textarea.svelte-jozr7y{width:80%;padding-left:10px;padding-right:10px;line-height:40px;font-size:20px}input.svelte-jozr7y{margin-top:25px}textarea.svelte-jozr7y{margin-bottom:25px}.selectstuff.svelte-jozr7y{display:table-cell;line-height:40px;font-size:20px}.container.svelte-jozr7y{display:table;width:100%;table-layout:fixed}",
+	map: "{\"version\":3,\"file\":\"ProposeToastForm.svelte\",\"sources\":[\"ProposeToastForm.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>;\\r\\nlet toast = {\\r\\n    toasterName: '',\\r\\n    toasterRelationship: '',\\r\\n    toasterAssociation: '',\\r\\n    toastContent: ''\\r\\n};\\r\\nasync function proposeToast() {\\r\\n    if (toast.toasterName == '' || toast.toastContent == '') {\\r\\n        return;\\r\\n    }\\r\\n    await fetch('/api/toastController', {\\r\\n        method: 'POST',\\r\\n        body: JSON.stringify({ toast }),\\r\\n        headers: { \\\"Content-type\\\": \\\"application/json\\\" }\\r\\n    });\\r\\n}\\r\\n;\\r\\n</script>\\r\\n\\r\\n<section class='propose'>\\r\\n    <div class='form'>\\r\\n        <div class='header'>\\r\\n            <p class='heading'>Propose a Toast...</p>\\r\\n        </div>\\r\\n        <input type='text' placeholder='Name' bind:value={toast.toasterName}/>\\r\\n        <div class='container'>\\r\\n        <div class='selectstuff'>\\r\\n            <select bind:value={toast.toasterRelationship}>\\r\\n                <option value='Father' selected>Father</option>\\r\\n                <option value='Mother'>Mother</option>\\r\\n                <option value='Brother'>Brother</option>\\r\\n                <option value='Sister'>Sister</option>\\r\\n                <option value='Son'>Son</option>\\r\\n                <option value='Daughter'>Daughter</option>\\r\\n                <option value='Relative'>Relative</option>\\r\\n                <option value='Friend'>Friend</option>\\r\\n            </select>\\r\\n        </div>\\r\\n        <div class='selectstuff'>of the</div>\\r\\n        <div class='selectstuff'>\\r\\n            <select bind:value={toast.toasterAssociation}>\\r\\n                <option value='Groom' selected>Groom</option>\\r\\n                <option value='Bride'>Bride</option>\\r\\n            </select>\\r\\n        </div>\\r\\n        </div>\\r\\n        <textarea bind:value={toast.toastContent} rows='7' placeholder='Message'></textarea>\\r\\n        <br/>\\r\\n        <button on:click={proposeToast}>Propose!</button>\\r\\n    </div>\\r\\n</section>\\r\\n\\r\\n<style lang='scss'>section {\\n  height: 65vh;\\n  width: 100%;\\n  margin-bottom: 40px; }\\n\\ndiv {\\n  padding: 0; }\\n\\n.form {\\n  background-color: #ded599;\\n  height: 100%;\\n  margin: 20px;\\n  border-radius: 20px; }\\n\\n.header {\\n  border-radius: 20px 20px 0 0;\\n  height: 20%;\\n  background-color: #375637;\\n  position: relative; }\\n\\n.heading {\\n  font-size: 32px;\\n  margin: 0;\\n  position: absolute;\\n  top: 50%;\\n  transform: translate(0, -50%);\\n  padding-left: 10px;\\n  color: #ddd499; }\\n\\ninput, textarea {\\n  width: 80%;\\n  padding-left: 10px;\\n  padding-right: 10px;\\n  line-height: 40px;\\n  font-size: 20px; }\\n\\ninput {\\n  margin-top: 25px; }\\n\\ntextarea {\\n  margin-bottom: 25px; }\\n\\n.selectstuff {\\n  display: table-cell;\\n  line-height: 40px;\\n  font-size: 20px; }\\n\\n.container {\\n  display: table;\\n  width: 100%;\\n  table-layout: fixed; }</style>\"],\"names\":[],\"mappings\":\"AAqDmB,OAAO,cAAC,CAAC,AAC1B,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,GAAG,cAAC,CAAC,AACH,OAAO,CAAE,CAAC,AAAE,CAAC,AAEf,KAAK,cAAC,CAAC,AACL,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,IAAI,CACZ,MAAM,CAAE,IAAI,CACZ,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,OAAO,cAAC,CAAC,AACP,aAAa,CAAE,IAAI,CAAC,IAAI,CAAC,CAAC,CAAC,CAAC,CAC5B,MAAM,CAAE,GAAG,CACX,gBAAgB,CAAE,OAAO,CACzB,QAAQ,CAAE,QAAQ,AAAE,CAAC,AAEvB,QAAQ,cAAC,CAAC,AACR,SAAS,CAAE,IAAI,CACf,MAAM,CAAE,CAAC,CACT,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,GAAG,CACR,SAAS,CAAE,UAAU,CAAC,CAAC,CAAC,IAAI,CAAC,CAC7B,YAAY,CAAE,IAAI,CAClB,KAAK,CAAE,OAAO,AAAE,CAAC,AAEnB,mBAAK,CAAE,QAAQ,cAAC,CAAC,AACf,KAAK,CAAE,GAAG,CACV,YAAY,CAAE,IAAI,CAClB,aAAa,CAAE,IAAI,CACnB,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC,AAEpB,KAAK,cAAC,CAAC,AACL,UAAU,CAAE,IAAI,AAAE,CAAC,AAErB,QAAQ,cAAC,CAAC,AACR,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,YAAY,cAAC,CAAC,AACZ,OAAO,CAAE,UAAU,CACnB,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC,AAEpB,UAAU,cAAC,CAAC,AACV,OAAO,CAAE,KAAK,CACd,KAAK,CAAE,IAAI,CACX,YAAY,CAAE,KAAK,AAAE,CAAC\"}"
 };
 
 const ProposeToastForm = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
-	$$result.css.add(css$6);
+	
 
-	return `<section class="${"propose svelte-1o41sfh"}"><div class="${"form svelte-1o41sfh"}"><div class="${"header svelte-1o41sfh"}"><p class="${"heading svelte-1o41sfh"}">Propose a Toast...</p></div>
-        <input type="${"text"}" placeholder="${"Name"}" class="${"svelte-1o41sfh"}">
-        <div class="${"container svelte-1o41sfh"}"><div class="${"selectstuff svelte-1o41sfh"}"><select><option value="${"Father"}">Father</option><option value="${"Mother"}">Mother</option><option value="${"Brother"}">Brother</option><option value="${"Sister"}">Sister</option><option value="${"Son"}">Son</option><option value="${"Daughter"}">Daughter</option><option value="${"Relative"}">Relative</option><option value="${"Friend"}">Friend</option></select></div>
-        <div class="${"selectstuff svelte-1o41sfh"}">of the</div>
-        <div class="${"selectstuff svelte-1o41sfh"}"><select><option value="${"Groom"}">Groom</option><option value="${"Bride"}">Bride</option></select></div></div>
-        <textarea rows="${"7"}" placeholder="${"Message"}" class="${"svelte-1o41sfh"}"></textarea></div>
+	let toast = {
+		toasterName: "",
+		toasterRelationship: "",
+		toasterAssociation: "",
+		toastContent: ""
+	};
+
+	
+	$$result.css.add(css$7);
+
+	return `<section class="${"propose svelte-jozr7y"}"><div class="${"form svelte-jozr7y"}"><div class="${"header svelte-jozr7y"}"><p class="${"heading svelte-jozr7y"}">Propose a Toast...</p></div>
+        <input type="${"text"}" placeholder="${"Name"}" class="${"svelte-jozr7y"}"${add_attribute("value", toast.toasterName, 1)}>
+        <div class="${"container svelte-jozr7y"}"><div class="${"selectstuff svelte-jozr7y"}"><select${add_attribute("value", toast.toasterRelationship, 1)}><option value="${"Father"}" selected>Father</option><option value="${"Mother"}">Mother</option><option value="${"Brother"}">Brother</option><option value="${"Sister"}">Sister</option><option value="${"Son"}">Son</option><option value="${"Daughter"}">Daughter</option><option value="${"Relative"}">Relative</option><option value="${"Friend"}">Friend</option></select></div>
+        <div class="${"selectstuff svelte-jozr7y"}">of the</div>
+        <div class="${"selectstuff svelte-jozr7y"}"><select${add_attribute("value", toast.toasterAssociation, 1)}><option value="${"Groom"}" selected>Groom</option><option value="${"Bride"}">Bride</option></select></div></div>
+        <textarea rows="${"7"}" placeholder="${"Message"}" class="${"svelte-jozr7y"}">${toast.toastContent || ""}</textarea>
+        <br>
+        <button>Propose!</button></div>
 </section>`;
 });
 
 /* src\routes\index.svelte generated by Svelte v3.23.2 */
 
-const css$7 = {
+const css$8 = {
 	code: "@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';body{background-color:#fff9ea;margin:0;font-size:0;font-family:'Princess Sofia'}h1{font-weight:100;text-align:center;font-size:40px;color:#ddd499;margin-bottom:0}div{overflow:hidden}section{text-align:center}section div{padding:20px}img{width:50%;margin-top:-20px}p{font-size:20px;font-family:'serif'}",
 	map: "{\"version\":3,\"file\":\"index.svelte\",\"sources\":[\"index.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import SectionHeader from './_components/SectionHeader.svelte';\\r\\n    import Jumbotron from './_components/Jumbotron.svelte';\\r\\n    import Story from './_components/Story.svelte';\\r\\n    import Family from './_components/Family.svelte';\\r\\n    import Toasts from './_components/Toasts.svelte';\\r\\n    import ProposeToastForm from './_components/ProposeToastForm.svelte';\\r\\n</script>\\r\\n\\r\\n<SectionHeader isNav={true} />\\r\\n<Jumbotron />\\r\\n<Story />\\r\\n<Family />\\r\\n<Toasts />\\r\\n<ProposeToastForm/>\\r\\n\\r\\n<style global lang='scss'>@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';\\n:global(body) {\\n  background-color: #fff9ea;\\n  margin: 0;\\n  font-size: 0;\\n  font-family: 'Princess Sofia'; }\\n\\n:global(h1) {\\n  font-weight: 100;\\n  text-align: center;\\n  font-size: 40px;\\n  color: #ddd499;\\n  margin-bottom: 0; }\\n\\n:global(div) {\\n  overflow: hidden; }\\n\\n:global(section) {\\n  text-align: center; }\\n  :global(section) :global(div) {\\n    padding: 20px; }\\n\\n:global(img) {\\n  width: 50%;\\n  margin-top: -20px; }\\n\\n:global(p) {\\n  font-size: 20px;\\n  font-family: 'serif'; }</style>\"],\"names\":[],\"mappings\":\"AAgB0B,QAAQ,wDAAwD,CAAC,AACnF,IAAI,AAAE,CAAC,AACb,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,CAAC,CACT,SAAS,CAAE,CAAC,CACZ,WAAW,CAAE,gBAAgB,AAAE,CAAC,AAE1B,EAAE,AAAE,CAAC,AACX,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,MAAM,CAClB,SAAS,CAAE,IAAI,CACf,KAAK,CAAE,OAAO,CACd,aAAa,CAAE,CAAC,AAAE,CAAC,AAEb,GAAG,AAAE,CAAC,AACZ,QAAQ,CAAE,MAAM,AAAE,CAAC,AAEb,OAAO,AAAE,CAAC,AAChB,UAAU,CAAE,MAAM,AAAE,CAAC,AACb,OAAO,AAAC,CAAC,AAAQ,GAAG,AAAE,CAAC,AAC7B,OAAO,CAAE,IAAI,AAAE,CAAC,AAEZ,GAAG,AAAE,CAAC,AACZ,KAAK,CAAE,GAAG,CACV,UAAU,CAAE,KAAK,AAAE,CAAC,AAEd,CAAC,AAAE,CAAC,AACV,SAAS,CAAE,IAAI,CACf,WAAW,CAAE,OAAO,AAAE,CAAC\"}"
 };
 
 const Routes = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
-	$$result.css.add(css$7);
+	$$result.css.add(css$8);
 
 	return `${validate_component(SectionHeader, "SectionHeader").$$render($$result, { isNav: true }, {}, {})}
 ${validate_component(Jumbotron, "Jumbotron").$$render($$result, {}, {}, {})}
@@ -637,7 +873,12 @@ ${ ``}`;
 
 const manifest = {
 	server_routes: [
-		
+		{
+			// api/toastController.ts
+			pattern: /^\/api\/toastController\/?$/,
+			handlers: route_0,
+			params: () => ({})
+		}
 	],
 
 	pages: [
@@ -2719,17 +2960,17 @@ const resolve_url = Url.resolve;
  * @param   Object   opts  Fetch options
  * @return  Promise
  */
-function fetch(url, opts) {
+function fetch$1(url, opts) {
 
 	// allow custom promise
-	if (!fetch.Promise) {
+	if (!fetch$1.Promise) {
 		throw new Error('native promise missing, set fetch.Promise to your favorite alternative');
 	}
 
-	Body.Promise = fetch.Promise;
+	Body.Promise = fetch$1.Promise;
 
 	// wrap http.request into fetch
-	return new fetch.Promise(function (resolve, reject) {
+	return new fetch$1.Promise(function (resolve, reject) {
 		// build request object
 		const request = new Request(url, opts);
 		const options = getNodeRequestOptions(request);
@@ -2793,7 +3034,7 @@ function fetch(url, opts) {
 			const headers = createHeadersLenient(res.headers);
 
 			// HTTP fetch step 5
-			if (fetch.isRedirect(res.statusCode)) {
+			if (fetch$1.isRedirect(res.statusCode)) {
 				// HTTP fetch step 5.2
 				const location = headers.get('Location');
 
@@ -2860,7 +3101,7 @@ function fetch(url, opts) {
 						}
 
 						// HTTP-redirect fetch step 15
-						resolve(fetch(new Request(locationURL, requestOpts)));
+						resolve(fetch$1(new Request(locationURL, requestOpts)));
 						finalize();
 						return;
 				}
@@ -2957,12 +3198,12 @@ function fetch(url, opts) {
  * @param   Number   code  Status code
  * @return  Boolean
  */
-fetch.isRedirect = function (code) {
+fetch$1.isRedirect = function (code) {
 	return code === 301 || code === 302 || code === 303 || code === 307 || code === 308;
 };
 
 // expose Promise
-fetch.Promise = global.Promise;
+fetch$1.Promise = global.Promise;
 
 function get_page_handler(
 	manifest,
@@ -3096,7 +3337,7 @@ function get_page_handler(
 					}
 				}
 
-				return fetch(parsed.href, opts);
+				return fetch$1(parsed.href, opts);
 			}
 		};
 
@@ -3467,13 +3708,12 @@ function noop$1(){}
 
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
-
-polka() 
-	.use(
-		compression({ threshold: 0 }),
-		sirv('static', { dev }),
-		middleware()
-	)
-	.listen(PORT, err => {
-		if (err) console.log('error', err);
-	});
+polka()
+    .use(bodyParser.urlencoded({ extended: true }))
+    .use(bodyParser.json())
+    .use(compression({ threshold: 0 }), sirv('static', { dev }), middleware())
+    .listen(PORT, err => {
+    if (err) {
+        throw err;
+    }
+});

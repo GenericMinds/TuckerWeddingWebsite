@@ -30,7 +30,7 @@
     <ul slot='content'>
         <li class='home' on:click={() => {handleSectionSelection('home')}}>Home</li>
         <li on:click={() => {handleSectionSelection('story')}}>Our Story</li>
-        <li on:click={() => {handleSectionSelection('family')}}>Our Family</li>
+        <li on:click={() => {handleSectionSelection('clan')}}>Our Clan</li>
         <li on:click={() => {handleSectionSelection('toasts')}}>Toasts</li>
         <li on:click={() => {handleSectionSelection('propose')}}>Propose a Toast</li>
     </ul>
