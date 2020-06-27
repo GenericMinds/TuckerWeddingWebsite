@@ -18,7 +18,7 @@
 </script>
 
 <Overlay on:toggle={handleToggle} zIndex={100} bind:isOpen={isOpen}>    
-    <img slot='parent' src='./134216-32.png' on:click={handleToggle} alt='hamburger menu'/>
+    <img slot='parent' src='./134216-32.png' on:click={() => handleToggle()} alt='hamburger menu'/>
      
     <ul slot='content'>
         <li class='home' on:click={() => {handleSectionSelection('home')}}>Home</li>
@@ -35,6 +35,7 @@
     @import '../../../static/theme.scss';
 
     ul {
+        position: fixed;
         -webkit-backface-visibility: hidden;  
         top: 40px;
         right: 0;
