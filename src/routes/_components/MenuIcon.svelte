@@ -16,9 +16,10 @@
         animateScroll.scrollTo({element: '.' + section});
     }
 </script>
+    <img on:click={() => handleToggle()} src='./134216-32.png' alt='ji'/>
 
 <Overlay on:toggle={handleToggle} zIndex={100} bind:isOpen={isOpen}>    
-    <img slot='parent' src='./134216-32.png' alt='ji'/>
+    <img slot='parent' on:click={() => handleToggle()} src='./134216-32.png' alt='ji'/>
     <ul slot='content'>
         <li class='home' on:click={() => {handleSectionSelection('home')}}>Home</li>
         <li on:click={() => {handleSectionSelection('story')}}>Our Story</li>
@@ -57,7 +58,7 @@
     }
 
     img {
-        position: fixed;
+        position: absolute;
         right: 0;
         top: 0;
         height:32px;
