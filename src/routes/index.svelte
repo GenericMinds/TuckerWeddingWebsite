@@ -11,10 +11,10 @@
 <SectionHeader isNav={true} />
 <Jumbotron />
 <Story />
-<Blended />
 <Clan />
 <Toasts />
 <ProposeToastForm/>
+<Blended />
 
 <style global lang='scss'>
     @import '../../static/global.scss';
