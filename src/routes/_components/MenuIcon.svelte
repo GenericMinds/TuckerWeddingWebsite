@@ -58,14 +58,12 @@
         padding-top: 3vh;
     }
 
-    svg {
+    img {
         position: fixed;
         -webkit-overflow-scrolling: touch;
         -webkit-transform: translateZ(0);
         -webkit-backface-visibility: hidden;  
-        right: 0;
-        top: 0;
-        overflow: hidden;
+        right:0;
         height: 32px;
         width:32px;
         z-index: 999;
