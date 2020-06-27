@@ -2,13 +2,13 @@
   "bundler": "rollup",
   "shimport": "1.0.1",
   "assets": {
-    "main": "client.07a81c40.js"
+    "main": "client.b7c8c679.js"
   },
   "css": {
     "main": null,
     "chunks": {
       "index.svelte": [
-        "index.62ac0755.css"
+        "index.a940011f.css"
       ]
     }
   }
