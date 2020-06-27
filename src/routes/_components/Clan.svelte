@@ -130,7 +130,7 @@
 
 	.demo {
 		margin: 0 auto;
-		height: 600px;
+		height: 300px;
 		width: 60vw;
 	}
 	
@@ -146,7 +146,7 @@
 		border: 1px solid #eee;
 		display: flex;
 		flex-direction: column;
-		height: 600px;
+		height: 300px;
         background-color: beige;
 	}
 	
