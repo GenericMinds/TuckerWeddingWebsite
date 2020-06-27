@@ -68,6 +68,7 @@
         -webkit-transform: translateZ(0);
         right: 0;
         top: 0;
+        overflow: hidden;
     }
 
     img:hover, li:hover {
