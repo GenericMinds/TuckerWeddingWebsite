@@ -20,7 +20,7 @@ const config = {
     user: process.env.RDS_USERNAME,
     password: process.env.RDS_PASSWORD,
     port: parseInt(process.env.RDS_PORT),
-    database: process.env.RDS_DATABASE
+    database: 'TuckerWeddingWebsite'
 };
 async function get(req, res) {
     let toasts;
