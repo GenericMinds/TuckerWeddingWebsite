@@ -130,8 +130,8 @@
 
 	.demo {
 		margin: 0 auto;
-		height: 300px;
-		width: 60vw;
+		height: 350px;
+		width: 350px;
 	}
 	
 	.control :global(svg) {
@@ -146,7 +146,7 @@
 		border: 1px solid #eee;
 		display: flex;
 		flex-direction: column;
-		height: 300px;
+		height: 350px;
         background-color: beige;
 	}
 	
