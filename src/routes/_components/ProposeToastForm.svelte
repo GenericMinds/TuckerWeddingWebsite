@@ -118,4 +118,8 @@
         width: $full-size;
         table-layout: fixed;
     }
+
+    select {
+        width: 65px;
+    }
 </style>
