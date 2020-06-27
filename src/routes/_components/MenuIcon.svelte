@@ -72,6 +72,7 @@
         overflow: hidden;
         height: 32px;
         width:32px;
+        z-index: 999;
     }
 
     img:hover, li:hover {
