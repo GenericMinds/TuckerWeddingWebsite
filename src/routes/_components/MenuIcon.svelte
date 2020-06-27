@@ -62,14 +62,12 @@
         padding-top: 3vh;
     }
 
-    img {
+    svg {
         position: fixed;
-        -webkit-backface-visibility: hidden;  
+        -webkit-overflow-scrolling: touch;
+        -webkit-transform: translateZ(0);
         right: 0;
         top: 0;
-        height:32px;
-        width: 32px;
-        margin: 0;
     }
 
     img:hover, li:hover {
