@@ -19,7 +19,7 @@
     <div>
         {#each toasts as toast}
             <p>{toast.toastContent}</p>
-            <p> - {toast.toasterName}, {toast.toasterRelationship} of the {toast.toasterAssociation == true ? 'Bride' : 'Groom'}</p>
+            <p> - {toast.toasterName}, {toast.toasterRelationship} of the {toast.toasterAssociation}</p>
         {/each}
     </div>
 </section>
