@@ -26,7 +26,15 @@
             <ChevronLeftIcon />
         </span>
         <div class="slide-content">
+            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/GrandchildrenWithBarb.jpg)">
+            </header>
+        </div>
+        <div class="slide-content">
             <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Cheese.jpg)">		
+            </header>
+        </div>
+        <div class="slide-content">
+            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/MovingDay.jpg)">
             </header>
         </div>
         <div class="slide-content">
@@ -34,36 +42,11 @@
             </header>
         </div>
         <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Lake.jpg)">	
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Masks.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Masks2.jpg)">
-            </header>
-        </div>		
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/MovingDay.jpg)">
-            </header>
-        </div>		
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/SportsBar.jpg)">
-            </header>
-        </div>		
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/StPatricksDay.jpg)">
-            </header>
-        </div>
-
-
-
-
-
-        <div class="slide-content">
             <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/WithLiam.jpg)">
+            </header>
+        </div>
+        <div class="slide-content">
+            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Lake.jpg)">	
             </header>
         </div>
         <div class="slide-content">
@@ -71,15 +54,31 @@
             </header>
         </div>
         <div class="slide-content">
+            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Masks.jpg)">
+            </header>
+        </div>
+        <div class="slide-content">
             <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/CarenaAndDog.jpg)">
             </header>
         </div>
+        <div class="slide-content">
+            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Masks2.jpg)">
+            </header>
+        </div>				
         <div class="slide-content">
             <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/RhiannahAndAdam.jpg)">
             </header>
         </div>
         <div class="slide-content">
+            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/SportsBar.jpg)">
+            </header>
+        </div>		
+        <div class="slide-content">
             <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/SummerAndClan.jpg)">
+            </header>
+        </div>
+        <div class="slide-content">
+            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/StPatricksDay.jpg)">
             </header>
         </div>
         <div class="slide-content">
@@ -98,13 +97,7 @@
             <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Grandchildren.jpg)">
             </header>
         </div>
-                
-                <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/GrandchildrenWithBarb.jpg)">
-            </header>
-        </div>
-                
-                <div class="slide-content">
+        <div class="slide-content">
             <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/ShannonAndClan.jpg)">
             </header>
         </div>
