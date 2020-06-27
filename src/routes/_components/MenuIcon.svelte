@@ -58,7 +58,8 @@
     }
 
     img {
-        position: absolute;
+        position: fixed;
+        -webkit-backface-visibility: hidden;  
         right: 0;
         top: 0;
         height:32px;
