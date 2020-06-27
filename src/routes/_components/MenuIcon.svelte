@@ -16,7 +16,6 @@
         animateScroll.scrollTo({element: '.' + section});
     }
 </script>
-    <img on:click={() => handleToggle()} src='./134216-32.png' alt='ji'/>
 
 <Overlay on:toggle={handleToggle} zIndex={100} bind:isOpen={isOpen}>    
     <svg slot='parent' on:click={handleToggle} x='0px' y='0px' viewBox='0 0 50 50' enable-background='new 0 0 50 50' xml:space='preserve' height='40px' width='40px'>
@@ -59,18 +58,16 @@
     }
 
     li {
+        -webkit-backface-visibility: hidden;  
         height: 15vh;
         padding-top: 3vh;
     }
 
-    img {
+    svg {
         position: fixed;
         -webkit-backface-visibility: hidden;  
         right: 0;
         top: 0;
-        height:32px;
-        width: 32px;
-        margin: 0;
     }
 
     img:hover, li:hover {
