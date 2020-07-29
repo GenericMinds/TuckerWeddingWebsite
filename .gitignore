@@ -6,3 +6,11 @@
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+#https cert stuff
+client-1.local.crt
+client-1.local.csr
+client-1.local.key
+rootSSL.key
+rootSSL.pem
+rootSSL.srl
