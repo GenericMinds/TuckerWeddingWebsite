@@ -16,7 +16,11 @@ secret.txt
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 
+<<<<<<< HEAD
 #Https Certs
+=======
+#https cert stuff
+>>>>>>> 32dbbc29a7a5013e4347d5cfeedd628911058b1d
 client-1.local.crt
 client-1.local.csr
 client-1.local.key
