@@ -1,5 +1,46 @@
 <script lang='typescript'> 
     import { ToastModel } from '../_models/ToastModel';
+    import { onMount } from 'svelte';
+
+    declare const FB: any;
+    let isLoggedIn: boolean = false;
+
+    onMount( () => {
+        FB.init({
+            appId      : '3134094980017395',
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v7.0'
+        }); 
+        
+        FB.getLoginStatus(function(response) {
+            isLoggedIn = (response.status === 'connected');
+        })
+    }); 
+    
+    function logout() {
+        if (isFacebookConnected()) {
+            FB.logout(function(response) {
+                isLoggedIn = false;
+            }); 
+        }
+    }
+    function login() {
+        if (!isFacebookConnected()) {
+            FB.login(function(response) {
+                isLoggedIn = true;
+            });
+        }
+    }
+
+    function isFacebookConnected(): boolean {
+        let isConnected: boolean = false;
+        FB.getLoginStatus(function(response) {
+            isConnected = (response.status === 'connected');
+        });
+        return isConnected;
+    }
+    
     let toast: ToastModel = {
         toasterName: '',
         toasterRelationship: '',
@@ -27,10 +68,10 @@
         <div class='header'>
             <p class='heading'>Propose a Toast...</p>
         </div>
-        <input type='text' placeholder='Name' bind:value={toast.toasterName}/>
+        <input type='text' disabled={!isLoggedIn} placeholder='Name' bind:value={toast.toasterName}/>
         <div class='container'>
         <div class='selectstuff'>
-            <select bind:value={toast.toasterRelationship}>
+            <select disabled={!isLoggedIn} bind:value={toast.toasterRelationship}>
                 <option value='Father' selected>Father</option>
                 <option value='Mother'>Mother</option>
                 <option value='Brother'>Brother</option>
@@ -43,15 +84,20 @@
         </div>
         <div class='selectstuff'>of the</div>
         <div class='selectstuff'>
-            <select bind:value={toast.toasterAssociation}>
+            <select disabled={!isLoggedIn} bind:value={toast.toasterAssociation}>
                 <option value='Groom' selected>Groom</option>
                 <option value='Bride'>Bride</option>
             </select>
         </div>
         </div>
-        <textarea bind:value={toast.toastContent} rows='7' placeholder='Message'></textarea>
+        <textarea disabled={!isLoggedIn} bind:value={toast.toastContent} rows='7' placeholder='Message'></textarea>
         <br/>
-        <button on:click={proposeToast}>Propose!</button>
+        {#if !isLoggedIn}
+            <button class='facebook-button' on:click={login}>Login with Facebook to Propose</button>
+        {/if}
+        {#if isLoggedIn}
+            <button class='propose-button' on:click={proposeToast}>Propose!</button>
+        {/if}
     </div>
 </section>
 
@@ -123,6 +169,20 @@
     }
 
     button {
+        border-radius: 5px;
+        border: none;
+        color: $accent-color-cream;
+        padding: 6px 32px;
+        text-align: center;
+        text-decoration: none;
         margin-bottom: 20px;
+    }
+
+    .facebook-button {
+        background-color: #3578e5;
+    }
+
+    .propose-button {
+        background-color: $accent-color-green;
     }
 </style>

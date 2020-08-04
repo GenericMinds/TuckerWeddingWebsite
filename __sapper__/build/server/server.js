@@ -8,6 +8,7 @@ var compression = _interopDefault(require('compression'));
 var bodyParser = _interopDefault(require('body-parser'));
 var fs = _interopDefault(require('fs'));
 var path = _interopDefault(require('path'));
+require('query-string');
 var Stream = _interopDefault(require('stream'));
 var http = _interopDefault(require('http'));
 var Url = _interopDefault(require('url'));
@@ -59,9 +60,9 @@ async function post(req, res) {
 }
 
 var route_0 = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  get: get,
-  post: post
+    __proto__: null,
+    get: get,
+    post: post
 });
 
 function noop() { }
@@ -192,7 +193,7 @@ function add_attribute(name, value, boolean) {
 
 const css = {
 	code: "@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';div.svelte-1k30h7c,ul.svelte-1k30h7c{position:absolute;top:40px;right:0;width:100vw;height:100vh;background-color:#375637;color:#ddd499;text-align:center;font-size:40px;overflow:hidden;padding:0;margin:0;list-style:none;z-index:999}li.svelte-1k30h7c{height:10vh;padding-top:3vh}img.svelte-1k30h7c{position:fixed;right:30px;top:3px;height:32px;width:32px;z-index:999;margin:0}img.svelte-1k30h7c:hover,li.svelte-1k30h7c:hover{cursor:pointer}",
-	map: "{\"version\":3,\"file\":\"MenuIcon.svelte\",\"sources\":[\"MenuIcon.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>import Overlay from 'svelte-overlay';\\r\\nimport * as animateScroll from 'svelte-scrollto';\\r\\nlet isOpen = false;\\r\\nfunction handleToggle() {\\r\\n    isOpen = !isOpen;\\r\\n}\\r\\nfunction handleSectionSelection(section) {\\r\\n    isOpen = false;\\r\\n    if (section == 'home') {\\r\\n        animateScroll.scrollToTop();\\r\\n        return;\\r\\n    }\\r\\n    animateScroll.scrollTo({ element: '.' + section });\\r\\n}\\r\\n</script>\\r\\n<img on:click={handleToggle} src='./134216-32.png' alt='hamburger menu'/>     \\r\\n\\r\\n{#if isOpen}\\r\\n    <div>\\r\\n        <ul>\\r\\n            <li class='home' on:click={() => {handleSectionSelection('home')}}>Home</li>\\r\\n            <li on:click={() => {handleSectionSelection('story')}}>Our Story</li>\\r\\n            <li on:click={() => {handleSectionSelection('clan')}}>Our Clan</li>\\r\\n            <li on:click={() => {handleSectionSelection('toasts')}}>Toasts</li>\\r\\n            <li on:click={() => {handleSectionSelection('propose')}}>Propose a Toast</li>\\r\\n            <li on:click={() => {handleSectionSelection('blended')}}>Blended Family</li>\\r\\n        </ul>\\r\\n    </div>\\r\\n{/if}\\r\\n\\r\\n<style lang='scss'>@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';\\ndiv, ul {\\n  position: absolute;\\n  top: 40px;\\n  right: 0;\\n  width: 100vw;\\n  height: 100vh;\\n  background-color: #375637;\\n  color: #ddd499;\\n  text-align: center;\\n  font-size: 40px;\\n  overflow: hidden;\\n  padding: 0;\\n  margin: 0;\\n  list-style: none;\\n  z-index: 999; }\\n\\nli {\\n  height: 10vh;\\n  padding-top: 3vh; }\\n\\nimg {\\n  position: fixed;\\n  right: 30px;\\n  top: 3px;\\n  height: 32px;\\n  width: 32px;\\n  z-index: 999;\\n  margin: 0; }\\n\\nimg:hover, li:hover {\\n  cursor: pointer; }</style>\"],\"names\":[],\"mappings\":\"AA8BmB,QAAQ,wDAAwD,CAAC,AACpF,kBAAG,CAAE,EAAE,eAAC,CAAC,AACP,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,IAAI,CACT,KAAK,CAAE,CAAC,CACR,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,KAAK,CACb,gBAAgB,CAAE,OAAO,CACzB,KAAK,CAAE,OAAO,CACd,UAAU,CAAE,MAAM,CAClB,SAAS,CAAE,IAAI,CACf,QAAQ,CAAE,MAAM,CAChB,OAAO,CAAE,CAAC,CACV,MAAM,CAAE,CAAC,CACT,UAAU,CAAE,IAAI,CAChB,OAAO,CAAE,GAAG,AAAE,CAAC,AAEjB,EAAE,eAAC,CAAC,AACF,MAAM,CAAE,IAAI,CACZ,WAAW,CAAE,GAAG,AAAE,CAAC,AAErB,GAAG,eAAC,CAAC,AACH,QAAQ,CAAE,KAAK,CACf,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,GAAG,CACR,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,OAAO,CAAE,GAAG,CACZ,MAAM,CAAE,CAAC,AAAE,CAAC,AAEd,kBAAG,MAAM,CAAE,iBAAE,MAAM,AAAC,CAAC,AACnB,MAAM,CAAE,OAAO,AAAE,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"MenuIcon.svelte\",\"sources\":[\"MenuIcon.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>import Overlay from 'svelte-overlay';\\r\\nimport * as animateScroll from 'svelte-scrollto';\\r\\nlet isOpen = false;\\r\\nfunction handleToggle() {\\r\\n    console.log('hi');\\r\\n    isOpen = !isOpen;\\r\\n}\\r\\nfunction handleSectionSelection(section) {\\r\\n    isOpen = false;\\r\\n    if (section == 'home') {\\r\\n        animateScroll.scrollToTop();\\r\\n        return;\\r\\n    }\\r\\n    animateScroll.scrollTo({ element: '.' + section });\\r\\n}\\r\\n</script>\\r\\n\\r\\n<img on:click={handleToggle} src='./134216-32.png' alt='hamburger menu'/>     \\r\\n\\r\\n{#if isOpen}\\r\\n    <div>\\r\\n        <ul>\\r\\n            <li class='home' on:click={() => {handleSectionSelection('home')}}>Home</li>\\r\\n            <li on:click={() => {handleSectionSelection('story')}}>Our Story</li>\\r\\n            <li on:click={() => {handleSectionSelection('clan')}}>Our Clan</li>\\r\\n            <li on:click={() => {handleSectionSelection('toasts')}}>Toasts</li>\\r\\n            <li on:click={() => {handleSectionSelection('propose')}}>Propose a Toast</li>\\r\\n            <li on:click={() => {handleSectionSelection('blended')}}>Blended Family</li>\\r\\n        </ul>\\r\\n    </div>\\r\\n{/if}\\r\\n\\r\\n<style lang='scss'>@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';\\ndiv, ul {\\n  position: absolute;\\n  top: 40px;\\n  right: 0;\\n  width: 100vw;\\n  height: 100vh;\\n  background-color: #375637;\\n  color: #ddd499;\\n  text-align: center;\\n  font-size: 40px;\\n  overflow: hidden;\\n  padding: 0;\\n  margin: 0;\\n  list-style: none;\\n  z-index: 999; }\\n\\nli {\\n  height: 10vh;\\n  padding-top: 3vh; }\\n\\nimg {\\n  position: fixed;\\n  right: 30px;\\n  top: 3px;\\n  height: 32px;\\n  width: 32px;\\n  z-index: 999;\\n  margin: 0; }\\n\\nimg:hover, li:hover {\\n  cursor: pointer; }</style>\"],\"names\":[],\"mappings\":\"AAgCmB,QAAQ,wDAAwD,CAAC,AACpF,kBAAG,CAAE,EAAE,eAAC,CAAC,AACP,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,IAAI,CACT,KAAK,CAAE,CAAC,CACR,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,KAAK,CACb,gBAAgB,CAAE,OAAO,CACzB,KAAK,CAAE,OAAO,CACd,UAAU,CAAE,MAAM,CAClB,SAAS,CAAE,IAAI,CACf,QAAQ,CAAE,MAAM,CAChB,OAAO,CAAE,CAAC,CACV,MAAM,CAAE,CAAC,CACT,UAAU,CAAE,IAAI,CAChB,OAAO,CAAE,GAAG,AAAE,CAAC,AAEjB,EAAE,eAAC,CAAC,AACF,MAAM,CAAE,IAAI,CACZ,WAAW,CAAE,GAAG,AAAE,CAAC,AAErB,GAAG,eAAC,CAAC,AACH,QAAQ,CAAE,KAAK,CACf,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,GAAG,CACR,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,OAAO,CAAE,GAAG,CACZ,MAAM,CAAE,CAAC,AAAE,CAAC,AAEd,kBAAG,MAAM,CAAE,iBAAE,MAAM,AAAC,CAAC,AACnB,MAAM,CAAE,OAAO,AAAE,CAAC\"}"
 };
 
 const MenuIcon = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
@@ -204,528 +205,11 @@ const MenuIcon = create_ssr_component(($$result, $$props, $$bindings, $$slots) =
 ${ ``}`;
 });
 
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function unwrapExports (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
-function createCommonjsModule(fn, basedir, module) {
-	return module = {
-	  path: basedir,
-	  exports: {},
-	  require: function (path, base) {
-      return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-    }
-	}, fn(module, module.exports), module.exports;
-}
-
-function commonjsRequire () {
-	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
-}
-
-var strictUriEncode = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.charCodeAt(0).toString(16).toUpperCase()}`);
-
-var token = '%[a-f0-9]{2}';
-var singleMatcher = new RegExp(token, 'gi');
-var multiMatcher = new RegExp('(' + token + ')+', 'gi');
-
-function decodeComponents(components, split) {
-	try {
-		// Try to decode the entire string first
-		return decodeURIComponent(components.join(''));
-	} catch (err) {
-		// Do nothing
-	}
-
-	if (components.length === 1) {
-		return components;
-	}
-
-	split = split || 1;
-
-	// Split the array in 2 parts
-	var left = components.slice(0, split);
-	var right = components.slice(split);
-
-	return Array.prototype.concat.call([], decodeComponents(left), decodeComponents(right));
-}
-
-function decode(input) {
-	try {
-		return decodeURIComponent(input);
-	} catch (err) {
-		var tokens = input.match(singleMatcher);
-
-		for (var i = 1; i < tokens.length; i++) {
-			input = decodeComponents(tokens, i).join('');
-
-			tokens = input.match(singleMatcher);
-		}
-
-		return input;
-	}
-}
-
-function customDecodeURIComponent(input) {
-	// Keep track of all the replacements and prefill the map with the `BOM`
-	var replaceMap = {
-		'%FE%FF': '\uFFFD\uFFFD',
-		'%FF%FE': '\uFFFD\uFFFD'
-	};
-
-	var match = multiMatcher.exec(input);
-	while (match) {
-		try {
-			// Decode as big chunks as possible
-			replaceMap[match[0]] = decodeURIComponent(match[0]);
-		} catch (err) {
-			var result = decode(match[0]);
-
-			if (result !== match[0]) {
-				replaceMap[match[0]] = result;
-			}
-		}
-
-		match = multiMatcher.exec(input);
-	}
-
-	// Add `%C2` at the end of the map to make sure it does not replace the combinator before everything else
-	replaceMap['%C2'] = '\uFFFD';
-
-	var entries = Object.keys(replaceMap);
-
-	for (var i = 0; i < entries.length; i++) {
-		// Replace all decoded components
-		var key = entries[i];
-		input = input.replace(new RegExp(key, 'g'), replaceMap[key]);
-	}
-
-	return input;
-}
-
-var decodeUriComponent = function (encodedURI) {
-	if (typeof encodedURI !== 'string') {
-		throw new TypeError('Expected `encodedURI` to be of type `string`, got `' + typeof encodedURI + '`');
-	}
-
-	try {
-		encodedURI = encodedURI.replace(/\+/g, ' ');
-
-		// Try the built in decoder first
-		return decodeURIComponent(encodedURI);
-	} catch (err) {
-		// Fallback to a more advanced decoder
-		return customDecodeURIComponent(encodedURI);
-	}
-};
-
-var splitOnFirst = (string, separator) => {
-	if (!(typeof string === 'string' && typeof separator === 'string')) {
-		throw new TypeError('Expected the arguments to be of type `string`');
-	}
-
-	if (separator === '') {
-		return [string];
-	}
-
-	const separatorIndex = string.indexOf(separator);
-
-	if (separatorIndex === -1) {
-		return [string];
-	}
-
-	return [
-		string.slice(0, separatorIndex),
-		string.slice(separatorIndex + separator.length)
-	];
-};
-
-var queryString = createCommonjsModule(function (module, exports) {
-
-
-
-
-const isNullOrUndefined = value => value === null || value === undefined;
-
-function encoderForArrayFormat(options) {
-	switch (options.arrayFormat) {
-		case 'index':
-			return key => (result, value) => {
-				const index = result.length;
-
-				if (
-					value === undefined ||
-					(options.skipNull && value === null) ||
-					(options.skipEmptyString && value === '')
-				) {
-					return result;
-				}
-
-				if (value === null) {
-					return [...result, [encode(key, options), '[', index, ']'].join('')];
-				}
-
-				return [
-					...result,
-					[encode(key, options), '[', encode(index, options), ']=', encode(value, options)].join('')
-				];
-			};
-
-		case 'bracket':
-			return key => (result, value) => {
-				if (
-					value === undefined ||
-					(options.skipNull && value === null) ||
-					(options.skipEmptyString && value === '')
-				) {
-					return result;
-				}
-
-				if (value === null) {
-					return [...result, [encode(key, options), '[]'].join('')];
-				}
-
-				return [...result, [encode(key, options), '[]=', encode(value, options)].join('')];
-			};
-
-		case 'comma':
-		case 'separator':
-			return key => (result, value) => {
-				if (value === null || value === undefined || value.length === 0) {
-					return result;
-				}
-
-				if (result.length === 0) {
-					return [[encode(key, options), '=', encode(value, options)].join('')];
-				}
-
-				return [[result, encode(value, options)].join(options.arrayFormatSeparator)];
-			};
-
-		default:
-			return key => (result, value) => {
-				if (
-					value === undefined ||
-					(options.skipNull && value === null) ||
-					(options.skipEmptyString && value === '')
-				) {
-					return result;
-				}
-
-				if (value === null) {
-					return [...result, encode(key, options)];
-				}
-
-				return [...result, [encode(key, options), '=', encode(value, options)].join('')];
-			};
-	}
-}
-
-function parserForArrayFormat(options) {
-	let result;
-
-	switch (options.arrayFormat) {
-		case 'index':
-			return (key, value, accumulator) => {
-				result = /\[(\d*)\]$/.exec(key);
-
-				key = key.replace(/\[\d*\]$/, '');
-
-				if (!result) {
-					accumulator[key] = value;
-					return;
-				}
-
-				if (accumulator[key] === undefined) {
-					accumulator[key] = {};
-				}
-
-				accumulator[key][result[1]] = value;
-			};
-
-		case 'bracket':
-			return (key, value, accumulator) => {
-				result = /(\[\])$/.exec(key);
-				key = key.replace(/\[\]$/, '');
-
-				if (!result) {
-					accumulator[key] = value;
-					return;
-				}
-
-				if (accumulator[key] === undefined) {
-					accumulator[key] = [value];
-					return;
-				}
-
-				accumulator[key] = [].concat(accumulator[key], value);
-			};
-
-		case 'comma':
-		case 'separator':
-			return (key, value, accumulator) => {
-				const isArray = typeof value === 'string' && value.split('').indexOf(options.arrayFormatSeparator) > -1;
-				const newValue = isArray ? value.split(options.arrayFormatSeparator).map(item => decode(item, options)) : value === null ? value : decode(value, options);
-				accumulator[key] = newValue;
-			};
-
-		default:
-			return (key, value, accumulator) => {
-				if (accumulator[key] === undefined) {
-					accumulator[key] = value;
-					return;
-				}
-
-				accumulator[key] = [].concat(accumulator[key], value);
-			};
-	}
-}
-
-function validateArrayFormatSeparator(value) {
-	if (typeof value !== 'string' || value.length !== 1) {
-		throw new TypeError('arrayFormatSeparator must be single character string');
-	}
-}
-
-function encode(value, options) {
-	if (options.encode) {
-		return options.strict ? strictUriEncode(value) : encodeURIComponent(value);
-	}
-
-	return value;
-}
-
-function decode(value, options) {
-	if (options.decode) {
-		return decodeUriComponent(value);
-	}
-
-	return value;
-}
-
-function keysSorter(input) {
-	if (Array.isArray(input)) {
-		return input.sort();
-	}
-
-	if (typeof input === 'object') {
-		return keysSorter(Object.keys(input))
-			.sort((a, b) => Number(a) - Number(b))
-			.map(key => input[key]);
-	}
-
-	return input;
-}
-
-function removeHash(input) {
-	const hashStart = input.indexOf('#');
-	if (hashStart !== -1) {
-		input = input.slice(0, hashStart);
-	}
-
-	return input;
-}
-
-function getHash(url) {
-	let hash = '';
-	const hashStart = url.indexOf('#');
-	if (hashStart !== -1) {
-		hash = url.slice(hashStart);
-	}
-
-	return hash;
-}
-
-function extract(input) {
-	input = removeHash(input);
-	const queryStart = input.indexOf('?');
-	if (queryStart === -1) {
-		return '';
-	}
-
-	return input.slice(queryStart + 1);
-}
-
-function parseValue(value, options) {
-	if (options.parseNumbers && !Number.isNaN(Number(value)) && (typeof value === 'string' && value.trim() !== '')) {
-		value = Number(value);
-	} else if (options.parseBooleans && value !== null && (value.toLowerCase() === 'true' || value.toLowerCase() === 'false')) {
-		value = value.toLowerCase() === 'true';
-	}
-
-	return value;
-}
-
-function parse(input, options) {
-	options = Object.assign({
-		decode: true,
-		sort: true,
-		arrayFormat: 'none',
-		arrayFormatSeparator: ',',
-		parseNumbers: false,
-		parseBooleans: false
-	}, options);
-
-	validateArrayFormatSeparator(options.arrayFormatSeparator);
-
-	const formatter = parserForArrayFormat(options);
-
-	// Create an object with no prototype
-	const ret = Object.create(null);
-
-	if (typeof input !== 'string') {
-		return ret;
-	}
-
-	input = input.trim().replace(/^[?#&]/, '');
-
-	if (!input) {
-		return ret;
-	}
-
-	for (const param of input.split('&')) {
-		let [key, value] = splitOnFirst(options.decode ? param.replace(/\+/g, ' ') : param, '=');
-
-		// Missing `=` should be `null`:
-		// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
-		value = value === undefined ? null : ['comma', 'separator'].includes(options.arrayFormat) ? value : decode(value, options);
-		formatter(decode(key, options), value, ret);
-	}
-
-	for (const key of Object.keys(ret)) {
-		const value = ret[key];
-		if (typeof value === 'object' && value !== null) {
-			for (const k of Object.keys(value)) {
-				value[k] = parseValue(value[k], options);
-			}
-		} else {
-			ret[key] = parseValue(value, options);
-		}
-	}
-
-	if (options.sort === false) {
-		return ret;
-	}
-
-	return (options.sort === true ? Object.keys(ret).sort() : Object.keys(ret).sort(options.sort)).reduce((result, key) => {
-		const value = ret[key];
-		if (Boolean(value) && typeof value === 'object' && !Array.isArray(value)) {
-			// Sort object keys, not values
-			result[key] = keysSorter(value);
-		} else {
-			result[key] = value;
-		}
-
-		return result;
-	}, Object.create(null));
-}
-
-exports.extract = extract;
-exports.parse = parse;
-
-exports.stringify = (object, options) => {
-	if (!object) {
-		return '';
-	}
-
-	options = Object.assign({
-		encode: true,
-		strict: true,
-		arrayFormat: 'none',
-		arrayFormatSeparator: ','
-	}, options);
-
-	validateArrayFormatSeparator(options.arrayFormatSeparator);
-
-	const shouldFilter = key => (
-		(options.skipNull && isNullOrUndefined(object[key])) ||
-		(options.skipEmptyString && object[key] === '')
-	);
-
-	const formatter = encoderForArrayFormat(options);
-
-	const objectCopy = {};
-
-	for (const key of Object.keys(object)) {
-		if (!shouldFilter(key)) {
-			objectCopy[key] = object[key];
-		}
-	}
-
-	const keys = Object.keys(objectCopy);
-
-	if (options.sort !== false) {
-		keys.sort(options.sort);
-	}
-
-	return keys.map(key => {
-		const value = object[key];
-
-		if (value === undefined) {
-			return '';
-		}
-
-		if (value === null) {
-			return encode(key, options);
-		}
-
-		if (Array.isArray(value)) {
-			return value
-				.reduce(formatter(key), [])
-				.join('&');
-		}
-
-		return encode(key, options) + '=' + encode(value, options);
-	}).filter(x => x.length > 0).join('&');
-};
-
-exports.parseUrl = (input, options) => {
-	options = Object.assign({
-		decode: true
-	}, options);
-
-	const [url, hash] = splitOnFirst(input, '#');
-
-	return Object.assign(
-		{
-			url: url.split('?')[0] || '',
-			query: parse(extract(input), options)
-		},
-		options && options.parseFragmentIdentifier && hash ? {fragmentIdentifier: decode(hash, options)} : {}
-	);
-};
-
-exports.stringifyUrl = (input, options) => {
-	options = Object.assign({
-		encode: true,
-		strict: true
-	}, options);
-
-	const url = removeHash(input.url).split('?')[0] || '';
-	const queryFromUrl = exports.extract(input.url);
-	const parsedQueryFromUrl = exports.parse(queryFromUrl, {sort: false});
-
-	const query = Object.assign(parsedQueryFromUrl, input.query);
-	let queryString = exports.stringify(query, options);
-	if (queryString) {
-		queryString = `?${queryString}`;
-	}
-
-	let hash = getHash(input.url);
-	if (input.fragmentIdentifier) {
-		hash = `#${encode(input.fragmentIdentifier, options)}`;
-	}
-
-	return `${url}${queryString}${hash}`;
-};
-});
-
 /* src\routes\_components\SectionHeader.svelte generated by Svelte v3.23.2 */
 
 const css$1 = {
 	code: "div.svelte-10nrjo8{background-color:#375637;height:40px;line-height:40px;padding:0}p.svelte-10nrjo8{display:initial;color:#ddd499;font-weight:bold;font-size:20px}",
-	map: "{\"version\":3,\"file\":\"SectionHeader.svelte\",\"sources\":[\"SectionHeader.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>import MenuIcon from './MenuIcon.svelte';\\r\\nimport * as queryString from 'query-string';\\r\\nfunction logout() {\\r\\n    FB.getLoginStatus(function (response) {\\r\\n        if (response.status === 'connected') {\\r\\n            FB.logout(function (response) {\\r\\n                console.log(response);\\r\\n            });\\r\\n        }\\r\\n    });\\r\\n}\\r\\nfunction login() {\\r\\n    FB.getLoginStatus(function (response) {\\r\\n        if (response.status !== 'connected') {\\r\\n            FB.login(function (response) {\\r\\n                console.log(response);\\r\\n            });\\r\\n        }\\r\\n    });\\r\\n}\\r\\nexport let isNav;\\r\\n</script>\\r\\n\\r\\n<div>\\r\\n    {#if isNav === true}\\r\\n        <p>#blameitonfate</p>\\r\\n        <button on:click={login}>Login</button>\\r\\n        <button on:click={logout}>Logout</button>\\r\\n        <MenuIcon />\\r\\n    {/if}\\r\\n</div>\\r\\n\\r\\n<style lang='scss'>div {\\n  background-color: #375637;\\n  height: 40px;\\n  line-height: 40px;\\n  padding: 0; }\\n\\np {\\n  display: initial;\\n  color: #ddd499;\\n  font-weight: bold;\\n  font-size: 20px; }</style>\"],\"names\":[],\"mappings\":\"AAgCmB,GAAG,eAAC,CAAC,AACtB,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,IAAI,CACZ,WAAW,CAAE,IAAI,CACjB,OAAO,CAAE,CAAC,AAAE,CAAC,AAEf,CAAC,eAAC,CAAC,AACD,OAAO,CAAE,OAAO,CAChB,KAAK,CAAE,OAAO,CACd,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"SectionHeader.svelte\",\"sources\":[\"SectionHeader.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>import MenuIcon from './MenuIcon.svelte';\\r\\nimport * as queryString from 'query-string';\\r\\nexport let isNav;\\r\\n</script>\\r\\n\\r\\n<div>\\r\\n    {#if isNav === true}\\r\\n        <p>#blameitonfate</p>\\r\\n        <MenuIcon />\\r\\n    {/if}\\r\\n</div>\\r\\n\\r\\n<style lang='scss'>div {\\n  background-color: #375637;\\n  height: 40px;\\n  line-height: 40px;\\n  padding: 0; }\\n\\np {\\n  display: initial;\\n  color: #ddd499;\\n  font-weight: bold;\\n  font-size: 20px; }</style>\"],\"names\":[],\"mappings\":\"AAYmB,GAAG,eAAC,CAAC,AACtB,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,IAAI,CACZ,WAAW,CAAE,IAAI,CACjB,OAAO,CAAE,CAAC,AAAE,CAAC,AAEf,CAAC,eAAC,CAAC,AACD,OAAO,CAAE,OAAO,CAChB,KAAK,CAAE,OAAO,CACd,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC\"}"
 };
 
 const SectionHeader = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
@@ -735,8 +219,6 @@ const SectionHeader = create_ssr_component(($$result, $$props, $$bindings, $$slo
 
 	return `<div class="${"svelte-10nrjo8"}">${isNav === true
 	? `<p class="${"svelte-10nrjo8"}">#blameitonfate</p>
-        <button>Login</button>
-        <button>Logout</button>
         ${validate_component(MenuIcon, "MenuIcon").$$render($$result, {}, {}, {})}`
 	: ``}
 </div>`;
@@ -810,6 +292,26 @@ const Blended = create_ssr_component(($$result, $$props, $$bindings, $$slots) =>
         <p>creation of our awesome,</p>
         <p>loving blended family.</p></div></section>`;
 });
+
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function unwrapExports (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
+
+function createCommonjsModule(fn, basedir, module) {
+	return module = {
+	  path: basedir,
+	  exports: {},
+	  require: function (path, base) {
+      return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+    }
+	}, fn(module, module.exports), module.exports;
+}
+
+function commonjsRequire () {
+	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+}
 
 var siema_min = createCommonjsModule(function (module, exports) {
 !function(e,t){module.exports=t();}("undefined"!=typeof self?self:commonjsGlobal,function(){return function(e){function t(r){if(i[r])return i[r].exports;var n=i[r]={i:r,l:!1,exports:{}};return e[r].call(n.exports,n,n.exports,t),n.l=!0,n.exports}var i={};return t.m=e,t.c=i,t.d=function(e,i,r){t.o(e,i)||Object.defineProperty(e,i,{configurable:!1,enumerable:!0,get:r});},t.n=function(e){var i=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(i,"a",i),i},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,i){function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0});var n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},s=function(){function e(e,t){for(var i=0;i<t.length;i++){var r=t[i];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r);}}return function(t,i,r){return i&&e(t.prototype,i),r&&e(t,r),t}}(),l=function(){function e(t){var i=this;if(r(this,e),this.config=e.mergeSettings(t),this.selector="string"==typeof this.config.selector?document.querySelector(this.config.selector):this.config.selector,null===this.selector)throw new Error("Something wrong with your selector 😭");this.resolveSlidesNumber(),this.selectorWidth=this.selector.offsetWidth,this.innerElements=[].slice.call(this.selector.children),this.currentSlide=this.config.loop?this.config.startIndex%this.innerElements.length:Math.max(0,Math.min(this.config.startIndex,this.innerElements.length-this.perPage)),this.transformProperty=e.webkitOrNot(),["resizeHandler","touchstartHandler","touchendHandler","touchmoveHandler","mousedownHandler","mouseupHandler","mouseleaveHandler","mousemoveHandler","clickHandler"].forEach(function(e){i[e]=i[e].bind(i);}),this.init();}return s(e,[{key:"attachEvents",value:function(){window.addEventListener("resize",this.resizeHandler),this.config.draggable&&(this.pointerDown=!1,this.drag={startX:0,endX:0,startY:0,letItGo:null,preventClick:!1},this.selector.addEventListener("touchstart",this.touchstartHandler),this.selector.addEventListener("touchend",this.touchendHandler),this.selector.addEventListener("touchmove",this.touchmoveHandler),this.selector.addEventListener("mousedown",this.mousedownHandler),this.selector.addEventListener("mouseup",this.mouseupHandler),this.selector.addEventListener("mouseleave",this.mouseleaveHandler),this.selector.addEventListener("mousemove",this.mousemoveHandler),this.selector.addEventListener("click",this.clickHandler));}},{key:"detachEvents",value:function(){window.removeEventListener("resize",this.resizeHandler),this.selector.removeEventListener("touchstart",this.touchstartHandler),this.selector.removeEventListener("touchend",this.touchendHandler),this.selector.removeEventListener("touchmove",this.touchmoveHandler),this.selector.removeEventListener("mousedown",this.mousedownHandler),this.selector.removeEventListener("mouseup",this.mouseupHandler),this.selector.removeEventListener("mouseleave",this.mouseleaveHandler),this.selector.removeEventListener("mousemove",this.mousemoveHandler),this.selector.removeEventListener("click",this.clickHandler);}},{key:"init",value:function(){this.attachEvents(),this.selector.style.overflow="hidden",this.selector.style.direction=this.config.rtl?"rtl":"ltr",this.buildSliderFrame(),this.config.onInit.call(this);}},{key:"buildSliderFrame",value:function(){var e=this.selectorWidth/this.perPage,t=this.config.loop?this.innerElements.length+2*this.perPage:this.innerElements.length;this.sliderFrame=document.createElement("div"),this.sliderFrame.style.width=e*t+"px",this.enableTransition(),this.config.draggable&&(this.selector.style.cursor="-webkit-grab");var i=document.createDocumentFragment();if(this.config.loop)for(var r=this.innerElements.length-this.perPage;r<this.innerElements.length;r++){var n=this.buildSliderFrameItem(this.innerElements[r].cloneNode(!0));i.appendChild(n);}for(var s=0;s<this.innerElements.length;s++){var l=this.buildSliderFrameItem(this.innerElements[s]);i.appendChild(l);}if(this.config.loop)for(var o=0;o<this.perPage;o++){var a=this.buildSliderFrameItem(this.innerElements[o].cloneNode(!0));i.appendChild(a);}this.sliderFrame.appendChild(i),this.selector.innerHTML="",this.selector.appendChild(this.sliderFrame),this.slideToCurrent();}},{key:"buildSliderFrameItem",value:function(e){var t=document.createElement("div");return t.style.cssFloat=this.config.rtl?"right":"left",t.style.float=this.config.rtl?"right":"left",t.style.width=(this.config.loop?100/(this.innerElements.length+2*this.perPage):100/this.innerElements.length)+"%",t.appendChild(e),t}},{key:"resolveSlidesNumber",value:function(){if("number"==typeof this.config.perPage)this.perPage=this.config.perPage;else if("object"===n(this.config.perPage)){this.perPage=1;for(var e in this.config.perPage)window.innerWidth>=e&&(this.perPage=this.config.perPage[e]);}}},{key:"prev",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:1,t=arguments[1];if(!(this.innerElements.length<=this.perPage)){var i=this.currentSlide;if(this.config.loop){if(this.currentSlide-e<0){this.disableTransition();var r=this.currentSlide+this.innerElements.length,n=this.perPage,s=r+n,l=(this.config.rtl?1:-1)*s*(this.selectorWidth/this.perPage),o=this.config.draggable?this.drag.endX-this.drag.startX:0;this.sliderFrame.style[this.transformProperty]="translate3d("+(l+o)+"px, 0, 0)",this.currentSlide=r-e;}else this.currentSlide=this.currentSlide-e;}else this.currentSlide=Math.max(this.currentSlide-e,0);i!==this.currentSlide&&(this.slideToCurrent(this.config.loop),this.config.onChange.call(this),t&&t.call(this));}}},{key:"next",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:1,t=arguments[1];if(!(this.innerElements.length<=this.perPage)){var i=this.currentSlide;if(this.config.loop){if(this.currentSlide+e>this.innerElements.length-this.perPage){this.disableTransition();var r=this.currentSlide-this.innerElements.length,n=this.perPage,s=r+n,l=(this.config.rtl?1:-1)*s*(this.selectorWidth/this.perPage),o=this.config.draggable?this.drag.endX-this.drag.startX:0;this.sliderFrame.style[this.transformProperty]="translate3d("+(l+o)+"px, 0, 0)",this.currentSlide=r+e;}else this.currentSlide=this.currentSlide+e;}else this.currentSlide=Math.min(this.currentSlide+e,this.innerElements.length-this.perPage);i!==this.currentSlide&&(this.slideToCurrent(this.config.loop),this.config.onChange.call(this),t&&t.call(this));}}},{key:"disableTransition",value:function(){this.sliderFrame.style.webkitTransition="all 0ms "+this.config.easing,this.sliderFrame.style.transition="all 0ms "+this.config.easing;}},{key:"enableTransition",value:function(){this.sliderFrame.style.webkitTransition="all "+this.config.duration+"ms "+this.config.easing,this.sliderFrame.style.transition="all "+this.config.duration+"ms "+this.config.easing;}},{key:"goTo",value:function(e,t){if(!(this.innerElements.length<=this.perPage)){var i=this.currentSlide;this.currentSlide=this.config.loop?e%this.innerElements.length:Math.min(Math.max(e,0),this.innerElements.length-this.perPage),i!==this.currentSlide&&(this.slideToCurrent(),this.config.onChange.call(this),t&&t.call(this));}}},{key:"slideToCurrent",value:function(e){var t=this,i=this.config.loop?this.currentSlide+this.perPage:this.currentSlide,r=(this.config.rtl?1:-1)*i*(this.selectorWidth/this.perPage);e?requestAnimationFrame(function(){requestAnimationFrame(function(){t.enableTransition(),t.sliderFrame.style[t.transformProperty]="translate3d("+r+"px, 0, 0)";});}):this.sliderFrame.style[this.transformProperty]="translate3d("+r+"px, 0, 0)";}},{key:"updateAfterDrag",value:function(){var e=(this.config.rtl?-1:1)*(this.drag.endX-this.drag.startX),t=Math.abs(e),i=this.config.multipleDrag?Math.ceil(t/(this.selectorWidth/this.perPage)):1,r=e>0&&this.currentSlide-i<0,n=e<0&&this.currentSlide+i>this.innerElements.length-this.perPage;e>0&&t>this.config.threshold&&this.innerElements.length>this.perPage?this.prev(i):e<0&&t>this.config.threshold&&this.innerElements.length>this.perPage&&this.next(i),this.slideToCurrent(r||n);}},{key:"resizeHandler",value:function(){this.resolveSlidesNumber(),this.currentSlide+this.perPage>this.innerElements.length&&(this.currentSlide=this.innerElements.length<=this.perPage?0:this.innerElements.length-this.perPage),this.selectorWidth=this.selector.offsetWidth,this.buildSliderFrame();}},{key:"clearDrag",value:function(){this.drag={startX:0,endX:0,startY:0,letItGo:null,preventClick:this.drag.preventClick};}},{key:"touchstartHandler",value:function(e){-1!==["TEXTAREA","OPTION","INPUT","SELECT"].indexOf(e.target.nodeName)||(e.stopPropagation(),this.pointerDown=!0,this.drag.startX=e.touches[0].pageX,this.drag.startY=e.touches[0].pageY);}},{key:"touchendHandler",value:function(e){e.stopPropagation(),this.pointerDown=!1,this.enableTransition(),this.drag.endX&&this.updateAfterDrag(),this.clearDrag();}},{key:"touchmoveHandler",value:function(e){if(e.stopPropagation(),null===this.drag.letItGo&&(this.drag.letItGo=Math.abs(this.drag.startY-e.touches[0].pageY)<Math.abs(this.drag.startX-e.touches[0].pageX)),this.pointerDown&&this.drag.letItGo){e.preventDefault(),this.drag.endX=e.touches[0].pageX,this.sliderFrame.style.webkitTransition="all 0ms "+this.config.easing,this.sliderFrame.style.transition="all 0ms "+this.config.easing;var t=this.config.loop?this.currentSlide+this.perPage:this.currentSlide,i=t*(this.selectorWidth/this.perPage),r=this.drag.endX-this.drag.startX,n=this.config.rtl?i+r:i-r;this.sliderFrame.style[this.transformProperty]="translate3d("+(this.config.rtl?1:-1)*n+"px, 0, 0)";}}},{key:"mousedownHandler",value:function(e){-1!==["TEXTAREA","OPTION","INPUT","SELECT"].indexOf(e.target.nodeName)||(e.preventDefault(),e.stopPropagation(),this.pointerDown=!0,this.drag.startX=e.pageX);}},{key:"mouseupHandler",value:function(e){e.stopPropagation(),this.pointerDown=!1,this.selector.style.cursor="-webkit-grab",this.enableTransition(),this.drag.endX&&this.updateAfterDrag(),this.clearDrag();}},{key:"mousemoveHandler",value:function(e){if(e.preventDefault(),this.pointerDown){"A"===e.target.nodeName&&(this.drag.preventClick=!0),this.drag.endX=e.pageX,this.selector.style.cursor="-webkit-grabbing",this.sliderFrame.style.webkitTransition="all 0ms "+this.config.easing,this.sliderFrame.style.transition="all 0ms "+this.config.easing;var t=this.config.loop?this.currentSlide+this.perPage:this.currentSlide,i=t*(this.selectorWidth/this.perPage),r=this.drag.endX-this.drag.startX,n=this.config.rtl?i+r:i-r;this.sliderFrame.style[this.transformProperty]="translate3d("+(this.config.rtl?1:-1)*n+"px, 0, 0)";}}},{key:"mouseleaveHandler",value:function(e){this.pointerDown&&(this.pointerDown=!1,this.selector.style.cursor="-webkit-grab",this.drag.endX=e.pageX,this.drag.preventClick=!1,this.enableTransition(),this.updateAfterDrag(),this.clearDrag());}},{key:"clickHandler",value:function(e){this.drag.preventClick&&e.preventDefault(),this.drag.preventClick=!1;}},{key:"remove",value:function(e,t){if(e<0||e>=this.innerElements.length)throw new Error("Item to remove doesn't exist 😭");var i=e<this.currentSlide,r=this.currentSlide+this.perPage-1===e;(i||r)&&this.currentSlide--,this.innerElements.splice(e,1),this.buildSliderFrame(),t&&t.call(this);}},{key:"insert",value:function(e,t,i){if(t<0||t>this.innerElements.length+1)throw new Error("Unable to inset it at this index 😭");if(-1!==this.innerElements.indexOf(e))throw new Error("The same item in a carousel? Really? Nope 😭");var r=t<=this.currentSlide>0&&this.innerElements.length;this.currentSlide=r?this.currentSlide+1:this.currentSlide,this.innerElements.splice(t,0,e),this.buildSliderFrame(),i&&i.call(this);}},{key:"prepend",value:function(e,t){this.insert(e,0),t&&t.call(this);}},{key:"append",value:function(e,t){this.insert(e,this.innerElements.length+1),t&&t.call(this);}},{key:"destroy",value:function(){var e=arguments.length>0&&void 0!==arguments[0]&&arguments[0],t=arguments[1];if(this.detachEvents(),this.selector.style.cursor="auto",e){for(var i=document.createDocumentFragment(),r=0;r<this.innerElements.length;r++)i.appendChild(this.innerElements[r]);this.selector.innerHTML="",this.selector.appendChild(i),this.selector.removeAttribute("style");}t&&t.call(this);}}],[{key:"mergeSettings",value:function(e){var t={selector:".siema",duration:200,easing:"ease-out",perPage:1,startIndex:0,draggable:!0,multipleDrag:!0,threshold:20,loop:!1,rtl:!1,onInit:function(){},onChange:function(){}},i=e;for(var r in i)t[r]=i[r];return t}},{key:"webkitOrNot",value:function(){return "string"==typeof document.documentElement.style.transform?"transform":"WebkitTransform"}}]),e}();t.default=l,e.exports=t.default;}])});
@@ -1047,12 +549,26 @@ const Toasts = create_ssr_component(($$result, $$props, $$bindings, $$slots) => 
 /* src\routes\_components\ProposeToastForm.svelte generated by Svelte v3.23.2 */
 
 const css$6 = {
-	code: "section.svelte-c15mx9{width:100%;margin-bottom:40px}div.svelte-c15mx9{padding:0}.form.svelte-c15mx9{background-color:#ded599;height:100%;margin:20px;border-radius:20px}.header.svelte-c15mx9{border-radius:20px 20px 0 0;height:75px;background-color:#375637;position:relative}.heading.svelte-c15mx9{font-size:32px;margin:0;position:absolute;top:50%;transform:translate(0, -50%);padding-left:10px;color:#ddd499}input.svelte-c15mx9,textarea.svelte-c15mx9{width:80%;padding-left:10px;padding-right:10px;line-height:40px;font-size:20px}input.svelte-c15mx9{margin-top:25px}textarea.svelte-c15mx9{margin-bottom:25px}.selectstuff.svelte-c15mx9{display:table-cell;line-height:40px;font-size:20px}.container.svelte-c15mx9{display:table;width:100%;table-layout:fixed}select.svelte-c15mx9{width:65px}button.svelte-c15mx9{margin-bottom:20px}",
-	map: "{\"version\":3,\"file\":\"ProposeToastForm.svelte\",\"sources\":[\"ProposeToastForm.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>;\\r\\nlet toast = {\\r\\n    toasterName: '',\\r\\n    toasterRelationship: '',\\r\\n    toasterAssociation: '',\\r\\n    toastContent: ''\\r\\n};\\r\\nasync function proposeToast() {\\r\\n    if (toast.toasterName == '' || toast.toastContent == '') {\\r\\n        return;\\r\\n    }\\r\\n    await fetch('/api/toastController', {\\r\\n        method: 'POST',\\r\\n        body: JSON.stringify({ toast }),\\r\\n        headers: { \\\"Content-type\\\": \\\"application/json\\\" }\\r\\n    }).then(response => window.location.reload());\\r\\n}\\r\\n;\\r\\n</script>\\r\\n\\r\\n<section class='propose'>\\r\\n    <div class='form'>\\r\\n        <div class='header'>\\r\\n            <p class='heading'>Propose a Toast...</p>\\r\\n        </div>\\r\\n        <input type='text' placeholder='Name' bind:value={toast.toasterName}/>\\r\\n        <div class='container'>\\r\\n        <div class='selectstuff'>\\r\\n            <select bind:value={toast.toasterRelationship}>\\r\\n                <option value='Father' selected>Father</option>\\r\\n                <option value='Mother'>Mother</option>\\r\\n                <option value='Brother'>Brother</option>\\r\\n                <option value='Sister'>Sister</option>\\r\\n                <option value='Son'>Son</option>\\r\\n                <option value='Daughter'>Daughter</option>\\r\\n                <option value='Relative'>Relative</option>\\r\\n                <option value='Friend'>Friend</option>\\r\\n            </select>\\r\\n        </div>\\r\\n        <div class='selectstuff'>of the</div>\\r\\n        <div class='selectstuff'>\\r\\n            <select bind:value={toast.toasterAssociation}>\\r\\n                <option value='Groom' selected>Groom</option>\\r\\n                <option value='Bride'>Bride</option>\\r\\n            </select>\\r\\n        </div>\\r\\n        </div>\\r\\n        <textarea bind:value={toast.toastContent} rows='7' placeholder='Message'></textarea>\\r\\n        <br/>\\r\\n        <button on:click={proposeToast}>Propose!</button>\\r\\n    </div>\\r\\n</section>\\r\\n\\r\\n<style lang='scss'>section {\\n  width: 100%;\\n  margin-bottom: 40px; }\\n\\ndiv {\\n  padding: 0; }\\n\\n.form {\\n  background-color: #ded599;\\n  height: 100%;\\n  margin: 20px;\\n  border-radius: 20px; }\\n\\n.header {\\n  border-radius: 20px 20px 0 0;\\n  height: 75px;\\n  background-color: #375637;\\n  position: relative; }\\n\\n.heading {\\n  font-size: 32px;\\n  margin: 0;\\n  position: absolute;\\n  top: 50%;\\n  transform: translate(0, -50%);\\n  padding-left: 10px;\\n  color: #ddd499; }\\n\\ninput, textarea {\\n  width: 80%;\\n  padding-left: 10px;\\n  padding-right: 10px;\\n  line-height: 40px;\\n  font-size: 20px; }\\n\\ninput {\\n  margin-top: 25px; }\\n\\ntextarea {\\n  margin-bottom: 25px; }\\n\\n.selectstuff {\\n  display: table-cell;\\n  line-height: 40px;\\n  font-size: 20px; }\\n\\n.container {\\n  display: table;\\n  width: 100%;\\n  table-layout: fixed; }\\n\\nselect {\\n  width: 65px; }\\n\\nbutton {\\n  margin-bottom: 20px; }</style>\"],\"names\":[],\"mappings\":\"AAqDmB,OAAO,cAAC,CAAC,AAC1B,KAAK,CAAE,IAAI,CACX,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,GAAG,cAAC,CAAC,AACH,OAAO,CAAE,CAAC,AAAE,CAAC,AAEf,KAAK,cAAC,CAAC,AACL,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,IAAI,CACZ,MAAM,CAAE,IAAI,CACZ,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,OAAO,cAAC,CAAC,AACP,aAAa,CAAE,IAAI,CAAC,IAAI,CAAC,CAAC,CAAC,CAAC,CAC5B,MAAM,CAAE,IAAI,CACZ,gBAAgB,CAAE,OAAO,CACzB,QAAQ,CAAE,QAAQ,AAAE,CAAC,AAEvB,QAAQ,cAAC,CAAC,AACR,SAAS,CAAE,IAAI,CACf,MAAM,CAAE,CAAC,CACT,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,GAAG,CACR,SAAS,CAAE,UAAU,CAAC,CAAC,CAAC,IAAI,CAAC,CAC7B,YAAY,CAAE,IAAI,CAClB,KAAK,CAAE,OAAO,AAAE,CAAC,AAEnB,mBAAK,CAAE,QAAQ,cAAC,CAAC,AACf,KAAK,CAAE,GAAG,CACV,YAAY,CAAE,IAAI,CAClB,aAAa,CAAE,IAAI,CACnB,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC,AAEpB,KAAK,cAAC,CAAC,AACL,UAAU,CAAE,IAAI,AAAE,CAAC,AAErB,QAAQ,cAAC,CAAC,AACR,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,YAAY,cAAC,CAAC,AACZ,OAAO,CAAE,UAAU,CACnB,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC,AAEpB,UAAU,cAAC,CAAC,AACV,OAAO,CAAE,KAAK,CACd,KAAK,CAAE,IAAI,CACX,YAAY,CAAE,KAAK,AAAE,CAAC,AAExB,MAAM,cAAC,CAAC,AACN,KAAK,CAAE,IAAI,AAAE,CAAC,AAEhB,MAAM,cAAC,CAAC,AACN,aAAa,CAAE,IAAI,AAAE,CAAC\"}"
+	code: "section.svelte-1tmojol{width:100%;margin-bottom:40px}div.svelte-1tmojol{padding:0}.form.svelte-1tmojol{background-color:#ded599;height:100%;margin:20px;border-radius:20px}.header.svelte-1tmojol{border-radius:20px 20px 0 0;height:75px;background-color:#375637;position:relative}.heading.svelte-1tmojol{font-size:32px;margin:0;position:absolute;top:50%;transform:translate(0, -50%);padding-left:10px;color:#ddd499}input.svelte-1tmojol,textarea.svelte-1tmojol{width:80%;padding-left:10px;padding-right:10px;line-height:40px;font-size:20px}input.svelte-1tmojol{margin-top:25px}textarea.svelte-1tmojol{margin-bottom:25px}.selectstuff.svelte-1tmojol{display:table-cell;line-height:40px;font-size:20px}.container.svelte-1tmojol{display:table;width:100%;table-layout:fixed}select.svelte-1tmojol{width:65px}button.svelte-1tmojol{border-radius:5px;border:none;color:#ddd499;padding:6px 32px;text-align:center;text-decoration:none;margin-bottom:20px}.facebook-button.svelte-1tmojol{background-color:#3578e5}.propose-button.svelte-1tmojol{background-color:#375637}",
+	map: "{\"version\":3,\"file\":\"ProposeToastForm.svelte\",\"sources\":[\"ProposeToastForm.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>;\\r\\nimport { onMount } from 'svelte';\\r\\nlet isLoggedIn = false;\\r\\nonMount(() => {\\r\\n    FB.init({\\r\\n        appId: '3134094980017395',\\r\\n        cookie: true,\\r\\n        xfbml: true,\\r\\n        version: 'v7.0'\\r\\n    });\\r\\n    FB.getLoginStatus(function (response) {\\r\\n        isLoggedIn = (response.status === 'connected');\\r\\n    });\\r\\n});\\r\\nfunction logout() {\\r\\n    if (isFacebookConnected()) {\\r\\n        FB.logout(function (response) {\\r\\n            isLoggedIn = false;\\r\\n        });\\r\\n    }\\r\\n}\\r\\nfunction login() {\\r\\n    if (!isFacebookConnected()) {\\r\\n        FB.login(function (response) {\\r\\n            isLoggedIn = true;\\r\\n        });\\r\\n    }\\r\\n}\\r\\nfunction isFacebookConnected() {\\r\\n    let isConnected = false;\\r\\n    FB.getLoginStatus(function (response) {\\r\\n        isConnected = (response.status === 'connected');\\r\\n    });\\r\\n    return isConnected;\\r\\n}\\r\\nlet toast = {\\r\\n    toasterName: '',\\r\\n    toasterRelationship: '',\\r\\n    toasterAssociation: '',\\r\\n    toastContent: ''\\r\\n};\\r\\nasync function proposeToast() {\\r\\n    if (toast.toasterName == '' || toast.toastContent == '') {\\r\\n        return;\\r\\n    }\\r\\n    await fetch('/api/toastController', {\\r\\n        method: 'POST',\\r\\n        body: JSON.stringify({ toast }),\\r\\n        headers: { \\\"Content-type\\\": \\\"application/json\\\" }\\r\\n    }).then(response => window.location.reload());\\r\\n}\\r\\n;\\r\\n</script>\\r\\n\\r\\n<section class='propose'>\\r\\n    <div class='form'>\\r\\n        <div class='header'>\\r\\n            <p class='heading'>Propose a Toast...</p>\\r\\n        </div>\\r\\n        <input type='text' disabled={!isLoggedIn} placeholder='Name' bind:value={toast.toasterName}/>\\r\\n        <div class='container'>\\r\\n        <div class='selectstuff'>\\r\\n            <select disabled={!isLoggedIn} bind:value={toast.toasterRelationship}>\\r\\n                <option value='Father' selected>Father</option>\\r\\n                <option value='Mother'>Mother</option>\\r\\n                <option value='Brother'>Brother</option>\\r\\n                <option value='Sister'>Sister</option>\\r\\n                <option value='Son'>Son</option>\\r\\n                <option value='Daughter'>Daughter</option>\\r\\n                <option value='Relative'>Relative</option>\\r\\n                <option value='Friend'>Friend</option>\\r\\n            </select>\\r\\n        </div>\\r\\n        <div class='selectstuff'>of the</div>\\r\\n        <div class='selectstuff'>\\r\\n            <select disabled={!isLoggedIn} bind:value={toast.toasterAssociation}>\\r\\n                <option value='Groom' selected>Groom</option>\\r\\n                <option value='Bride'>Bride</option>\\r\\n            </select>\\r\\n        </div>\\r\\n        </div>\\r\\n        <textarea disabled={!isLoggedIn} bind:value={toast.toastContent} rows='7' placeholder='Message'></textarea>\\r\\n        <br/>\\r\\n        {#if !isLoggedIn}\\r\\n            <button class='facebook-button' on:click={login}>Login with Facebook to Propose</button>\\r\\n        {/if}\\r\\n        {#if isLoggedIn}\\r\\n            <button class='propose-button' on:click={proposeToast}>Propose!</button>\\r\\n        {/if}\\r\\n    </div>\\r\\n</section>\\r\\n\\r\\n<style lang='scss'>section {\\n  width: 100%;\\n  margin-bottom: 40px; }\\n\\ndiv {\\n  padding: 0; }\\n\\n.form {\\n  background-color: #ded599;\\n  height: 100%;\\n  margin: 20px;\\n  border-radius: 20px; }\\n\\n.header {\\n  border-radius: 20px 20px 0 0;\\n  height: 75px;\\n  background-color: #375637;\\n  position: relative; }\\n\\n.heading {\\n  font-size: 32px;\\n  margin: 0;\\n  position: absolute;\\n  top: 50%;\\n  transform: translate(0, -50%);\\n  padding-left: 10px;\\n  color: #ddd499; }\\n\\ninput, textarea {\\n  width: 80%;\\n  padding-left: 10px;\\n  padding-right: 10px;\\n  line-height: 40px;\\n  font-size: 20px; }\\n\\ninput {\\n  margin-top: 25px; }\\n\\ntextarea {\\n  margin-bottom: 25px; }\\n\\n.selectstuff {\\n  display: table-cell;\\n  line-height: 40px;\\n  font-size: 20px; }\\n\\n.container {\\n  display: table;\\n  width: 100%;\\n  table-layout: fixed; }\\n\\nselect {\\n  width: 65px; }\\n\\nbutton {\\n  border-radius: 5px;\\n  border: none;\\n  color: #ddd499;\\n  padding: 6px 32px;\\n  text-align: center;\\n  text-decoration: none;\\n  margin-bottom: 20px; }\\n\\n.facebook-button {\\n  background-color: #3578e5; }\\n\\n.propose-button {\\n  background-color: #375637; }</style>\"],\"names\":[],\"mappings\":\"AA4FmB,OAAO,eAAC,CAAC,AAC1B,KAAK,CAAE,IAAI,CACX,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,GAAG,eAAC,CAAC,AACH,OAAO,CAAE,CAAC,AAAE,CAAC,AAEf,KAAK,eAAC,CAAC,AACL,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,IAAI,CACZ,MAAM,CAAE,IAAI,CACZ,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,OAAO,eAAC,CAAC,AACP,aAAa,CAAE,IAAI,CAAC,IAAI,CAAC,CAAC,CAAC,CAAC,CAC5B,MAAM,CAAE,IAAI,CACZ,gBAAgB,CAAE,OAAO,CACzB,QAAQ,CAAE,QAAQ,AAAE,CAAC,AAEvB,QAAQ,eAAC,CAAC,AACR,SAAS,CAAE,IAAI,CACf,MAAM,CAAE,CAAC,CACT,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,GAAG,CACR,SAAS,CAAE,UAAU,CAAC,CAAC,CAAC,IAAI,CAAC,CAC7B,YAAY,CAAE,IAAI,CAClB,KAAK,CAAE,OAAO,AAAE,CAAC,AAEnB,oBAAK,CAAE,QAAQ,eAAC,CAAC,AACf,KAAK,CAAE,GAAG,CACV,YAAY,CAAE,IAAI,CAClB,aAAa,CAAE,IAAI,CACnB,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC,AAEpB,KAAK,eAAC,CAAC,AACL,UAAU,CAAE,IAAI,AAAE,CAAC,AAErB,QAAQ,eAAC,CAAC,AACR,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,YAAY,eAAC,CAAC,AACZ,OAAO,CAAE,UAAU,CACnB,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC,AAEpB,UAAU,eAAC,CAAC,AACV,OAAO,CAAE,KAAK,CACd,KAAK,CAAE,IAAI,CACX,YAAY,CAAE,KAAK,AAAE,CAAC,AAExB,MAAM,eAAC,CAAC,AACN,KAAK,CAAE,IAAI,AAAE,CAAC,AAEhB,MAAM,eAAC,CAAC,AACN,aAAa,CAAE,GAAG,CAClB,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,OAAO,CACd,OAAO,CAAE,GAAG,CAAC,IAAI,CACjB,UAAU,CAAE,MAAM,CAClB,eAAe,CAAE,IAAI,CACrB,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,gBAAgB,eAAC,CAAC,AAChB,gBAAgB,CAAE,OAAO,AAAE,CAAC,AAE9B,eAAe,eAAC,CAAC,AACf,gBAAgB,CAAE,OAAO,AAAE,CAAC\"}"
 };
 
 const ProposeToastForm = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
 	
+	let isLoggedIn = false;
+
+	onMount(() => {
+		FB.init({
+			appId: "3134094980017395",
+			cookie: true,
+			xfbml: true,
+			version: "v7.0"
+		});
+
+		FB.getLoginStatus(function (response) {
+			isLoggedIn = response.status === "connected";
+		});
+	});
 
 	let toast = {
 		toasterName: "",
@@ -1064,14 +580,19 @@ const ProposeToastForm = create_ssr_component(($$result, $$props, $$bindings, $$
 	
 	$$result.css.add(css$6);
 
-	return `<section class="${"propose svelte-c15mx9"}"><div class="${"form svelte-c15mx9"}"><div class="${"header svelte-c15mx9"}"><p class="${"heading svelte-c15mx9"}">Propose a Toast...</p></div>
-        <input type="${"text"}" placeholder="${"Name"}" class="${"svelte-c15mx9"}"${add_attribute("value", toast.toasterName, 1)}>
-        <div class="${"container svelte-c15mx9"}"><div class="${"selectstuff svelte-c15mx9"}"><select class="${"svelte-c15mx9"}"${add_attribute("value", toast.toasterRelationship, 1)}><option value="${"Father"}" selected>Father</option><option value="${"Mother"}">Mother</option><option value="${"Brother"}">Brother</option><option value="${"Sister"}">Sister</option><option value="${"Son"}">Son</option><option value="${"Daughter"}">Daughter</option><option value="${"Relative"}">Relative</option><option value="${"Friend"}">Friend</option></select></div>
-        <div class="${"selectstuff svelte-c15mx9"}">of the</div>
-        <div class="${"selectstuff svelte-c15mx9"}"><select class="${"svelte-c15mx9"}"${add_attribute("value", toast.toasterAssociation, 1)}><option value="${"Groom"}" selected>Groom</option><option value="${"Bride"}">Bride</option></select></div></div>
-        <textarea rows="${"7"}" placeholder="${"Message"}" class="${"svelte-c15mx9"}">${toast.toastContent || ""}</textarea>
+	return `<section class="${"propose svelte-1tmojol"}"><div class="${"form svelte-1tmojol"}"><div class="${"header svelte-1tmojol"}"><p class="${"heading svelte-1tmojol"}">Propose a Toast...</p></div>
+        <input type="${"text"}" ${!isLoggedIn ? "disabled" : ""} placeholder="${"Name"}" class="${"svelte-1tmojol"}"${add_attribute("value", toast.toasterName, 1)}>
+        <div class="${"container svelte-1tmojol"}"><div class="${"selectstuff svelte-1tmojol"}"><select ${!isLoggedIn ? "disabled" : ""} class="${"svelte-1tmojol"}"${add_attribute("value", toast.toasterRelationship, 1)}><option value="${"Father"}" selected>Father</option><option value="${"Mother"}">Mother</option><option value="${"Brother"}">Brother</option><option value="${"Sister"}">Sister</option><option value="${"Son"}">Son</option><option value="${"Daughter"}">Daughter</option><option value="${"Relative"}">Relative</option><option value="${"Friend"}">Friend</option></select></div>
+        <div class="${"selectstuff svelte-1tmojol"}">of the</div>
+        <div class="${"selectstuff svelte-1tmojol"}"><select ${!isLoggedIn ? "disabled" : ""} class="${"svelte-1tmojol"}"${add_attribute("value", toast.toasterAssociation, 1)}><option value="${"Groom"}" selected>Groom</option><option value="${"Bride"}">Bride</option></select></div></div>
+        <textarea ${!isLoggedIn ? "disabled" : ""} rows="${"7"}" placeholder="${"Message"}" class="${"svelte-1tmojol"}">${toast.toastContent || ""}</textarea>
         <br>
-        <button class="${"svelte-c15mx9"}">Propose!</button></div>
+        ${!isLoggedIn
+	? `<button class="${"facebook-button svelte-1tmojol"}">Login with Facebook to Propose</button>`
+	: ``}
+        ${isLoggedIn
+	? `<button class="${"propose-button svelte-1tmojol"}">Propose!</button>`
+	: ``}</div>
 </section>`;
 });
 
@@ -1451,7 +972,7 @@ var serialize_1 = serialize;
  * @private
  */
 
-var decode$1 = decodeURIComponent;
+var decode = decodeURIComponent;
 var encode = encodeURIComponent;
 var pairSplitRegExp = /; */;
 
@@ -1485,7 +1006,7 @@ function parse(str, options) {
   var obj = {};
   var opt = options || {};
   var pairs = str.split(pairSplitRegExp);
-  var dec = opt.decode || decode$1;
+  var dec = opt.decode || decode;
 
   for (var i = 0; i < pairs.length; i++) {
     var pair = pairs[i];

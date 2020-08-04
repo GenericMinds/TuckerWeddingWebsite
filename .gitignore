@@ -1,12 +1,5 @@
 /node_modules/
 .DS_STORE
-client-1.local.crt
-client-1.local.csr
-client-1.local.key
-rootSSL.key
-rootSSL.pem
-rootSSL.srl
-.elasticbeanstalk
 
 #Local Database Credentials
 secret.txt

@@ -1,1 +1,1 @@
-{"bundler":"rollup","shimport":"1.0.1","assets":{"main":"client.bd2b4fbf.js"},"css":{"main":null,"chunks":{"index.svelte":["index.11e8ed00.css"],"auth/facebook-logout.svelte":[],"auth/facebook-login.svelte":[]}}}
+{"bundler":"rollup","shimport":"1.0.1","assets":{"main":"client.54b98511.js"},"css":{"main":null,"chunks":{"index.svelte":["index.668a81db.css"],"auth/facebook-logout.svelte":[],"auth/facebook-login.svelte":[]}}}

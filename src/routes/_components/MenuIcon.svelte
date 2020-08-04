@@ -4,6 +4,7 @@
     let isOpen: boolean = false;
 
     function handleToggle(): void {
+        console.log('hi')
         isOpen = !isOpen;
     }
 
@@ -16,6 +17,7 @@
         animateScroll.scrollTo({element: '.' + section});
     }
 </script>
+
 <img on:click={handleToggle} src='./134216-32.png' alt='hamburger menu'/>     
 
 {#if isOpen}
