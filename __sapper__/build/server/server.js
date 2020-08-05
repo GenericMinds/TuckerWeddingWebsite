@@ -17,10 +17,10 @@ var zlib = _interopDefault(require('zlib'));
 
 var sql = require("mssql");
 const config = {
-    server: 'aa1g1gmfozz0sat.cadofo8p7xec.us-east-1.rds.amazonaws.com',
-    user: 'admin',
-    password: 'Beanie9!',
-    port: 1433,
+    server: process.env.RDS_HOSTNAME,
+    user: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD,
+    port: parseInt(process.env.RDS_PORT),
     database: 'TuckerWeddingWebsite'
 };
 async function get(req, res) {
@@ -50,7 +50,28 @@ async function post(req, res) {
         request.input('toasterRelationship', sql.VarChar(15), req.body.toast.toasterRelationship);
         request.input('toasterAssociation', sql.VarChar(5), req.body.toast.toasterAssociation);
         request.input('toastContent', sql.VarChar(sql.MAX), req.body.toast.toastContent);
-        request.query("insert into Toast (toasterName, toasterRelationship, toasterAssociation, toastContent) VALUES (@toasterName, @toasterRelationship, @toasterAssociation, @toastContent);", function (err, recordset) {
+        request.input('toasterFacebookId', sql.VarChar(50), req.body.toast.toasterFacebookId);
+        request.query("insert into Toast (toasterName, toasterRelationship, toasterAssociation, toastContent, toasterFacebookId) VALUES (@toasterName, @toasterRelationship, @toasterAssociation, @toastContent, @toasterfacebookId);", function (err, recordset) {
+            if (err) {
+                throw err;
+            }
+            res.end(JSON.stringify(recordset));
+        });
+    });
+}
+async function put(req, res) {
+    sql.connect(config, function (err) {
+        if (err) {
+            throw err;
+        }
+        var request = new sql.Request();
+        request.input('toastId', sql.Int, req.body.toast.toastId);
+        request.input('toasterName', sql.VarChar(50), req.body.toast.toasterName);
+        request.input('toasterRelationship', sql.VarChar(15), req.body.toast.toasterRelationship);
+        request.input('toasterAssociation', sql.VarChar(5), req.body.toast.toasterAssociation);
+        request.input('toastContent', sql.VarChar(sql.MAX), req.body.toast.toastContent);
+        request.input('toasterFacebookId', sql.VarChar(50), req.body.toast.toasterFacebookId);
+        request.query("update Toast set toasterName = @toasterName, toasterRelationship = @toasterRelationship, toasterAssociation = @toasterAssociation, toastContent = @toastContent, toasterFacebookId = @toasterFacebookId where toastId = @toastId;", function (err, recordset) {
             if (err) {
                 throw err;
             }
@@ -62,7 +83,8 @@ async function post(req, res) {
 var route_0 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     get: get,
-    post: post
+    post: post,
+    put: put
 });
 
 function noop() { }
@@ -193,11 +215,14 @@ function add_attribute(name, value, boolean) {
 
 const css = {
 	code: "@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';div.svelte-1k30h7c,ul.svelte-1k30h7c{position:absolute;top:40px;right:0;width:100vw;height:100vh;background-color:#375637;color:#ddd499;text-align:center;font-size:40px;overflow:hidden;padding:0;margin:0;list-style:none;z-index:999}li.svelte-1k30h7c{height:10vh;padding-top:3vh}img.svelte-1k30h7c{position:fixed;right:30px;top:3px;height:32px;width:32px;z-index:999;margin:0}img.svelte-1k30h7c:hover,li.svelte-1k30h7c:hover{cursor:pointer}",
-	map: "{\"version\":3,\"file\":\"MenuIcon.svelte\",\"sources\":[\"MenuIcon.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>import Overlay from 'svelte-overlay';\\r\\nimport * as animateScroll from 'svelte-scrollto';\\r\\nlet isOpen = false;\\r\\nfunction handleToggle() {\\r\\n    console.log('hi');\\r\\n    isOpen = !isOpen;\\r\\n}\\r\\nfunction handleSectionSelection(section) {\\r\\n    isOpen = false;\\r\\n    if (section == 'home') {\\r\\n        animateScroll.scrollToTop();\\r\\n        return;\\r\\n    }\\r\\n    animateScroll.scrollTo({ element: '.' + section });\\r\\n}\\r\\n</script>\\r\\n\\r\\n<img on:click={handleToggle} src='./134216-32.png' alt='hamburger menu'/>     \\r\\n\\r\\n{#if isOpen}\\r\\n    <div>\\r\\n        <ul>\\r\\n            <li class='home' on:click={() => {handleSectionSelection('home')}}>Home</li>\\r\\n            <li on:click={() => {handleSectionSelection('story')}}>Our Story</li>\\r\\n            <li on:click={() => {handleSectionSelection('clan')}}>Our Clan</li>\\r\\n            <li on:click={() => {handleSectionSelection('toasts')}}>Toasts</li>\\r\\n            <li on:click={() => {handleSectionSelection('propose')}}>Propose a Toast</li>\\r\\n            <li on:click={() => {handleSectionSelection('blended')}}>Blended Family</li>\\r\\n        </ul>\\r\\n    </div>\\r\\n{/if}\\r\\n\\r\\n<style lang='scss'>@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';\\ndiv, ul {\\n  position: absolute;\\n  top: 40px;\\n  right: 0;\\n  width: 100vw;\\n  height: 100vh;\\n  background-color: #375637;\\n  color: #ddd499;\\n  text-align: center;\\n  font-size: 40px;\\n  overflow: hidden;\\n  padding: 0;\\n  margin: 0;\\n  list-style: none;\\n  z-index: 999; }\\n\\nli {\\n  height: 10vh;\\n  padding-top: 3vh; }\\n\\nimg {\\n  position: fixed;\\n  right: 30px;\\n  top: 3px;\\n  height: 32px;\\n  width: 32px;\\n  z-index: 999;\\n  margin: 0; }\\n\\nimg:hover, li:hover {\\n  cursor: pointer; }</style>\"],\"names\":[],\"mappings\":\"AAgCmB,QAAQ,wDAAwD,CAAC,AACpF,kBAAG,CAAE,EAAE,eAAC,CAAC,AACP,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,IAAI,CACT,KAAK,CAAE,CAAC,CACR,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,KAAK,CACb,gBAAgB,CAAE,OAAO,CACzB,KAAK,CAAE,OAAO,CACd,UAAU,CAAE,MAAM,CAClB,SAAS,CAAE,IAAI,CACf,QAAQ,CAAE,MAAM,CAChB,OAAO,CAAE,CAAC,CACV,MAAM,CAAE,CAAC,CACT,UAAU,CAAE,IAAI,CAChB,OAAO,CAAE,GAAG,AAAE,CAAC,AAEjB,EAAE,eAAC,CAAC,AACF,MAAM,CAAE,IAAI,CACZ,WAAW,CAAE,GAAG,AAAE,CAAC,AAErB,GAAG,eAAC,CAAC,AACH,QAAQ,CAAE,KAAK,CACf,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,GAAG,CACR,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,OAAO,CAAE,GAAG,CACZ,MAAM,CAAE,CAAC,AAAE,CAAC,AAEd,kBAAG,MAAM,CAAE,iBAAE,MAAM,AAAC,CAAC,AACnB,MAAM,CAAE,OAAO,AAAE,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"MenuIcon.svelte\",\"sources\":[\"MenuIcon.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>import Overlay from 'svelte-overlay';\\r\\nimport * as animateScroll from 'svelte-scrollto';\\r\\nimport { createEventDispatcher } from 'svelte';\\r\\nconst dispatch = createEventDispatcher();\\r\\nexport let isLoggedIn;\\r\\nlet isOpen = false;\\r\\nfunction logOut() {\\r\\n    dispatch(\\\"toggleLogIn\\\");\\r\\n    handleSectionSelection('home');\\r\\n}\\r\\nfunction handleToggle() {\\r\\n    isOpen = !isOpen;\\r\\n}\\r\\nfunction handleSectionSelection(section) {\\r\\n    isOpen = false;\\r\\n    if (section == 'home') {\\r\\n        animateScroll.scrollToTop();\\r\\n        return;\\r\\n    }\\r\\n    animateScroll.scrollTo({ element: '.' + section });\\r\\n}\\r\\n</script>\\r\\n\\r\\n<img on:click={handleToggle} src='./134216-32.png' alt='hamburger menu'/>     \\r\\n\\r\\n{#if isOpen}\\r\\n    <div>\\r\\n        <ul>\\r\\n            <li class='home' on:click={() => {handleSectionSelection('home')}}>Home</li>\\r\\n            <li on:click={() => {handleSectionSelection('story')}}>Our Story</li>\\r\\n            <li on:click={() => {handleSectionSelection('clan')}}>Our Clan</li>\\r\\n            <li on:click={() => {handleSectionSelection('toasts')}}>Toasts</li>\\r\\n            <li on:click={() => {handleSectionSelection('propose')}}>Propose a Toast</li>\\r\\n            <li on:click={() => {handleSectionSelection('blended')}}>Blended Family</li>\\r\\n            {#if isLoggedIn}\\r\\n                <li on:click={logOut}>Log out</li>\\r\\n            {/if}\\r\\n        </ul>\\r\\n    </div>\\r\\n{/if}\\r\\n\\r\\n<style lang='scss'>@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';\\ndiv, ul {\\n  position: absolute;\\n  top: 40px;\\n  right: 0;\\n  width: 100vw;\\n  height: 100vh;\\n  background-color: #375637;\\n  color: #ddd499;\\n  text-align: center;\\n  font-size: 40px;\\n  overflow: hidden;\\n  padding: 0;\\n  margin: 0;\\n  list-style: none;\\n  z-index: 999; }\\n\\nli {\\n  height: 10vh;\\n  padding-top: 3vh; }\\n\\nimg {\\n  position: fixed;\\n  right: 30px;\\n  top: 3px;\\n  height: 32px;\\n  width: 32px;\\n  z-index: 999;\\n  margin: 0; }\\n\\nimg:hover, li:hover {\\n  cursor: pointer; }</style>\"],\"names\":[],\"mappings\":\"AAyCmB,QAAQ,wDAAwD,CAAC,AACpF,kBAAG,CAAE,EAAE,eAAC,CAAC,AACP,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,IAAI,CACT,KAAK,CAAE,CAAC,CACR,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,KAAK,CACb,gBAAgB,CAAE,OAAO,CACzB,KAAK,CAAE,OAAO,CACd,UAAU,CAAE,MAAM,CAClB,SAAS,CAAE,IAAI,CACf,QAAQ,CAAE,MAAM,CAChB,OAAO,CAAE,CAAC,CACV,MAAM,CAAE,CAAC,CACT,UAAU,CAAE,IAAI,CAChB,OAAO,CAAE,GAAG,AAAE,CAAC,AAEjB,EAAE,eAAC,CAAC,AACF,MAAM,CAAE,IAAI,CACZ,WAAW,CAAE,GAAG,AAAE,CAAC,AAErB,GAAG,eAAC,CAAC,AACH,QAAQ,CAAE,KAAK,CACf,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,GAAG,CACR,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,OAAO,CAAE,GAAG,CACZ,MAAM,CAAE,CAAC,AAAE,CAAC,AAEd,kBAAG,MAAM,CAAE,iBAAE,MAAM,AAAC,CAAC,AACnB,MAAM,CAAE,OAAO,AAAE,CAAC\"}"
 };
 
 const MenuIcon = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
+	const dispatch = createEventDispatcher();
+	let { isLoggedIn } = $$props;
 
+	if ($$props.isLoggedIn === void 0 && $$bindings.isLoggedIn && isLoggedIn !== void 0) $$bindings.isLoggedIn(isLoggedIn);
 	$$result.css.add(css);
 
 	return `<img src="${"./134216-32.png"}" alt="${"hamburger menu"}" class="${"svelte-1k30h7c"}">     
@@ -209,17 +234,21 @@ ${ ``}`;
 
 const css$1 = {
 	code: "div.svelte-10nrjo8{background-color:#375637;height:40px;line-height:40px;padding:0}p.svelte-10nrjo8{display:initial;color:#ddd499;font-weight:bold;font-size:20px}",
-	map: "{\"version\":3,\"file\":\"SectionHeader.svelte\",\"sources\":[\"SectionHeader.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>import MenuIcon from './MenuIcon.svelte';\\r\\nimport * as queryString from 'query-string';\\r\\nexport let isNav;\\r\\n</script>\\r\\n\\r\\n<div>\\r\\n    {#if isNav === true}\\r\\n        <p>#blameitonfate</p>\\r\\n        <MenuIcon />\\r\\n    {/if}\\r\\n</div>\\r\\n\\r\\n<style lang='scss'>div {\\n  background-color: #375637;\\n  height: 40px;\\n  line-height: 40px;\\n  padding: 0; }\\n\\np {\\n  display: initial;\\n  color: #ddd499;\\n  font-weight: bold;\\n  font-size: 20px; }</style>\"],\"names\":[],\"mappings\":\"AAYmB,GAAG,eAAC,CAAC,AACtB,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,IAAI,CACZ,WAAW,CAAE,IAAI,CACjB,OAAO,CAAE,CAAC,AAAE,CAAC,AAEf,CAAC,eAAC,CAAC,AACD,OAAO,CAAE,OAAO,CAChB,KAAK,CAAE,OAAO,CACd,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"SectionHeader.svelte\",\"sources\":[\"SectionHeader.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>import MenuIcon from './MenuIcon.svelte';\\r\\nimport * as queryString from 'query-string';\\r\\nimport { createEventDispatcher } from 'svelte';\\r\\nconst dispatch = createEventDispatcher();\\r\\nexport let isLoggedIn;\\r\\nexport let isNav;\\r\\nfunction forward() {\\r\\n    dispatch('toggleLogIn');\\r\\n}\\r\\n</script>\\r\\n\\r\\n<div>\\r\\n    {#if isNav === true}\\r\\n        <p>#blameitonfate</p>\\r\\n        <MenuIcon isLoggedIn={isLoggedIn} on:toggleLogIn={forward}/>\\r\\n    {/if}\\r\\n</div>\\r\\n\\r\\n<style lang='scss'>div {\\n  background-color: #375637;\\n  height: 40px;\\n  line-height: 40px;\\n  padding: 0; }\\n\\np {\\n  display: initial;\\n  color: #ddd499;\\n  font-weight: bold;\\n  font-size: 20px; }</style>\"],\"names\":[],\"mappings\":\"AAkBmB,GAAG,eAAC,CAAC,AACtB,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,IAAI,CACZ,WAAW,CAAE,IAAI,CACjB,OAAO,CAAE,CAAC,AAAE,CAAC,AAEf,CAAC,eAAC,CAAC,AACD,OAAO,CAAE,OAAO,CAChB,KAAK,CAAE,OAAO,CACd,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC\"}"
 };
 
 const SectionHeader = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
+	const dispatch = createEventDispatcher();
+	let { isLoggedIn } = $$props;
 	let { isNav } = $$props;
+
+	if ($$props.isLoggedIn === void 0 && $$bindings.isLoggedIn && isLoggedIn !== void 0) $$bindings.isLoggedIn(isLoggedIn);
 	if ($$props.isNav === void 0 && $$bindings.isNav && isNav !== void 0) $$bindings.isNav(isNav);
 	$$result.css.add(css$1);
 
 	return `<div class="${"svelte-10nrjo8"}">${isNav === true
 	? `<p class="${"svelte-10nrjo8"}">#blameitonfate</p>
-        ${validate_component(MenuIcon, "MenuIcon").$$render($$result, {}, {}, {})}`
+        ${validate_component(MenuIcon, "MenuIcon").$$render($$result, { isLoggedIn }, {}, {})}`
 	: ``}
 </div>`;
 });
@@ -485,7 +514,7 @@ const ChevronRightIcon = create_ssr_component(($$result, $$props, $$bindings, $$
 
 const css$5 = {
 	code: ".headingDecorator.svelte-696ytv.svelte-696ytv{width:50%;margin-top:-20px}.demo.svelte-696ytv.svelte-696ytv{margin:0 auto;height:350px;width:350px}.control.svelte-696ytv.svelte-696ytv svg{width:100%;height:100%;color:#fff;border:2px solid #fff;border-radius:32px}.slide-content.svelte-696ytv.svelte-696ytv{border:1px solid #eee;display:flex;flex-direction:column;height:350px;background-color:beige}.slide-content.svelte-696ytv header.svelte-696ytv{flex:1;background-size:contain;background-repeat:no-repeat;background-position:50% 50%;background-color:#375637;border:3px solid #ded599}",
-	map: "{\"version\":3,\"file\":\"Clan.svelte\",\"sources\":[\"Clan.svelte\"],\"sourcesContent\":[\"<script>\\r\\n\\timport Carousel from '@beyonk/svelte-carousel';\\r\\n\\timport { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons'\\r\\n\\tlet carousels = [\\r\\n\\t\\t{\\r\\n\\t\\t\\tperPage: 1\\r\\n\\t\\t},\\r\\n\\t\\t{\\r\\n\\t\\t\\tperPage: 1,\\r\\n\\t\\t\\tcontrols: false\\r\\n\\t\\t}\\r\\n\\t]\\r\\n\\tfunction changed (event) {\\r\\n\\t\\tconsole.log(event.detail.currentSlide)\\r\\n\\t}\\r\\n</script>\\r\\n\\r\\n<section class='clan'>\\r\\n    <h1>Our Clan</h1>\\r\\n    <img alt='Heading Decoration' class='headingDecorator' src='./HeadingDecorator.png'/>\\r\\n</section>\\r\\n<div class=\\\"demo\\\">\\r\\n    {#each carousels as carousel}\\r\\n    <Carousel on:change={changed} {...carousel} dots={false}>\\r\\n        <span class=\\\"control\\\" slot=\\\"left-control\\\">\\r\\n            <ChevronLeftIcon />\\r\\n        </span>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/GrandchildrenWithBarb.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Cheese.jpg)\\\">\\t\\t\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/MovingDay.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/FireAndIce.jpg)\\\">\\t\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/WithLiam.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Lake.jpg)\\\">\\t\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/WithNora.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Masks.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/CarenaAndDog.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Masks2.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\t\\t\\t\\t\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/RhiannahAndAdam.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/SportsBar.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\t\\t\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/SummerAndClan.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/StPatricksDay.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/ToryAndCarenaAndBri.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/ToryAndClan.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/AustinAndClan.jpg)\\\">\\r\\n            </header>\\r\\n        </div>        \\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Grandchildren.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/ShannonAndClan.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/WithRhiannah.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/LisaAndAdam.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/NanaAndPoppop.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <span class=\\\"control\\\" slot=\\\"right-control\\\">\\r\\n            <ChevronRightIcon />\\r\\n        </span>\\r\\n    </Carousel>\\r\\n    <br/>\\r\\n    <br/>\\r\\n    {/each}\\r\\n</div>\\r\\n<style lang='scss'>.headingDecorator {\\n  width: 50%;\\n  margin-top: -20px; }\\n\\n.demo {\\n  margin: 0 auto;\\n  height: 350px;\\n  width: 350px; }\\n\\n.control :global(svg) {\\n  width: 100%;\\n  height: 100%;\\n  color: #fff;\\n  border: 2px solid #fff;\\n  border-radius: 32px; }\\n\\n.slide-content {\\n  border: 1px solid #eee;\\n  display: flex;\\n  flex-direction: column;\\n  height: 350px;\\n  background-color: beige; }\\n\\n.slide-content header {\\n  flex: 1;\\n  background-size: contain;\\n  background-repeat: no-repeat;\\n  background-position: 50% 50%;\\n  background-color: #375637;\\n  border: 3px solid #ded599; }</style>\\r\\n\\r\\n\"],\"names\":[],\"mappings\":\"AA2HmB,iBAAiB,4BAAC,CAAC,AACpC,KAAK,CAAE,GAAG,CACV,UAAU,CAAE,KAAK,AAAE,CAAC,AAEtB,KAAK,4BAAC,CAAC,AACL,MAAM,CAAE,CAAC,CAAC,IAAI,CACd,MAAM,CAAE,KAAK,CACb,KAAK,CAAE,KAAK,AAAE,CAAC,AAEjB,oCAAQ,CAAC,AAAQ,GAAG,AAAE,CAAC,AACrB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,GAAG,CAAC,KAAK,CAAC,IAAI,CACtB,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,cAAc,4BAAC,CAAC,AACd,MAAM,CAAE,GAAG,CAAC,KAAK,CAAC,IAAI,CACtB,OAAO,CAAE,IAAI,CACb,cAAc,CAAE,MAAM,CACtB,MAAM,CAAE,KAAK,CACb,gBAAgB,CAAE,KAAK,AAAE,CAAC,AAE5B,4BAAc,CAAC,MAAM,cAAC,CAAC,AACrB,IAAI,CAAE,CAAC,CACP,eAAe,CAAE,OAAO,CACxB,iBAAiB,CAAE,SAAS,CAC5B,mBAAmB,CAAE,GAAG,CAAC,GAAG,CAC5B,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,GAAG,CAAC,KAAK,CAAC,OAAO,AAAE,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"Clan.svelte\",\"sources\":[\"Clan.svelte\"],\"sourcesContent\":[\"<script>\\r\\n\\timport Carousel from '@beyonk/svelte-carousel';\\r\\n\\timport { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons'\\r\\n\\tlet carousels = [\\r\\n\\t\\t{\\r\\n\\t\\t\\tperPage: 1\\r\\n\\t\\t},\\r\\n\\t\\t{\\r\\n\\t\\t\\tperPage: 1,\\r\\n\\t\\t\\tcontrols: false\\r\\n\\t\\t}\\r\\n\\t]\\r\\n</script>\\r\\n\\r\\n<section class='clan'>\\r\\n    <h1>Our Clan</h1>\\r\\n    <img alt='Heading Decoration' class='headingDecorator' src='./HeadingDecorator.png'/>\\r\\n</section>\\r\\n<div class=\\\"demo\\\">\\r\\n    {#each carousels as carousel}\\r\\n    <Carousel {...carousel} dots={false}>\\r\\n        <span class=\\\"control\\\" slot=\\\"left-control\\\">\\r\\n            <ChevronLeftIcon />\\r\\n        </span>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/GrandchildrenWithBarb.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Cheese.jpg)\\\">\\t\\t\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/MovingDay.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/FireAndIce.jpg)\\\">\\t\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/WithLiam.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Lake.jpg)\\\">\\t\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/WithNora.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Masks.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/CarenaAndDog.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Masks2.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\t\\t\\t\\t\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/RhiannahAndAdam.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/SportsBar.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\t\\t\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/SummerAndClan.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/StPatricksDay.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/ToryAndCarenaAndBri.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/ToryAndClan.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/AustinAndClan.jpg)\\\">\\r\\n            </header>\\r\\n        </div>        \\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Grandchildren.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/ShannonAndClan.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/WithRhiannah.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/LisaAndAdam.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <div class=\\\"slide-content\\\">\\r\\n            <header style=\\\"background-image: url(https://lisaandtimpictures.s3.amazonaws.com/NanaAndPoppop.jpg)\\\">\\r\\n            </header>\\r\\n        </div>\\r\\n        <span class=\\\"control\\\" slot=\\\"right-control\\\">\\r\\n            <ChevronRightIcon />\\r\\n        </span>\\r\\n    </Carousel>\\r\\n    <br/>\\r\\n    <br/>\\r\\n    {/each}\\r\\n</div>\\r\\n<style lang='scss'>.headingDecorator {\\n  width: 50%;\\n  margin-top: -20px; }\\n\\n.demo {\\n  margin: 0 auto;\\n  height: 350px;\\n  width: 350px; }\\n\\n.control :global(svg) {\\n  width: 100%;\\n  height: 100%;\\n  color: #fff;\\n  border: 2px solid #fff;\\n  border-radius: 32px; }\\n\\n.slide-content {\\n  border: 1px solid #eee;\\n  display: flex;\\n  flex-direction: column;\\n  height: 350px;\\n  background-color: beige; }\\n\\n.slide-content header {\\n  flex: 1;\\n  background-size: contain;\\n  background-repeat: no-repeat;\\n  background-position: 50% 50%;\\n  background-color: #375637;\\n  border: 3px solid #ded599; }</style>\\r\\n\\r\\n\"],\"names\":[],\"mappings\":\"AAwHmB,iBAAiB,4BAAC,CAAC,AACpC,KAAK,CAAE,GAAG,CACV,UAAU,CAAE,KAAK,AAAE,CAAC,AAEtB,KAAK,4BAAC,CAAC,AACL,MAAM,CAAE,CAAC,CAAC,IAAI,CACd,MAAM,CAAE,KAAK,CACb,KAAK,CAAE,KAAK,AAAE,CAAC,AAEjB,oCAAQ,CAAC,AAAQ,GAAG,AAAE,CAAC,AACrB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,GAAG,CAAC,KAAK,CAAC,IAAI,CACtB,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,cAAc,4BAAC,CAAC,AACd,MAAM,CAAE,GAAG,CAAC,KAAK,CAAC,IAAI,CACtB,OAAO,CAAE,IAAI,CACb,cAAc,CAAE,MAAM,CACtB,MAAM,CAAE,KAAK,CACb,gBAAgB,CAAE,KAAK,AAAE,CAAC,AAE5B,4BAAc,CAAC,MAAM,cAAC,CAAC,AACrB,IAAI,CAAE,CAAC,CACP,eAAe,CAAE,OAAO,CACxB,iBAAiB,CAAE,SAAS,CAC5B,mBAAmB,CAAE,GAAG,CAAC,GAAG,CAC5B,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,GAAG,CAAC,KAAK,CAAC,OAAO,AAAE,CAAC\"}"
 };
 
 const Clan = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
@@ -528,11 +557,64 @@ const Clan = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
 </div>`;
 });
 
-/* src\routes\_components\Toasts.svelte generated by Svelte v3.23.2 */
+/* src\routes\_components\ToastForm.svelte generated by Svelte v3.23.2 */
 
-const Toasts = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
+const css$6 = {
+	code: "section.svelte-1tmojol{width:100%;margin-bottom:40px}div.svelte-1tmojol{padding:0}.form.svelte-1tmojol{background-color:#ded599;height:100%;margin:20px;border-radius:20px}.header.svelte-1tmojol{border-radius:20px 20px 0 0;height:75px;background-color:#375637;position:relative}.heading.svelte-1tmojol{font-size:32px;margin:0;position:absolute;top:50%;transform:translate(0, -50%);padding-left:10px;color:#ddd499}input.svelte-1tmojol,textarea.svelte-1tmojol{width:80%;padding-left:10px;padding-right:10px;line-height:40px;font-size:20px}input.svelte-1tmojol{margin-top:25px}textarea.svelte-1tmojol{margin-bottom:25px}.selectstuff.svelte-1tmojol{display:table-cell;line-height:40px;font-size:20px}.container.svelte-1tmojol{display:table;width:100%;table-layout:fixed}select.svelte-1tmojol{width:65px}button.svelte-1tmojol{border-radius:5px;border:none;color:#ddd499;padding:6px 32px;text-align:center;text-decoration:none;margin-bottom:20px}.facebook-button.svelte-1tmojol{background-color:#3578e5}.propose-button.svelte-1tmojol{background-color:#375637}",
+	map: "{\"version\":3,\"file\":\"ToastForm.svelte\",\"sources\":[\"ToastForm.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>;\\r\\nimport { createEventDispatcher } from 'svelte';\\r\\nconst dispatch = createEventDispatcher();\\r\\nexport let isLoggedIn;\\r\\nexport let facebookUserId;\\r\\nexport let toast;\\r\\nexport let isEdittingToast;\\r\\nasync function proposeToast() {\\r\\n    if (toast.toasterName == '' || toast.toastContent == '') {\\r\\n        return;\\r\\n    }\\r\\n    toast.toasterFacebookId = facebookUserId;\\r\\n    await fetch('/api/toastController', {\\r\\n        method: 'POST',\\r\\n        body: JSON.stringify({ toast }),\\r\\n        headers: { \\\"Content-type\\\": \\\"application/json\\\" }\\r\\n    }).then(response => window.location.reload());\\r\\n}\\r\\n;\\r\\nasync function updateToast() {\\r\\n    if (toast.toasterName == '' || toast.toastContent == '') {\\r\\n        return;\\r\\n    }\\r\\n    await fetch('/api/toastController', {\\r\\n        method: 'PUT',\\r\\n        body: JSON.stringify({ toast }),\\r\\n        headers: { \\\"Content-type\\\": \\\"application/json\\\" }\\r\\n    }).then(response => window.location.reload());\\r\\n}\\r\\nfunction logIn() {\\r\\n    dispatch(\\\"toggleLogIn\\\");\\r\\n}\\r\\n</script>\\r\\n\\r\\n<section class='propose'>\\r\\n    <div class='form'>\\r\\n        <div class='header'>\\r\\n            {#if isEdittingToast}\\r\\n                <p class='heading'>Editting Toast...</p>\\r\\n            {:else}\\r\\n                <p class='heading'>Propose a Toast...</p>\\r\\n            {/if}\\r\\n        </div>\\r\\n        <input type='text' disabled={!isLoggedIn} placeholder='Name' bind:value={toast.toasterName}/>\\r\\n        <div class='container'>\\r\\n        <div class='selectstuff'>\\r\\n            <select disabled={!isLoggedIn} bind:value={toast.toasterRelationship}>\\r\\n                <option value='Father' selected>Father</option>\\r\\n                <option value='Mother'>Mother</option>\\r\\n                <option value='Brother'>Brother</option>\\r\\n                <option value='Sister'>Sister</option>\\r\\n                <option value='Son'>Son</option>\\r\\n                <option value='Daughter'>Daughter</option>\\r\\n                <option value='Relative'>Relative</option>\\r\\n                <option value='Friend'>Friend</option>\\r\\n            </select>\\r\\n        </div>\\r\\n        <div class='selectstuff'>of the</div>\\r\\n        <div class='selectstuff'>\\r\\n            <select disabled={!isLoggedIn} bind:value={toast.toasterAssociation}>\\r\\n                <option value='Groom' selected>Groom</option>\\r\\n                <option value='Bride'>Bride</option>\\r\\n            </select>\\r\\n        </div>\\r\\n        </div>\\r\\n        <textarea disabled={!isLoggedIn} bind:value={toast.toastContent} rows='7' placeholder='Message'></textarea>\\r\\n        <br/>\\r\\n        {#if !isLoggedIn}\\r\\n            <button class='facebook-button' on:click={logIn}>Log in with Facebook to Propose</button>\\r\\n        {/if}\\r\\n        {#if isLoggedIn}\\r\\n            {#if isEdittingToast}\\r\\n                <button class='propose-button' on:click={updateToast}>Update!</button>\\r\\n            {:else}\\r\\n                <button class='propose-button' on:click={proposeToast}>Propose!</button>\\r\\n            {/if}\\r\\n        {/if}\\r\\n    </div>\\r\\n</section>\\r\\n\\r\\n<style lang='scss'>section {\\n  width: 100%;\\n  margin-bottom: 40px; }\\n\\ndiv {\\n  padding: 0; }\\n\\n.form {\\n  background-color: #ded599;\\n  height: 100%;\\n  margin: 20px;\\n  border-radius: 20px; }\\n\\n.header {\\n  border-radius: 20px 20px 0 0;\\n  height: 75px;\\n  background-color: #375637;\\n  position: relative; }\\n\\n.heading {\\n  font-size: 32px;\\n  margin: 0;\\n  position: absolute;\\n  top: 50%;\\n  transform: translate(0, -50%);\\n  padding-left: 10px;\\n  color: #ddd499; }\\n\\ninput, textarea {\\n  width: 80%;\\n  padding-left: 10px;\\n  padding-right: 10px;\\n  line-height: 40px;\\n  font-size: 20px; }\\n\\ninput {\\n  margin-top: 25px; }\\n\\ntextarea {\\n  margin-bottom: 25px; }\\n\\n.selectstuff {\\n  display: table-cell;\\n  line-height: 40px;\\n  font-size: 20px; }\\n\\n.container {\\n  display: table;\\n  width: 100%;\\n  table-layout: fixed; }\\n\\nselect {\\n  width: 65px; }\\n\\nbutton {\\n  border-radius: 5px;\\n  border: none;\\n  color: #ddd499;\\n  padding: 6px 32px;\\n  text-align: center;\\n  text-decoration: none;\\n  margin-bottom: 20px; }\\n\\n.facebook-button {\\n  background-color: #3578e5; }\\n\\n.propose-button {\\n  background-color: #375637; }</style>\"],\"names\":[],\"mappings\":\"AAgFmB,OAAO,eAAC,CAAC,AAC1B,KAAK,CAAE,IAAI,CACX,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,GAAG,eAAC,CAAC,AACH,OAAO,CAAE,CAAC,AAAE,CAAC,AAEf,KAAK,eAAC,CAAC,AACL,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,IAAI,CACZ,MAAM,CAAE,IAAI,CACZ,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,OAAO,eAAC,CAAC,AACP,aAAa,CAAE,IAAI,CAAC,IAAI,CAAC,CAAC,CAAC,CAAC,CAC5B,MAAM,CAAE,IAAI,CACZ,gBAAgB,CAAE,OAAO,CACzB,QAAQ,CAAE,QAAQ,AAAE,CAAC,AAEvB,QAAQ,eAAC,CAAC,AACR,SAAS,CAAE,IAAI,CACf,MAAM,CAAE,CAAC,CACT,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,GAAG,CACR,SAAS,CAAE,UAAU,CAAC,CAAC,CAAC,IAAI,CAAC,CAC7B,YAAY,CAAE,IAAI,CAClB,KAAK,CAAE,OAAO,AAAE,CAAC,AAEnB,oBAAK,CAAE,QAAQ,eAAC,CAAC,AACf,KAAK,CAAE,GAAG,CACV,YAAY,CAAE,IAAI,CAClB,aAAa,CAAE,IAAI,CACnB,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC,AAEpB,KAAK,eAAC,CAAC,AACL,UAAU,CAAE,IAAI,AAAE,CAAC,AAErB,QAAQ,eAAC,CAAC,AACR,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,YAAY,eAAC,CAAC,AACZ,OAAO,CAAE,UAAU,CACnB,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC,AAEpB,UAAU,eAAC,CAAC,AACV,OAAO,CAAE,KAAK,CACd,KAAK,CAAE,IAAI,CACX,YAAY,CAAE,KAAK,AAAE,CAAC,AAExB,MAAM,eAAC,CAAC,AACN,KAAK,CAAE,IAAI,AAAE,CAAC,AAEhB,MAAM,eAAC,CAAC,AACN,aAAa,CAAE,GAAG,CAClB,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,OAAO,CACd,OAAO,CAAE,GAAG,CAAC,IAAI,CACjB,UAAU,CAAE,MAAM,CAClB,eAAe,CAAE,IAAI,CACrB,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,gBAAgB,eAAC,CAAC,AAChB,gBAAgB,CAAE,OAAO,AAAE,CAAC,AAE9B,eAAe,eAAC,CAAC,AACf,gBAAgB,CAAE,OAAO,AAAE,CAAC\"}"
+};
+
+const ToastForm = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
 	
+	const dispatch = createEventDispatcher();
+	let { isLoggedIn } = $$props;
+	let { facebookUserId } = $$props;
+	let { toast } = $$props;
+	let { isEdittingToast } = $$props;
+
+	if ($$props.isLoggedIn === void 0 && $$bindings.isLoggedIn && isLoggedIn !== void 0) $$bindings.isLoggedIn(isLoggedIn);
+	if ($$props.facebookUserId === void 0 && $$bindings.facebookUserId && facebookUserId !== void 0) $$bindings.facebookUserId(facebookUserId);
+	if ($$props.toast === void 0 && $$bindings.toast && toast !== void 0) $$bindings.toast(toast);
+	if ($$props.isEdittingToast === void 0 && $$bindings.isEdittingToast && isEdittingToast !== void 0) $$bindings.isEdittingToast(isEdittingToast);
+	$$result.css.add(css$6);
+
+	return `<section class="${"propose svelte-1tmojol"}"><div class="${"form svelte-1tmojol"}"><div class="${"header svelte-1tmojol"}">${isEdittingToast
+	? `<p class="${"heading svelte-1tmojol"}">Editting Toast...</p>`
+	: `<p class="${"heading svelte-1tmojol"}">Propose a Toast...</p>`}</div>
+        <input type="${"text"}" ${!isLoggedIn ? "disabled" : ""} placeholder="${"Name"}" class="${"svelte-1tmojol"}"${add_attribute("value", toast.toasterName, 1)}>
+        <div class="${"container svelte-1tmojol"}"><div class="${"selectstuff svelte-1tmojol"}"><select ${!isLoggedIn ? "disabled" : ""} class="${"svelte-1tmojol"}"${add_attribute("value", toast.toasterRelationship, 1)}><option value="${"Father"}" selected>Father</option><option value="${"Mother"}">Mother</option><option value="${"Brother"}">Brother</option><option value="${"Sister"}">Sister</option><option value="${"Son"}">Son</option><option value="${"Daughter"}">Daughter</option><option value="${"Relative"}">Relative</option><option value="${"Friend"}">Friend</option></select></div>
+        <div class="${"selectstuff svelte-1tmojol"}">of the</div>
+        <div class="${"selectstuff svelte-1tmojol"}"><select ${!isLoggedIn ? "disabled" : ""} class="${"svelte-1tmojol"}"${add_attribute("value", toast.toasterAssociation, 1)}><option value="${"Groom"}" selected>Groom</option><option value="${"Bride"}">Bride</option></select></div></div>
+        <textarea ${!isLoggedIn ? "disabled" : ""} rows="${"7"}" placeholder="${"Message"}" class="${"svelte-1tmojol"}">${toast.toastContent || ""}</textarea>
+        <br>
+        ${!isLoggedIn
+	? `<button class="${"facebook-button svelte-1tmojol"}">Log in with Facebook to Propose</button>`
+	: ``}
+        ${isLoggedIn
+	? `${isEdittingToast
+		? `<button class="${"propose-button svelte-1tmojol"}">Update!</button>`
+		: `<button class="${"propose-button svelte-1tmojol"}">Propose!</button>`}`
+	: ``}</div>
+</section>`;
+});
+
+/* src\routes\_components\ToastsList.svelte generated by Svelte v3.23.2 */
+
+const css$7 = {
+	code: "button.svelte-cu32kv{border-radius:5px;border:none;background-color:#375637;color:#ddd499;padding:6px 12px;text-align:center;text-decoration:none;margin-bottom:20px}",
+	map: "{\"version\":3,\"file\":\"ToastsList.svelte\",\"sources\":[\"ToastsList.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>import { onMount } from \\\"svelte\\\";\\r\\n;\\r\\nimport { createEventDispatcher } from 'svelte';\\r\\nconst dispatch = createEventDispatcher();\\r\\nlet toasts = [];\\r\\nexport let isLoggedIn;\\r\\nexport let facebookUserId;\\r\\nfunction isAuthor(toasterFacebookId) {\\r\\n    return facebookUserId === toasterFacebookId;\\r\\n}\\r\\nfunction editToast(toast) {\\r\\n    dispatch('editToast', toast);\\r\\n}\\r\\nonMount(async () => {\\r\\n    await fetch('api/toastController', { method: 'GET' })\\r\\n        .then(toasts => toasts.json())\\r\\n        .then(toastsData => {\\r\\n        toasts = toastsData;\\r\\n    });\\r\\n});\\r\\n</script>\\r\\n\\r\\n<section class='toasts'>\\r\\n    <h1>Toasts</h1>\\r\\n    <img alt='Heading Decoration' src='./HeadingDecorator.png'/>\\r\\n    <div>\\r\\n        {#each toasts as toast}\\r\\n            <p>{toast.toastContent}</p>\\r\\n            <p> - {toast.toasterName}, {toast.toasterRelationship} of the {toast.toasterAssociation}\\r\\n            {#if isLoggedIn && isAuthor(toast.toasterFacebookId)}\\r\\n                <button on:click={() => {editToast(toast)}}>Edit</button>\\r\\n            {/if}\\r\\n            </p>\\r\\n            \\r\\n        {/each}\\r\\n    </div>\\r\\n</section>\\r\\n\\r\\n<style>\\r\\nbutton {\\r\\n    border-radius: 5px;\\r\\n    border: none;\\r\\n    background-color: #375637;\\r\\n    color: #ddd499;\\r\\n    padding: 6px 12px;\\r\\n    text-align: center;\\r\\n    text-decoration: none;\\r\\n    margin-bottom: 20px;\\r\\n}\\r\\n\\r\\n</style>\"],\"names\":[],\"mappings\":\"AAuCA,MAAM,cAAC,CAAC,AACJ,aAAa,CAAE,GAAG,CAClB,MAAM,CAAE,IAAI,CACZ,gBAAgB,CAAE,OAAO,CACzB,KAAK,CAAE,OAAO,CACd,OAAO,CAAE,GAAG,CAAC,IAAI,CACjB,UAAU,CAAE,MAAM,CAClB,eAAe,CAAE,IAAI,CACrB,aAAa,CAAE,IAAI,AACvB,CAAC\"}"
+};
+
+const ToastsList = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
+	
+	const dispatch = createEventDispatcher();
 	let toasts = [];
+	let { isLoggedIn } = $$props;
+	let { facebookUserId } = $$props;
+
+	function isAuthor(toasterFacebookId) {
+		return facebookUserId === toasterFacebookId;
+	}
 
 	onMount(async () => {
 		await fetch("api/toastController", { method: "GET" }).then(toasts => toasts.json()).then(toastsData => {
@@ -540,22 +622,66 @@ const Toasts = create_ssr_component(($$result, $$props, $$bindings, $$slots) => 
 		});
 	});
 
+	if ($$props.isLoggedIn === void 0 && $$bindings.isLoggedIn && isLoggedIn !== void 0) $$bindings.isLoggedIn(isLoggedIn);
+	if ($$props.facebookUserId === void 0 && $$bindings.facebookUserId && facebookUserId !== void 0) $$bindings.facebookUserId(facebookUserId);
+	$$result.css.add(css$7);
+
 	return `<section class="${"toasts"}"><h1>Toasts</h1>
     <img alt="${"Heading Decoration"}" src="${"./HeadingDecorator.png"}">
     <div>${each(toasts, toast => `<p>${escape(toast.toastContent)}</p>
-            <p>- ${escape(toast.toasterName)}, ${escape(toast.toasterRelationship)} of the ${escape(toast.toasterAssociation)}</p>`)}</div></section>`;
+            <p>- ${escape(toast.toasterName)}, ${escape(toast.toasterRelationship)} of the ${escape(toast.toasterAssociation)}
+            ${isLoggedIn && isAuthor(toast.toasterFacebookId)
+	? `<button class="${"svelte-cu32kv"}">Edit</button>`
+	: ``}
+            </p>`)}</div>
+</section>`;
 });
 
-/* src\routes\_components\ProposeToastForm.svelte generated by Svelte v3.23.2 */
+/* src\routes\_components\Toasts.svelte generated by Svelte v3.23.2 */
 
-const css$6 = {
-	code: "section.svelte-1tmojol{width:100%;margin-bottom:40px}div.svelte-1tmojol{padding:0}.form.svelte-1tmojol{background-color:#ded599;height:100%;margin:20px;border-radius:20px}.header.svelte-1tmojol{border-radius:20px 20px 0 0;height:75px;background-color:#375637;position:relative}.heading.svelte-1tmojol{font-size:32px;margin:0;position:absolute;top:50%;transform:translate(0, -50%);padding-left:10px;color:#ddd499}input.svelte-1tmojol,textarea.svelte-1tmojol{width:80%;padding-left:10px;padding-right:10px;line-height:40px;font-size:20px}input.svelte-1tmojol{margin-top:25px}textarea.svelte-1tmojol{margin-bottom:25px}.selectstuff.svelte-1tmojol{display:table-cell;line-height:40px;font-size:20px}.container.svelte-1tmojol{display:table;width:100%;table-layout:fixed}select.svelte-1tmojol{width:65px}button.svelte-1tmojol{border-radius:5px;border:none;color:#ddd499;padding:6px 32px;text-align:center;text-decoration:none;margin-bottom:20px}.facebook-button.svelte-1tmojol{background-color:#3578e5}.propose-button.svelte-1tmojol{background-color:#375637}",
-	map: "{\"version\":3,\"file\":\"ProposeToastForm.svelte\",\"sources\":[\"ProposeToastForm.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>;\\r\\nimport { onMount } from 'svelte';\\r\\nlet isLoggedIn = false;\\r\\nonMount(() => {\\r\\n    FB.init({\\r\\n        appId: '3134094980017395',\\r\\n        cookie: true,\\r\\n        xfbml: true,\\r\\n        version: 'v7.0'\\r\\n    });\\r\\n    FB.getLoginStatus(function (response) {\\r\\n        isLoggedIn = (response.status === 'connected');\\r\\n    });\\r\\n});\\r\\nfunction logout() {\\r\\n    if (isFacebookConnected()) {\\r\\n        FB.logout(function (response) {\\r\\n            isLoggedIn = false;\\r\\n        });\\r\\n    }\\r\\n}\\r\\nfunction login() {\\r\\n    if (!isFacebookConnected()) {\\r\\n        FB.login(function (response) {\\r\\n            isLoggedIn = true;\\r\\n        });\\r\\n    }\\r\\n}\\r\\nfunction isFacebookConnected() {\\r\\n    let isConnected = false;\\r\\n    FB.getLoginStatus(function (response) {\\r\\n        isConnected = (response.status === 'connected');\\r\\n    });\\r\\n    return isConnected;\\r\\n}\\r\\nlet toast = {\\r\\n    toasterName: '',\\r\\n    toasterRelationship: '',\\r\\n    toasterAssociation: '',\\r\\n    toastContent: ''\\r\\n};\\r\\nasync function proposeToast() {\\r\\n    if (toast.toasterName == '' || toast.toastContent == '') {\\r\\n        return;\\r\\n    }\\r\\n    await fetch('/api/toastController', {\\r\\n        method: 'POST',\\r\\n        body: JSON.stringify({ toast }),\\r\\n        headers: { \\\"Content-type\\\": \\\"application/json\\\" }\\r\\n    }).then(response => window.location.reload());\\r\\n}\\r\\n;\\r\\n</script>\\r\\n\\r\\n<section class='propose'>\\r\\n    <div class='form'>\\r\\n        <div class='header'>\\r\\n            <p class='heading'>Propose a Toast...</p>\\r\\n        </div>\\r\\n        <input type='text' disabled={!isLoggedIn} placeholder='Name' bind:value={toast.toasterName}/>\\r\\n        <div class='container'>\\r\\n        <div class='selectstuff'>\\r\\n            <select disabled={!isLoggedIn} bind:value={toast.toasterRelationship}>\\r\\n                <option value='Father' selected>Father</option>\\r\\n                <option value='Mother'>Mother</option>\\r\\n                <option value='Brother'>Brother</option>\\r\\n                <option value='Sister'>Sister</option>\\r\\n                <option value='Son'>Son</option>\\r\\n                <option value='Daughter'>Daughter</option>\\r\\n                <option value='Relative'>Relative</option>\\r\\n                <option value='Friend'>Friend</option>\\r\\n            </select>\\r\\n        </div>\\r\\n        <div class='selectstuff'>of the</div>\\r\\n        <div class='selectstuff'>\\r\\n            <select disabled={!isLoggedIn} bind:value={toast.toasterAssociation}>\\r\\n                <option value='Groom' selected>Groom</option>\\r\\n                <option value='Bride'>Bride</option>\\r\\n            </select>\\r\\n        </div>\\r\\n        </div>\\r\\n        <textarea disabled={!isLoggedIn} bind:value={toast.toastContent} rows='7' placeholder='Message'></textarea>\\r\\n        <br/>\\r\\n        {#if !isLoggedIn}\\r\\n            <button class='facebook-button' on:click={login}>Login with Facebook to Propose</button>\\r\\n        {/if}\\r\\n        {#if isLoggedIn}\\r\\n            <button class='propose-button' on:click={proposeToast}>Propose!</button>\\r\\n        {/if}\\r\\n    </div>\\r\\n</section>\\r\\n\\r\\n<style lang='scss'>section {\\n  width: 100%;\\n  margin-bottom: 40px; }\\n\\ndiv {\\n  padding: 0; }\\n\\n.form {\\n  background-color: #ded599;\\n  height: 100%;\\n  margin: 20px;\\n  border-radius: 20px; }\\n\\n.header {\\n  border-radius: 20px 20px 0 0;\\n  height: 75px;\\n  background-color: #375637;\\n  position: relative; }\\n\\n.heading {\\n  font-size: 32px;\\n  margin: 0;\\n  position: absolute;\\n  top: 50%;\\n  transform: translate(0, -50%);\\n  padding-left: 10px;\\n  color: #ddd499; }\\n\\ninput, textarea {\\n  width: 80%;\\n  padding-left: 10px;\\n  padding-right: 10px;\\n  line-height: 40px;\\n  font-size: 20px; }\\n\\ninput {\\n  margin-top: 25px; }\\n\\ntextarea {\\n  margin-bottom: 25px; }\\n\\n.selectstuff {\\n  display: table-cell;\\n  line-height: 40px;\\n  font-size: 20px; }\\n\\n.container {\\n  display: table;\\n  width: 100%;\\n  table-layout: fixed; }\\n\\nselect {\\n  width: 65px; }\\n\\nbutton {\\n  border-radius: 5px;\\n  border: none;\\n  color: #ddd499;\\n  padding: 6px 32px;\\n  text-align: center;\\n  text-decoration: none;\\n  margin-bottom: 20px; }\\n\\n.facebook-button {\\n  background-color: #3578e5; }\\n\\n.propose-button {\\n  background-color: #375637; }</style>\"],\"names\":[],\"mappings\":\"AA4FmB,OAAO,eAAC,CAAC,AAC1B,KAAK,CAAE,IAAI,CACX,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,GAAG,eAAC,CAAC,AACH,OAAO,CAAE,CAAC,AAAE,CAAC,AAEf,KAAK,eAAC,CAAC,AACL,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,IAAI,CACZ,MAAM,CAAE,IAAI,CACZ,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,OAAO,eAAC,CAAC,AACP,aAAa,CAAE,IAAI,CAAC,IAAI,CAAC,CAAC,CAAC,CAAC,CAC5B,MAAM,CAAE,IAAI,CACZ,gBAAgB,CAAE,OAAO,CACzB,QAAQ,CAAE,QAAQ,AAAE,CAAC,AAEvB,QAAQ,eAAC,CAAC,AACR,SAAS,CAAE,IAAI,CACf,MAAM,CAAE,CAAC,CACT,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,GAAG,CACR,SAAS,CAAE,UAAU,CAAC,CAAC,CAAC,IAAI,CAAC,CAC7B,YAAY,CAAE,IAAI,CAClB,KAAK,CAAE,OAAO,AAAE,CAAC,AAEnB,oBAAK,CAAE,QAAQ,eAAC,CAAC,AACf,KAAK,CAAE,GAAG,CACV,YAAY,CAAE,IAAI,CAClB,aAAa,CAAE,IAAI,CACnB,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC,AAEpB,KAAK,eAAC,CAAC,AACL,UAAU,CAAE,IAAI,AAAE,CAAC,AAErB,QAAQ,eAAC,CAAC,AACR,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,YAAY,eAAC,CAAC,AACZ,OAAO,CAAE,UAAU,CACnB,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,IAAI,AAAE,CAAC,AAEpB,UAAU,eAAC,CAAC,AACV,OAAO,CAAE,KAAK,CACd,KAAK,CAAE,IAAI,CACX,YAAY,CAAE,KAAK,AAAE,CAAC,AAExB,MAAM,eAAC,CAAC,AACN,KAAK,CAAE,IAAI,AAAE,CAAC,AAEhB,MAAM,eAAC,CAAC,AACN,aAAa,CAAE,GAAG,CAClB,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,OAAO,CACd,OAAO,CAAE,GAAG,CAAC,IAAI,CACjB,UAAU,CAAE,MAAM,CAClB,eAAe,CAAE,IAAI,CACrB,aAAa,CAAE,IAAI,AAAE,CAAC,AAExB,gBAAgB,eAAC,CAAC,AAChB,gBAAgB,CAAE,OAAO,AAAE,CAAC,AAE9B,eAAe,eAAC,CAAC,AACf,gBAAgB,CAAE,OAAO,AAAE,CAAC\"}"
+const Toasts = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
+	
+	const dispatch = createEventDispatcher();
+	let { isLoggedIn } = $$props;
+	let { facebookUserId } = $$props;
+	let isEdittingToast = false;
+
+	let toast = {
+		toastId: null,
+		toasterName: "",
+		toasterRelationship: "",
+		toasterAssociation: "",
+		toastContent: "",
+		toasterFacebookId: ""
+	};
+
+	if ($$props.isLoggedIn === void 0 && $$bindings.isLoggedIn && isLoggedIn !== void 0) $$bindings.isLoggedIn(isLoggedIn);
+	if ($$props.facebookUserId === void 0 && $$bindings.facebookUserId && facebookUserId !== void 0) $$bindings.facebookUserId(facebookUserId);
+
+	return `${validate_component(ToastsList, "ToastsList").$$render($$result, { facebookUserId, isLoggedIn }, {}, {})}
+${validate_component(ToastForm, "ToastForm").$$render(
+		$$result,
+		{
+			isEdittingToast,
+			toast,
+			facebookUserId,
+			isLoggedIn
+		},
+		{},
+		{}
+	)}`;
+});
+
+/* src\routes\index.svelte generated by Svelte v3.23.2 */
+
+const css$8 = {
+	code: "@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';@import 'https://fonts.googleapis.com/css?family=Rokkitt';body{background-color:#fff9ea;margin:0;font-size:0;font-family:'Princess Sofia';overflow:auto;height:100%}h1{font-weight:100;text-align:center;font-size:40px;color:#ddd499;margin-bottom:0}div{overflow:hidden}section{text-align:center}section div{padding:20px}img{width:50%;margin-top:-20px}p,a{font-size:20px;font-family:'Rokkitt'}html{position:absolute;height:100%;overflow:hidden}",
+	map: "{\"version\":3,\"file\":\"index.svelte\",\"sources\":[\"index.svelte\"],\"sourcesContent\":[\"<script lang='typescript'>import { onMount } from 'svelte';\\r\\nimport SectionHeader from './_components/SectionHeader.svelte';\\r\\nimport Jumbotron from './_components/Jumbotron.svelte';\\r\\nimport Story from './_components/Story.svelte';\\r\\nimport Blended from './_components/Blended.svelte';\\r\\nimport Clan from './_components/Clan.svelte';\\r\\nimport Toasts from './_components/Toasts.svelte';\\r\\nlet isLoggedIn = false;\\r\\nlet facebookUserId;\\r\\nonMount(() => {\\r\\n    FB.init({\\r\\n        appId: '3134094980017395',\\r\\n        cookie: true,\\r\\n        xfbml: true,\\r\\n        version: 'v7.0'\\r\\n    });\\r\\n    FB.getLoginStatus(function (response) {\\r\\n        isLoggedIn = (response.status === 'connected');\\r\\n        facebookUserId = response.authResponse.userID;\\r\\n    });\\r\\n});\\r\\nfunction toggleLogIn() {\\r\\n    if (isFacebookConnected()) {\\r\\n        FB.logout(function (response) {\\r\\n            facebookUserId = '';\\r\\n            isLoggedIn = false;\\r\\n        });\\r\\n    }\\r\\n    else {\\r\\n        FB.login(function (response) {\\r\\n            facebookUserId = response.authResponse.userID;\\r\\n            isLoggedIn = true;\\r\\n        });\\r\\n    }\\r\\n}\\r\\nfunction isFacebookConnected() {\\r\\n    let isConnected = false;\\r\\n    FB.getLoginStatus(function (response) {\\r\\n        isConnected = (response.status === 'connected');\\r\\n    });\\r\\n    return isConnected;\\r\\n}\\r\\n</script>\\r\\n\\r\\n<SectionHeader isNav={true} isLoggedIn={isLoggedIn} on:toggleLogIn={toggleLogIn}/>\\r\\n<Jumbotron />\\r\\n<Story />\\r\\n<Clan />\\r\\n<Toasts isLoggedIn={isLoggedIn} facebookUserId={facebookUserId} on:toggleLogIn={toggleLogIn}/>\\r\\n<Blended />\\r\\n\\r\\n<style global lang='scss'>@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';\\n@import 'https://fonts.googleapis.com/css?family=Rokkitt';\\n:global(body) {\\n  background-color: #fff9ea;\\n  margin: 0;\\n  font-size: 0;\\n  font-family: 'Princess Sofia';\\n  overflow: auto;\\n  height: 100%; }\\n\\n:global(h1) {\\n  font-weight: 100;\\n  text-align: center;\\n  font-size: 40px;\\n  color: #ddd499;\\n  margin-bottom: 0; }\\n\\n:global(div) {\\n  overflow: hidden; }\\n\\n:global(section) {\\n  text-align: center; }\\n  :global(section) :global(div) {\\n    padding: 20px; }\\n\\n:global(img) {\\n  width: 50%;\\n  margin-top: -20px; }\\n\\n:global(p), :global(a) {\\n  font-size: 20px;\\n  font-family: 'Rokkitt'; }\\n\\n:global(html) {\\n  position: absolute;\\n  height: 100%;\\n  overflow: hidden; }</style>\"],\"names\":[],\"mappings\":\"AAmD0B,QAAQ,wDAAwD,CAAC,AAC3F,QAAQ,iDAAiD,CAAC,AAClD,IAAI,AAAE,CAAC,AACb,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,CAAC,CACT,SAAS,CAAE,CAAC,CACZ,WAAW,CAAE,gBAAgB,CAC7B,QAAQ,CAAE,IAAI,CACd,MAAM,CAAE,IAAI,AAAE,CAAC,AAET,EAAE,AAAE,CAAC,AACX,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,MAAM,CAClB,SAAS,CAAE,IAAI,CACf,KAAK,CAAE,OAAO,CACd,aAAa,CAAE,CAAC,AAAE,CAAC,AAEb,GAAG,AAAE,CAAC,AACZ,QAAQ,CAAE,MAAM,AAAE,CAAC,AAEb,OAAO,AAAE,CAAC,AAChB,UAAU,CAAE,MAAM,AAAE,CAAC,AACb,OAAO,AAAC,CAAC,AAAQ,GAAG,AAAE,CAAC,AAC7B,OAAO,CAAE,IAAI,AAAE,CAAC,AAEZ,GAAG,AAAE,CAAC,AACZ,KAAK,CAAE,GAAG,CACV,UAAU,CAAE,KAAK,AAAE,CAAC,AAEd,CAAC,AAAC,CAAU,CAAC,AAAE,CAAC,AACtB,SAAS,CAAE,IAAI,CACf,WAAW,CAAE,SAAS,AAAE,CAAC,AAEnB,IAAI,AAAE,CAAC,AACb,QAAQ,CAAE,QAAQ,CAClB,MAAM,CAAE,IAAI,CACZ,QAAQ,CAAE,MAAM,AAAE,CAAC\"}"
 };
 
-const ProposeToastForm = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
-	
+const Routes = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
 	let isLoggedIn = false;
+	let facebookUserId;
 
 	onMount(() => {
 		FB.init({
@@ -567,64 +693,18 @@ const ProposeToastForm = create_ssr_component(($$result, $$props, $$bindings, $$
 
 		FB.getLoginStatus(function (response) {
 			isLoggedIn = response.status === "connected";
+			facebookUserId = response.authResponse.userID;
 		});
 	});
 
-	let toast = {
-		toasterName: "",
-		toasterRelationship: "",
-		toasterAssociation: "",
-		toastContent: ""
-	};
+	$$result.css.add(css$8);
 
-	
-	$$result.css.add(css$6);
-
-	return `<section class="${"propose svelte-1tmojol"}"><div class="${"form svelte-1tmojol"}"><div class="${"header svelte-1tmojol"}"><p class="${"heading svelte-1tmojol"}">Propose a Toast...</p></div>
-        <input type="${"text"}" ${!isLoggedIn ? "disabled" : ""} placeholder="${"Name"}" class="${"svelte-1tmojol"}"${add_attribute("value", toast.toasterName, 1)}>
-        <div class="${"container svelte-1tmojol"}"><div class="${"selectstuff svelte-1tmojol"}"><select ${!isLoggedIn ? "disabled" : ""} class="${"svelte-1tmojol"}"${add_attribute("value", toast.toasterRelationship, 1)}><option value="${"Father"}" selected>Father</option><option value="${"Mother"}">Mother</option><option value="${"Brother"}">Brother</option><option value="${"Sister"}">Sister</option><option value="${"Son"}">Son</option><option value="${"Daughter"}">Daughter</option><option value="${"Relative"}">Relative</option><option value="${"Friend"}">Friend</option></select></div>
-        <div class="${"selectstuff svelte-1tmojol"}">of the</div>
-        <div class="${"selectstuff svelte-1tmojol"}"><select ${!isLoggedIn ? "disabled" : ""} class="${"svelte-1tmojol"}"${add_attribute("value", toast.toasterAssociation, 1)}><option value="${"Groom"}" selected>Groom</option><option value="${"Bride"}">Bride</option></select></div></div>
-        <textarea ${!isLoggedIn ? "disabled" : ""} rows="${"7"}" placeholder="${"Message"}" class="${"svelte-1tmojol"}">${toast.toastContent || ""}</textarea>
-        <br>
-        ${!isLoggedIn
-	? `<button class="${"facebook-button svelte-1tmojol"}">Login with Facebook to Propose</button>`
-	: ``}
-        ${isLoggedIn
-	? `<button class="${"propose-button svelte-1tmojol"}">Propose!</button>`
-	: ``}</div>
-</section>`;
-});
-
-/* src\routes\index.svelte generated by Svelte v3.23.2 */
-
-const css$7 = {
-	code: "@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';@import 'https://fonts.googleapis.com/css?family=Rokkitt';body{background-color:#fff9ea;margin:0;font-size:0;font-family:'Princess Sofia';overflow:auto;height:100%}h1{font-weight:100;text-align:center;font-size:40px;color:#ddd499;margin-bottom:0}div{overflow:hidden}section{text-align:center}section div{padding:20px}img{width:50%;margin-top:-20px}p,a{font-size:20px;font-family:'Rokkitt'}html{position:absolute;height:100%;overflow:hidden}",
-	map: "{\"version\":3,\"file\":\"index.svelte\",\"sources\":[\"index.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import SectionHeader from './_components/SectionHeader.svelte';\\r\\n    import Jumbotron from './_components/Jumbotron.svelte';\\r\\n    import Story from './_components/Story.svelte';\\r\\n    import Blended from './_components/Blended.svelte';\\r\\n    import Clan from './_components/Clan.svelte';\\r\\n    import Toasts from './_components/Toasts.svelte';\\r\\n    import ProposeToastForm from './_components/ProposeToastForm.svelte';\\r\\n</script>\\r\\n\\r\\n<SectionHeader isNav={true} />\\r\\n<Jumbotron />\\r\\n<Story />\\r\\n<Clan />\\r\\n<Toasts />\\r\\n<ProposeToastForm/>\\r\\n<Blended />\\r\\n\\r\\n<style global lang='scss'>@import 'https://fonts.googleapis.com/css?family=Princess+Sofia';\\n@import 'https://fonts.googleapis.com/css?family=Rokkitt';\\n:global(body) {\\n  background-color: #fff9ea;\\n  margin: 0;\\n  font-size: 0;\\n  font-family: 'Princess Sofia';\\n  overflow: auto;\\n  height: 100%; }\\n\\n:global(h1) {\\n  font-weight: 100;\\n  text-align: center;\\n  font-size: 40px;\\n  color: #ddd499;\\n  margin-bottom: 0; }\\n\\n:global(div) {\\n  overflow: hidden; }\\n\\n:global(section) {\\n  text-align: center; }\\n  :global(section) :global(div) {\\n    padding: 20px; }\\n\\n:global(img) {\\n  width: 50%;\\n  margin-top: -20px; }\\n\\n:global(p), :global(a) {\\n  font-size: 20px;\\n  font-family: 'Rokkitt'; }\\n\\n:global(html) {\\n  position: absolute;\\n  height: 100%;\\n  overflow: hidden; }</style>\"],\"names\":[],\"mappings\":\"AAkB0B,QAAQ,wDAAwD,CAAC,AAC3F,QAAQ,iDAAiD,CAAC,AAClD,IAAI,AAAE,CAAC,AACb,gBAAgB,CAAE,OAAO,CACzB,MAAM,CAAE,CAAC,CACT,SAAS,CAAE,CAAC,CACZ,WAAW,CAAE,gBAAgB,CAC7B,QAAQ,CAAE,IAAI,CACd,MAAM,CAAE,IAAI,AAAE,CAAC,AAET,EAAE,AAAE,CAAC,AACX,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,MAAM,CAClB,SAAS,CAAE,IAAI,CACf,KAAK,CAAE,OAAO,CACd,aAAa,CAAE,CAAC,AAAE,CAAC,AAEb,GAAG,AAAE,CAAC,AACZ,QAAQ,CAAE,MAAM,AAAE,CAAC,AAEb,OAAO,AAAE,CAAC,AAChB,UAAU,CAAE,MAAM,AAAE,CAAC,AACb,OAAO,AAAC,CAAC,AAAQ,GAAG,AAAE,CAAC,AAC7B,OAAO,CAAE,IAAI,AAAE,CAAC,AAEZ,GAAG,AAAE,CAAC,AACZ,KAAK,CAAE,GAAG,CACV,UAAU,CAAE,KAAK,AAAE,CAAC,AAEd,CAAC,AAAC,CAAU,CAAC,AAAE,CAAC,AACtB,SAAS,CAAE,IAAI,CACf,WAAW,CAAE,SAAS,AAAE,CAAC,AAEnB,IAAI,AAAE,CAAC,AACb,QAAQ,CAAE,QAAQ,CAClB,MAAM,CAAE,IAAI,CACZ,QAAQ,CAAE,MAAM,AAAE,CAAC\"}"
-};
-
-const Routes = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
-	$$result.css.add(css$7);
-
-	return `${validate_component(SectionHeader, "SectionHeader").$$render($$result, { isNav: true }, {}, {})}
+	return `${validate_component(SectionHeader, "SectionHeader").$$render($$result, { isNav: true, isLoggedIn }, {}, {})}
 ${validate_component(Jumbotron, "Jumbotron").$$render($$result, {}, {}, {})}
 ${validate_component(Story, "Story").$$render($$result, {}, {}, {})}
 ${validate_component(Clan, "Clan").$$render($$result, {}, {}, {})}
-${validate_component(Toasts, "Toasts").$$render($$result, {}, {}, {})}
-${validate_component(ProposeToastForm, "ProposeToastForm").$$render($$result, {}, {}, {})}
+${validate_component(Toasts, "Toasts").$$render($$result, { isLoggedIn, facebookUserId }, {}, {})}
 ${validate_component(Blended, "Blended").$$render($$result, {}, {}, {})}`;
-});
-
-/* src\routes\auth\facebook-logout.svelte generated by Svelte v3.23.2 */
-
-const Facebook_logout = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
-	return ``;
-});
-
-/* src\routes\auth\facebook-login.svelte generated by Svelte v3.23.2 */
-
-const Facebook_login = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
-	return `<h1>Hi</h1>`;
 });
 
 /* src\node_modules\@sapper\internal\layout.svelte generated by Svelte v3.23.2 */
@@ -666,24 +746,6 @@ const manifest = {
 			pattern: /^\/$/,
 			parts: [
 				{ name: "index", file: "index.svelte", component: Routes }
-			]
-		},
-
-		{
-			// auth/facebook-logout.svelte
-			pattern: /^\/auth\/facebook-logout\/?$/,
-			parts: [
-				null,
-				{ name: "auth_facebook$45logout", file: "auth/facebook-logout.svelte", component: Facebook_logout }
-			]
-		},
-
-		{
-			// auth/facebook-login.svelte
-			pattern: /^\/auth\/facebook-login\/?$/,
-			parts: [
-				null,
-				{ name: "auth_facebook$45login", file: "auth/facebook-login.svelte", component: Facebook_login }
 			]
 		}
 	],

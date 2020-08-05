@@ -1,72 +1,52 @@
 <script lang='typescript'> 
     import { ToastModel } from '../_models/ToastModel';
-    import { onMount } from 'svelte';
-
-    declare const FB: any;
-    let isLoggedIn: boolean = false;
-
-    onMount( () => {
-        FB.init({
-            appId      : '3134094980017395',
-            cookie     : true,
-            xfbml      : true,
-            version    : 'v7.0'
-        }); 
-        
-        FB.getLoginStatus(function(response) {
-            isLoggedIn = (response.status === 'connected');
-        })
-    }); 
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
     
-    function logout() {
-        if (isFacebookConnected()) {
-            FB.logout(function(response) {
-                isLoggedIn = false;
-            }); 
-        }
-    }
-    function login() {
-        if (!isFacebookConnected()) {
-            FB.login(function(response) {
-                isLoggedIn = true;
-            });
-        }
-    }
-
-    function isFacebookConnected(): boolean {
-        let isConnected: boolean = false;
-        FB.getLoginStatus(function(response) {
-            isConnected = (response.status === 'connected');
-        });
-        return isConnected;
-    }
-    
-    let toast: ToastModel = {
-        toasterName: '',
-        toasterRelationship: '',
-        toasterAssociation: '',
-        toastContent: ''
-    };
+    export let isLoggedIn: boolean;
+    export let facebookUserId: string;
+    export let toast: ToastModel;
+    export let isEdittingToast: boolean;
     
     async function proposeToast () {
         if (toast.toasterName == '' || toast.toastContent == ''){
             return;
         }
 
+        toast.toasterFacebookId = facebookUserId;
         await fetch('/api/toastController', {
             method: 'POST', 
             body: JSON.stringify({toast}), 
             headers: {"Content-type": "application/json"}
         }).then(response => window.location.reload());
-        
     };
+
+    async function updateToast () {
+        if (toast.toasterName == '' || toast.toastContent == '') {
+            return;
+        }
+
+        await fetch('/api/toastController', {
+            method: 'PUT',
+            body: JSON.stringify({toast}),
+            headers: {"Content-type": "application/json"}
+        }).then(response => window.location.reload());
+    }
+
+    function logIn () {
+        dispatch("toggleLogIn");
+    }
 
 </script>
 
 <section class='propose'>
     <div class='form'>
         <div class='header'>
-            <p class='heading'>Propose a Toast...</p>
+            {#if isEdittingToast}
+                <p class='heading'>Editting Toast...</p>
+            {:else}
+                <p class='heading'>Propose a Toast...</p>
+            {/if}
         </div>
         <input type='text' disabled={!isLoggedIn} placeholder='Name' bind:value={toast.toasterName}/>
         <div class='container'>
@@ -93,10 +73,14 @@
         <textarea disabled={!isLoggedIn} bind:value={toast.toastContent} rows='7' placeholder='Message'></textarea>
         <br/>
         {#if !isLoggedIn}
-            <button class='facebook-button' on:click={login}>Login with Facebook to Propose</button>
+            <button class='facebook-button' on:click={logIn}>Log in with Facebook to Propose</button>
         {/if}
         {#if isLoggedIn}
-            <button class='propose-button' on:click={proposeToast}>Propose!</button>
+            {#if isEdittingToast}
+                <button class='propose-button' on:click={updateToast}>Update!</button>
+            {:else}
+                <button class='propose-button' on:click={proposeToast}>Propose!</button>
+            {/if}
         {/if}
     </div>
 </section>

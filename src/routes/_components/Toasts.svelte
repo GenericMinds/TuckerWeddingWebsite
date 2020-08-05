@@ -1,25 +1,34 @@
 <script lang='typescript'>
-    import { onMount } from "svelte";
+    import ToastForm from './ToastForm.svelte';
+    import ToastsList from './ToastsList.svelte';
     import { ToastModel } from '../_models/ToastModel';
-    
-    let toasts: ToastModel[] = [];
-    
-    onMount(async () => {
-        await fetch('api/toastController', { method: 'GET' })
-        .then(toasts => toasts.json())
-        .then(toastsData => {
-            toasts = toastsData;
-        });
-    })
+    import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
+
+    export let isLoggedIn: boolean;
+    export let facebookUserId: string;
+    let isEdittingToast = false;
+
+    let toast: ToastModel = {
+        toastId: null,
+        toasterName: '',
+        toasterRelationship: '',
+        toasterAssociation: '',
+        toastContent: '',
+        toasterFacebookId: ''
+    };
+
+    function forward() {
+        dispatch('toggleLogIn');
+    }
+
+    function editToast(event) {
+        toast = {...event.detail};
+        isEdittingToast = true;
+    }
+
 </script>
 
-<section class='toasts'>
-    <h1>Toasts</h1>
-    <img alt='Heading Decoration' src='./HeadingDecorator.png'/>
-    <div>
-        {#each toasts as toast}
-            <p>{toast.toastContent}</p>
-            <p> - {toast.toasterName}, {toast.toasterRelationship} of the {toast.toasterAssociation}</p>
-        {/each}
-    </div>
-</section>
+<ToastsList facebookUserId={facebookUserId} isLoggedIn={isLoggedIn} on:editToast={editToast}/>
+<ToastForm isEdittingToast={isEdittingToast} toast={toast} facebookUserId={facebookUserId} isLoggedIn={isLoggedIn} on:toggleLogIn={forward}/>

@@ -1,10 +1,18 @@
 <script lang='typescript'>
     import Overlay from 'svelte-overlay';
     import * as animateScroll from 'svelte-scrollto';
+    import { createEventDispatcher } from 'svelte';
+
+    const dispatch = createEventDispatcher();
+    export let isLoggedIn: boolean;
     let isOpen: boolean = false;
 
+    function logOut() {
+        dispatch("toggleLogIn");
+        handleSectionSelection('home');
+    }
+
     function handleToggle(): void {
-        console.log('hi')
         isOpen = !isOpen;
     }
 
@@ -29,6 +37,9 @@
             <li on:click={() => {handleSectionSelection('toasts')}}>Toasts</li>
             <li on:click={() => {handleSectionSelection('propose')}}>Propose a Toast</li>
             <li on:click={() => {handleSectionSelection('blended')}}>Blended Family</li>
+            {#if isLoggedIn}
+                <li on:click={logOut}>Log out</li>
+            {/if}
         </ul>
     </div>
 {/if}

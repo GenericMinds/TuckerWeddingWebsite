@@ -10,9 +10,6 @@
 			controls: false
 		}
 	]
-	function changed (event) {
-		console.log(event.detail.currentSlide)
-	}
 </script>
 
 <section class='clan'>
@@ -21,7 +18,7 @@
 </section>
 <div class="demo">
     {#each carousels as carousel}
-    <Carousel on:change={changed} {...carousel} dots={false}>
+    <Carousel {...carousel} dots={false}>
         <span class="control" slot="left-control">
             <ChevronLeftIcon />
         </span>
