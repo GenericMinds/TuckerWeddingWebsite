@@ -2,9 +2,11 @@
     import { onMount } from "svelte";
     import { ToastModel } from '../_models/ToastModel';
     import { createEventDispatcher } from 'svelte';
+    import {Modal, Button, Card} from 'svelte-chota';
 
 	const dispatch = createEventDispatcher();
-    
+
+let open:boolean = false;
     let toasts: ToastModel[] = [];
     
     export let isLoggedIn: boolean;
@@ -25,6 +27,15 @@
             toasts = toastsData;
         });
     })
+
+    async function deleteToast (toastId) {
+        await fetch('/api/toastController', {
+            method: 'DELETE',
+            body: JSON.stringify({toastId}),
+            headers: {"Content-type": "application/json"}
+        }).then(response => window.location.reload());
+    }
+
 </script>
 
 <section class='toasts'>
@@ -36,9 +47,16 @@
             <p> - {toast.toasterName}, {toast.toasterRelationship} of the {toast.toasterAssociation}
             {#if isLoggedIn && isAuthor(toast.toasterFacebookId)}
                 <button on:click={() => {editToast(toast)}}>Edit</button>
+                <Button on:click={e => open=true}>Delete</Button>
+                <Modal bind:open>
+                    <Card>
+                        Are you sure you want to delete this toast?
+                        <Button on:click={deleteToast(toast.toastId)}>Delete</Button>
+                        <Button on:click={e => open=false}>Cancel</Button>
+                    </Card>
+                </Modal>
             {/if}
-            </p>
-            
+            </p> 
         {/each}
     </div>
 </section>
@@ -55,4 +73,30 @@
         margin-bottom: 20px;
     }
     
+    /* Smartphones (portrait and landscape) -------------------- */
+    @media only screen 
+    and (min-device-width : 320px) 
+    and (max-device-width : 480px) {   
+    }
+    /* --------------------------------------------------------- */
+
+    /* iPads (portrait and landscape) -------------------------- */
+    @media only screen 
+    and (min-device-width : 768px) 
+    and (max-device-width : 1024px) {
+    }
+    /* --------------------------------------------------------- */
+
+    /* Desktops and Laptops ------------------------------------ */
+    @media only screen
+    and (min-width : 1224px) {
+    }
+    /* --------------------------------------------------------- */
+
+    /* iPhone 4 ----------- */
+    @media
+    only screen and (-webkit-min-device-pixel-ratio : 1.5),
+    only screen and (min-device-pixel-ratio : 1.5) {
+    }
+    /* --------------------------------------------------------- */
 </style>

@@ -6,6 +6,7 @@
     import Blended from './_components/Blended.svelte';
     import Clan from './_components/Clan.svelte';
     import Toasts from './_components/Toasts.svelte';
+    import Nav from './_components/Nav.svelte';
 
     declare const FB: any;
     let isLoggedIn: boolean = false;
@@ -48,7 +49,7 @@
     }
 </script>
 
-<SectionHeader isNav={true} isLoggedIn={isLoggedIn} on:toggleLogIn={toggleLogIn}/>
+<Nav isLoggedIn={isLoggedIn} on:toggleLogIn={toggleLogIn}/>
 <Jumbotron />
 <Story />
 <Clan />

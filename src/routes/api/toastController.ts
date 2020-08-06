@@ -62,3 +62,17 @@ export async function put(req, res): Promise<void> {
         })
     });
 }
+
+export async function del(req, res): Promise<void> {
+    sql.connect(config, function(err) {
+        if(err) { throw err; }
+
+        var request = new sql.Request();
+        request.input('toastId', sql.Int, req.body.toastId);
+
+        request.query("delete from Toast where toastId = @toastId;", function (err, recordset) {
+            if(err) { throw err; }
+            res.end(JSON.stringify(recordset));
+        })
+    });
+}
