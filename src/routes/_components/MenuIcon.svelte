@@ -41,7 +41,7 @@
             margin: 0;
         }
 
-        img:hover, li:hover {
+        img:hover {
             cursor: pointer;
         }
     }

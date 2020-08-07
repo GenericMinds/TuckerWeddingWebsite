@@ -122,6 +122,7 @@
             background-color: #2E4A2E;
             div {
                 text-decoration: underline;
+                cursor: pointer;
             }
         }
 
