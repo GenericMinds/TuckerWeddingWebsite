@@ -11,11 +11,7 @@ const { createServer } = require('https');
 const { readFileSync } = require('fs');
 const ssl_port = 3000;
 
-const options = dev ? {
-  // The path & file names could be different.
-  key: readFileSync('D:/Projects/tuckerweddingwebsite/client-1.local.key'),
-  cert: readFileSync('D:/Projects/tuckerweddingwebsite/client-1.local.crt')
-} : null;
+
 
 const { handler } = polka()
 	.use(bodyParser.urlencoded({ extended: true }))
@@ -30,6 +26,6 @@ const { handler } = polka()
     });
 
 // Mount Polka to HTTPS server
-createServer(options, handler).listen(ssl_port, _ => {
+createServer({}, handler).listen(ssl_port, _ => {
     console.log(`> Running on https://localhost:${ssl_port}`);
 });
