@@ -3942,11 +3942,11 @@ function serve({ prefix, pathname, cache_control }
 
 function noop$1(){}
 
-const { PORT, NODE_ENV } = process.env;
+const { NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
 const { createServer } = require('https');
 const { readFileSync } = require('fs');
-const ssl_port = 3000;
+const ssl_port = 8081;
 const { handler } = polka()
     .use(bodyParser.urlencoded({ extended: true }))
     .use(bodyParser.json())
