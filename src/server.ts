@@ -11,11 +11,11 @@ const { createServer } = require('https');
 const { readFileSync } = require('fs');
 const ssl_port = 3000;
 
-const options = {
+const options = dev ? {
   // The path & file names could be different.
   key: readFileSync('D:/Projects/tuckerweddingwebsite/client-1.local.key'),
   cert: readFileSync('D:/Projects/tuckerweddingwebsite/client-1.local.crt')
-};
+} : null;
 
 const { handler } = polka()
 	.use(bodyParser.urlencoded({ extended: true }))
