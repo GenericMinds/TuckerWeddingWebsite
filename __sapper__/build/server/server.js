@@ -5,7 +5,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var sirv = _interopDefault(require('sirv'));
 var polka = _interopDefault(require('polka'));
 var compression = _interopDefault(require('compression'));
-var bodyParser = _interopDefault(require('body-parser'));
 var fs = _interopDefault(require('fs'));
 var path = _interopDefault(require('path'));
 require('query-string');
@@ -14,6 +13,7 @@ var http = _interopDefault(require('http'));
 var Url = _interopDefault(require('url'));
 var https = _interopDefault(require('https'));
 var zlib = _interopDefault(require('zlib'));
+var bodyParser = _interopDefault(require('body-parser'));
 
 var sql = require("mssql");
 const config = {
@@ -3942,19 +3942,14 @@ function serve({ prefix, pathname, cache_control }
 
 function noop$1(){}
 
-const { NODE_ENV } = process.env;
+const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
-const { createServer } = require('https');
-const { readFileSync } = require('fs');
-const ssl_port = 8081;
-const { handler } = polka()
+polka()
     .use(bodyParser.urlencoded({ extended: true }))
     .use(bodyParser.json())
     .use(compression({ threshold: 0 }), sirv('static', { dev }), middleware())
-    .get('*', (req, res) => {
-    res.end(`POLKA: Hello from ${req.pathname}`);
-});
-// Mount Polka to HTTPS server
-createServer({}, handler).listen(ssl_port, _ => {
-    console.log(`> Running on https://localhost:${ssl_port}`);
+    .listen(PORT, err => {
+    if (err) {
+        throw err;
+    }
 });
