@@ -5,44 +5,34 @@
 body {
 	background-color: $background-color;
 	margin: 0;
-	font-size: 0;
-	font-family: 'Princess Sofia';
 	overflow: auto;
 	height: 100%;
+	line-height: 0 !important;
 }
 
 h1 {
-	font-weight: 100;
-	text-align: center;
-	font-size: $default-line-height;
+	font-size: 50px !important;
+	line-height: 50px;
+	padding-top: 12.5px !important;
 	color: $accent-color-cream;
-	margin-bottom: 0;
+	margin: 0 !important;
+	font-family: 'Princess Sofia';
 }
 
-div {
-	overflow:hidden;
-} 
-
 section {
+	line-height: 100%;
 	text-align: center;
 	div {
 		padding: 20px;
 	}
 }
 
-img {
-	width: $full-size/2;
-	margin-top: -20px;
-}
-
-p {
-	font-size: $small-font-size;
+p, a, li {
 	font-family: 'Rokkitt';
 }
 
 html {
-	position: absolute;
-	height: 100%;
-	overflow: hidden;
+    position: absolute;
+    height: 100%;
+    overflow: hidden;
 }
-

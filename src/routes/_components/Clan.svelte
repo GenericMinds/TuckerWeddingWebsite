@@ -1,5 +1,6 @@
 <script>
-	import Carousel from '@beyonk/svelte-carousel';
+	import SectionHeader from './SectionHeader.svelte';
+    import Carousel from '@beyonk/svelte-carousel';
 	import { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons'
 	let carousels = [
 		{
@@ -10,123 +11,116 @@
 			controls: false
 		}
 	]
-	function changed (event) {
-		console.log(event.detail.currentSlide)
-	}
 </script>
 
 <section class='clan'>
-    <h1>Our Clan</h1>
-    <img alt='Heading Decoration' class='headingDecorator' src='./HeadingDecorator.png'/>
+    <SectionHeader title={'Our Clan'}/>
+    <div class="demo">
+        {#each carousels as carousel}
+        <Carousel {...carousel} dots={false}>
+            <span class="control" slot="left-control">
+                <ChevronLeftIcon />
+            </span>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/GrandchildrenWithBarb.jpg)">
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Cheese.jpg)">		
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/MovingDay.jpg)">
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/FireAndIce.jpg)">	
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/WithLiam.jpg)">
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Lake.jpg)">	
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/WithNora.jpg)">
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Masks.jpg)">
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/CarenaAndDog.jpg)">
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Masks2.jpg)">
+                </header>
+            </div>				
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/RhiannahAndAdam.jpg)">
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/SportsBar.jpg)">
+                </header>
+            </div>		
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/SummerAndClan.jpg)">
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/StPatricksDay.jpg)">
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/ToryAndCarenaAndBri.jpg)">
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/ToryAndClan.jpg)">
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/AustinAndClan.jpg)">
+                </header>
+            </div>        
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Grandchildren.jpg)">
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/ShannonAndClan.jpg)">
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/WithRhiannah.jpg)">
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/LisaAndAdam.jpg)">
+                </header>
+            </div>
+            <div class="slide-content">
+                <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/NanaAndPoppop.jpg)">
+                </header>
+            </div>
+            <span class="control" slot="right-control">
+                <ChevronRightIcon />
+            </span>
+        </Carousel>
+        <br/>
+        <br/>
+        {/each}
+    </div>
 </section>
-<div class="demo">
-    {#each carousels as carousel}
-    <Carousel on:change={changed} {...carousel} dots={false}>
-        <span class="control" slot="left-control">
-            <ChevronLeftIcon />
-        </span>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/GrandchildrenWithBarb.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Cheese.jpg)">		
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/MovingDay.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/FireAndIce.jpg)">	
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/WithLiam.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Lake.jpg)">	
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/WithNora.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Masks.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/CarenaAndDog.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Masks2.jpg)">
-            </header>
-        </div>				
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/RhiannahAndAdam.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/SportsBar.jpg)">
-            </header>
-        </div>		
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/SummerAndClan.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/StPatricksDay.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/ToryAndCarenaAndBri.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/ToryAndClan.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/AustinAndClan.jpg)">
-            </header>
-        </div>        
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/Grandchildren.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/ShannonAndClan.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/WithRhiannah.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/LisaAndAdam.jpg)">
-            </header>
-        </div>
-        <div class="slide-content">
-            <header style="background-image: url(https://lisaandtimpictures.s3.amazonaws.com/NanaAndPoppop.jpg)">
-            </header>
-        </div>
-        <span class="control" slot="right-control">
-            <ChevronRightIcon />
-        </span>
-    </Carousel>
-    <br/>
-    <br/>
-    {/each}
-</div>
+
 <style lang='scss'>
     @import '../../../static/theme.scss';
-    .headingDecorator {
-        width: $full-size/2;
-        margin-top: -20px;    
-    }
 
 	.demo {
 		margin: 0 auto;
@@ -157,6 +151,37 @@
         background-position: 50% 50%;
         background-color: $accent-color-green;
         border: 3px solid $accent-color-cream-2;
-	}
+    }
+    
+    div {
+        overflow: hidden;
+    }
+
+    /* Smartphones (portrait and landscape) -------------------- */
+    @media only screen 
+    and (min-device-width : 320px) 
+    and (max-device-width : 480px) {   
+    }
+    /* --------------------------------------------------------- */
+
+    /* iPads (portrait and landscape) -------------------------- */
+    @media only screen 
+    and (min-device-width : 768px) 
+    and (max-device-width : 1024px) {
+    }
+    /* --------------------------------------------------------- */
+
+    /* Desktops and Laptops ------------------------------------ */
+    @media only screen
+    and (min-width : 1224px) {
+    }
+    /* --------------------------------------------------------- */
+
+    /* iPhone 4 ----------- */
+    @media
+    only screen and (-webkit-min-device-pixel-ratio : 1.5),
+    only screen and (min-device-pixel-ratio : 1.5) {
+    }
+    /* --------------------------------------------------------- */
 </style>
 

@@ -1,38 +1,32 @@
 <script lang='typescript'>
-    import ToastForm from './ToastForm.svelte';
-    import ToastsList from './ToastsList.svelte';
-    import { ToastModel } from '../_models/ToastModel';
-    import { createEventDispatcher } from 'svelte';
+    import MenuIcon from './MenuIcon.svelte';
+    import Menu from './Menu.svelte';
+    import * as queryString from 'query-string';
+	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 
     export let isLoggedIn: boolean;
-    export let facebookUserId: string;
-    let isEdittingToast = false;
-
-    let toast: ToastModel = {
-        toastId: null,
-        toasterName: '',
-        toasterRelationship: '',
-        toasterAssociation: '',
-        toastContent: '',
-        toasterFacebookId: ''
-    };
+    let isOpen: boolean = false;
 
     function forward() {
-        dispatch('toggleLogIn');
+		dispatch('toggleLogIn');
     }
-
-    function editToast(event) {
-        toast = {...event.detail};
-        isEdittingToast = true;
+    
+    function handleToggle() {
+        isOpen = !isOpen;
     }
 </script>
 
-<ToastsList facebookUserId={facebookUserId} isLoggedIn={isLoggedIn} on:editToast={editToast}/>
-<ToastForm isEdittingToast={isEdittingToast} toast={toast} facebookUserId={facebookUserId} isLoggedIn={isLoggedIn} on:toggleLogIn={forward}/>
+<div>
+    <p>#blameitonfate</p>
+    <MenuIcon on:handleToggle={handleToggle} isOpen={isOpen}/>
+    <Menu isLoggedIn={isLoggedIn} on:toggleLogIn={forward} isOpen={isOpen}/>
+</div>
 
-<style>
+<style lang='scss'>
+    @import '../../../static/theme.scss';
+    
     /* Smartphones (portrait and landscape) -------------------- */
     @media only screen 
     and (min-device-width : 320px) 
@@ -50,6 +44,20 @@
     /* Desktops and Laptops ------------------------------------ */
     @media only screen
     and (min-width : 1224px) {
+        div {
+            background-color: $accent-color-green;
+            height: 75px;
+            width: 100%;
+            position: absolute;
+        }
+
+        p {
+            color: $accent-color-cream;
+            font-weight: bold;
+            font-size: 40px;
+            line-height: 40px;
+            margin: 17.5px;
+        }
     }
     /* --------------------------------------------------------- */
 

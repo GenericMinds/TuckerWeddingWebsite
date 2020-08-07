@@ -1,74 +1,56 @@
 <script lang='typescript'>
-    import Overlay from 'svelte-overlay';
-    import * as animateScroll from 'svelte-scrollto';
+    import { createEventDispatcher } from 'svelte';
+
+    const dispatch = createEventDispatcher();
     let isOpen: boolean = false;
 
     function handleToggle(): void {
-        isOpen = !isOpen;
-    }
-
-    function handleSectionSelection(section): void {
-        isOpen = false;
-        if (section == 'home') {
-            animateScroll.scrollToTop();
-            return;
-        }
-        animateScroll.scrollTo({element: '.' + section});
+        dispatch('handleToggle');
     }
 </script>
-<img on:click={handleToggle} src='./134216-32.png' alt='hamburger menu'/>     
 
-{#if isOpen}
-    <div>
-        <ul>
-            <li class='home' on:click={() => {handleSectionSelection('home')}}>Home</li>
-            <li on:click={() => {handleSectionSelection('story')}}>Our Story</li>
-            <li on:click={() => {handleSectionSelection('clan')}}>Our Clan</li>
-            <li on:click={() => {handleSectionSelection('toasts')}}>Toasts</li>
-            <li on:click={() => {handleSectionSelection('propose')}}>Propose a Toast</li>
-            <li on:click={() => {handleSectionSelection('blended')}}>Blended Family</li>
-        </ul>
-    </div>
-{/if}
+<img on:click={handleToggle} src='./134216-32.png' alt='hamburger menu'/>     
 
 <style lang='scss'>
     @import 'https://fonts.googleapis.com/css?family=Princess+Sofia';
     @import '../../../static/theme.scss';
 
-    div,ul {
-        position: absolute;
-        top: 40px;
-        right: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: $accent-color-green;
-        color: $accent-color-cream;
-        text-align: center;
-        font-size: 40px;
-        overflow: hidden;
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        z-index: 999;
+    /* Smartphones (portrait and landscape) -------------------- */
+    @media only screen 
+    and (min-device-width : 320px) 
+    and (max-device-width : 480px) {   
     }
+    /* --------------------------------------------------------- */
 
-    li {
-        height: 10vh;
-        padding-top: 3vh;
+    /* iPads (portrait and landscape) -------------------------- */
+    @media only screen 
+    and (min-device-width : 768px) 
+    and (max-device-width : 1024px) {
     }
+    /* --------------------------------------------------------- */
 
-    img {
-        position: fixed;
-        right: 30px;
-        top: 3px;
-        height: 32px;
-        width:32px;
-        z-index: 999;
-        -webkit-backface-visibility: hidden;
-        margin: 0;
-    }
+    /* Desktops and Laptops ------------------------------------ */
+    @media only screen
+    and (min-width : 1224px) {
+        img {
+            position: fixed;
+            right: 30px;
+            top: 15px;
+            height: 45px;
+            width: 45px;
+            margin: 0;
+        }
 
-    img:hover, li:hover {
-        cursor: pointer;
+        img:hover {
+            cursor: pointer;
+        }
     }
+    /* --------------------------------------------------------- */
+
+    /* iPhone 4 ----------- */
+    @media
+    only screen and (-webkit-min-device-pixel-ratio : 1.5),
+    only screen and (min-device-pixel-ratio : 1.5) {
+    }
+    /* --------------------------------------------------------- */
 </style>

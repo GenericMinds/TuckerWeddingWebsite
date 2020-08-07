@@ -1,8 +1,18 @@
 /node_modules/
 .DS_STORE
-.elasticbeanstalk
+
+#Local Database Credentials
+secret.txt
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+#Https Certs
+client-1.local.crt
+client-1.local.csr
+client-1.local.key
+rootSSL.key
+rootSSL.pem
+rootSSL.srl

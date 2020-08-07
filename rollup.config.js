@@ -7,6 +7,8 @@ import { terser } from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-typescript'; 
 import config from 'sapper/config/rollup.js';
 import autoPreprocess from 'svelte-preprocess'; 
+import postcss from 'rollup-plugin-postcss';
+import sapperEnv from "sapper-environment";
 import pkg from './package.json';
 
 const mode = process.env.NODE_ENV;
@@ -21,6 +23,7 @@ export default {
 		output: config.client.output(),
 		plugins: [
 			replace({
+				...sapperEnv(),
 				'process.browser': true,
 				'process.env.NODE_ENV': JSON.stringify(mode)
 			}),
@@ -39,7 +42,7 @@ export default {
 
 			legacy && babel({
 				extensions: ['.js', '.ts', '.mjs', '.html', '.svelte'],
-				babelHelpers: 'runtime',
+				runtimeHelpers: true,
 				exclude: ['node_modules/@babel/**'],
 				presets: [
 					['@babel/preset-env', {
@@ -58,8 +61,7 @@ export default {
 				module: true
 			})
 		],
-
-		preserveEntrySignatures: false,
+		preserveEntrySignatures: 'strict',
 		onwarn,
 	},
 
@@ -76,6 +78,11 @@ export default {
 				dev,
 				preprocess: autoPreprocess(), // add this
 			}),
+			postcss({
+				extract: true,
+				minimize: !dev,
+				sourceMap: dev
+			}),
 			resolve({
 				dedupe: ['svelte']
 			}),
@@ -86,7 +93,6 @@ export default {
 			require('module').builtinModules || Object.keys(process.binding('natives'))
 		),
 
-		preserveEntrySignatures: 'strict',
 		onwarn,
 	},
 	serviceworker: {
@@ -102,7 +108,6 @@ export default {
 			!dev && terser()
 		],
 
-		preserveEntrySignatures: false,
 		onwarn,
 	}
 };

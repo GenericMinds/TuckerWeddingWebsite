@@ -1,9 +1,6 @@
-<img src='LisaTimMainPhoto.jpg' alt='Lisa and Tim posing during a hike in the woods.'/>
-
-<style lang='scss'>
-    @import '../../../static/theme.scss';
-
-/* Smartphones (portrait and landscape) -------------------- */
+<img alt='Heading Decoration' src='./HeadingDecorator.png'/>
+<style>
+    /* Smartphones (portrait and landscape) -------------------- */
     @media only screen 
     and (min-device-width : 320px) 
     and (max-device-width : 480px) {   
@@ -21,12 +18,8 @@
     @media only screen
     and (min-width : 1224px) {
         img {
-            width: 100%;
-            height: 800px;
-            object-fit: cover;
-            border: 2px solid $accent-color-cream;
-            box-sizing: border-box;
-            margin: 0;
+            width: 200px;
+            padding-top: -40px;
         }
     }
     /* --------------------------------------------------------- */

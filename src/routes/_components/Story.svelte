@@ -3,9 +3,7 @@
 </script>
 
 <section class='story'>
-    <SectionHeader isNav={false} />
-    <h1>Our Story</h1>
-    <img alt='Heading Decoration' src='./HeadingDecorator.png'/>
+    <SectionHeader title={'Our Story'}/>
     <div>
         <p>Once upon a time there was a king and a viking princess. They did not know it, but the gods had set the table for them to be together.</p>
         <p>As the gods planned out their destiny, they couldn't quite agree on the path these two should take to get there. One of the gods set up their first meeting. As they were both looking to learn more about the world around them, they attended the Academy at the same time. The first god set it up so that they lived in close proximity. Once the other gods noticed, they intervened and kept them from meeting each other. It was not their time yet.</p>
@@ -21,9 +19,34 @@
 </section>
 
 <style lang='scss'>
-    @import '../../../static/theme.scss';
-    
-    p {
-        text-align: left;
+    /* Smartphones (portrait and landscape) -------------------- */
+    @media only screen 
+    and (min-device-width : 320px) 
+    and (max-device-width : 480px) {   
     }
+    /* --------------------------------------------------------- */
+
+    /* iPads (portrait and landscape) -------------------------- */
+    @media only screen 
+    and (min-device-width : 768px) 
+    and (max-device-width : 1024px) {
+    }
+    /* --------------------------------------------------------- */
+
+    /* Desktops and Laptops ------------------------------------ */
+    @media only screen
+    and (min-width : 1224px) {
+        p {
+            text-align: left;
+            font-size: 20px;
+        }
+    }
+    /* --------------------------------------------------------- */
+
+    /* iPhone 4 ----------- */
+    @media
+    only screen and (-webkit-min-device-pixel-ratio : 1.5),
+    only screen and (min-device-pixel-ratio : 1.5) {
+    }
+    /* --------------------------------------------------------- */
 </style>
