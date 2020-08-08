@@ -5,6 +5,7 @@
 
 <div>
     <h1>{title}</h1>
+    <HeadingDecorator />
 </div>
 <style lang='scss'>
     @import '../../../static/theme.scss';
@@ -28,9 +29,13 @@
     and (min-width : 1224px) {
         div {
             background-color: $accent-color-green;
-            height: 75px;
-            line-height: 75px;
+            height: 120px;
+            line-height: 120px;
+            width: 100%;
+            margin-top: 20px;
             padding: 0;
+	        border-top-left-radius: 10px;
+	        border-top-right-radius: 10px;
         }
     }
     /* --------------------------------------------------------- */

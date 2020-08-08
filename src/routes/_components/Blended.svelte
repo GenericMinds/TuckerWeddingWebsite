@@ -1,6 +1,9 @@
+<script >
+    import SectionHeader from './SectionHeader.svelte';
+</script>
+
 <section class='blended'>
-    <h1>Blended Family Recipe</h1>
-    <img alt='Heading Decoration' src='./HeadingDecorator.png'/>
+    <SectionHeader title={'Blended Family Recipe'}/>
     <div>
         <p>Put a good and honest man</p>
         <p>into a mixing pan.</p>

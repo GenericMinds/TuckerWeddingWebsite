@@ -1,6 +1,7 @@
 <script lang='typescript'>
     import { onMount } from "svelte";
     import { ToastModel } from '../_models/ToastModel';
+    import SectionHeader from './SectionHeader.svelte';
     import { createEventDispatcher } from 'svelte';
     import {Modal, Button, Card} from 'svelte-chota';
 
@@ -39,8 +40,7 @@ let open:boolean = false;
 </script>
 
 <section class='toasts'>
-    <h1>Toasts</h1>
-    <img alt='Heading Decoration' src='./HeadingDecorator.png'/>
+    <SectionHeader title={'Toasts'}/>
     <div>
         {#each toasts as toast}
             <p>{toast.toastContent}</p>
@@ -61,18 +61,9 @@ let open:boolean = false;
     </div>
 </section>
 
-<style>
-    button {
-        border-radius: 5px;
-        border: none;
-        background-color: #375637;
-        color: #ddd499;
-        padding: 6px 12px;
-        text-align: center;
-        text-decoration: none;
-        margin-bottom: 20px;
-    }
-    
+<style lang='scss'>    
+    @import '../../../static/theme.scss';
+
     /* Smartphones (portrait and landscape) -------------------- */
     @media only screen 
     and (min-device-width : 320px) 
@@ -90,6 +81,21 @@ let open:boolean = false;
     /* Desktops and Laptops ------------------------------------ */
     @media only screen
     and (min-width : 1224px) {
+        button {
+            border-radius: 5px;
+            border: none;
+            background-color: #375637;
+            color: #ddd499;
+            padding: 6px 12px;
+            text-align: center;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        div {
+            background-color: $background-color;
+            padding: 20px;
+        }
     }
     /* --------------------------------------------------------- */
 

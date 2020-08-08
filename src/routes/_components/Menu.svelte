@@ -18,7 +18,7 @@
             animateScroll.scrollToTop();
             return;
         }
-        animateScroll.scrollTo({element: '.' + section, offset: -75});
+        animateScroll.scrollTo({element: '.' + section, offset: -62.5});
     }
 </script>
 
@@ -96,26 +96,23 @@
     and (min-width : 1224px) {
         .menu {
             position: absolute;
-            top: 75px;
+            top: 65px;
             right: 0;
             width: 25%;
             height: 100vh;
             background-color: $accent-color-green;
             color: $accent-color-cream;
+            z-index: 999;
         }
 
         ul {
             text-align: center;
-            font-size: 50px;
+            font-size: 35px;
             overflow: hidden;
             padding: 0;
             margin: 0;
             list-style: none;
             height: 100%;
-        }
-
-        li {
-            height: 14%;
         }
 
         li:hover {
@@ -136,10 +133,17 @@
 
         .arrow {
             float: left;
+            width:6.25%;
         }
 
         img {
             padding-top: 50px;
+            width: 100%; 
+        }
+
+        .section {
+            width: 93.75%;
+            float: right;
         }
     }
     /* --------------------------------------------------------- */

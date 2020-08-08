@@ -1,4 +1,4 @@
-<img src='LisaTimMainPhoto.jpg' alt='Lisa and Tim posing during a hike in the woods.'/>
+<div><img src='LisaTimMainPhoto.jpg' alt='Lisa and Tim posing during a hike in the woods.'/></div>
 
 <style lang='scss'>
     @import '../../../static/theme.scss';
@@ -22,11 +22,16 @@
     and (min-width : 1224px) {
         img {
             width: 100%;
-            height: 800px;
             object-fit: cover;
             border: 2px solid $accent-color-cream;
             box-sizing: border-box;
-            margin: 0;
+            border-radius: 10px;
+        }
+
+        div {
+            width: 100%;
+            text-align: center;
+            margin-top: 85px;
         }
     }
     /* --------------------------------------------------------- */

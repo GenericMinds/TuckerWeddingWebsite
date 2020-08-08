@@ -1,4 +1,6 @@
-<img alt='Heading Decoration' src='./HeadingDecorator.png'/>
+<div>
+    <img alt='Heading Decoration' src='./HeadingDecorator.png'>
+</div>
 <style>
     /* Smartphones (portrait and landscape) -------------------- */
     @media only screen 
@@ -18,8 +20,13 @@
     @media only screen
     and (min-width : 1224px) {
         img {
-            width: 200px;
-            padding-top: -40px;
+            padding-left: 35%;
+            padding-right: 35%;
+        }
+        div{
+            height: 40px;
+            padding: 0;
+            display: flex;
         }
     }
     /* --------------------------------------------------------- */

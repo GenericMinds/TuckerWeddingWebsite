@@ -50,12 +50,42 @@
 </script>
 
 <Nav isLoggedIn={isLoggedIn} on:toggleLogIn={toggleLogIn}/>
-<Jumbotron />
-<Story />
-<Clan />
-<Toasts isLoggedIn={isLoggedIn} facebookUserId={facebookUserId} on:toggleLogIn={toggleLogIn}/>
-<Blended />
-
+<img src='PageLeftDecorator.png' alt='decoration' class='left pageDecorator'>
+<div class='content'>
+    <Jumbotron />
+    <Story />
+    <Clan />
+    <Toasts isLoggedIn={isLoggedIn} facebookUserId={facebookUserId} on:toggleLogIn={toggleLogIn}/>
+    <Blended />
+</div>
+<img src='PageRightDecorator.png' alt='decoration' class='right pageDecorator'>
 <style global lang='scss'>
     @import '../../static/global.scss';
+
+    div {
+        margin: 0 auto;
+    }
+
+    .content {
+        width: 50%;
+        height: 100vh;
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .pageDecorator {
+        position: fixed;
+        pointer-events: none;
+    }
+
+    .left {
+        top: 65px;
+        left:0px;
+    }
+
+    .right {
+        bottom: 0px;
+        right: 0px;
+    }
 </style>

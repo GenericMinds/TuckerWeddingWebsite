@@ -87,10 +87,6 @@
 
 <style lang='scss'>
     @import '../../../static/theme.scss';
-    section {
-        width: $full-size;
-        margin-bottom: 40px;
-    }
 
     div {
         padding: 0;
@@ -99,8 +95,8 @@
     .form {
         background-color: $accent-color-cream-2;
         height: $full-size;
-        margin: 20px;
         border-radius: 20px;
+        margin-top: 20px;
     }
 
     .header {

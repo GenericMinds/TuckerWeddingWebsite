@@ -35,9 +35,9 @@
         img {
             position: fixed;
             right: 30px;
-            top: 15px;
-            height: 45px;
-            width: 45px;
+            top: 17.5px;
+            height: 30px;
+            width: 30px;
             margin: 0;
         }
 

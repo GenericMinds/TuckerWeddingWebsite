@@ -46,17 +46,18 @@
     and (min-width : 1224px) {
         div {
             background-color: $accent-color-green;
-            height: 75px;
+            height: 65px;
             width: 100%;
             position: absolute;
+            top: 0;
         }
 
         p {
             color: $accent-color-cream;
             font-weight: bold;
-            font-size: 40px;
-            line-height: 40px;
-            margin: 17.5px;
+            font-size: 30px;
+            line-height: 30px;
+            margin: 17.5px 0 0 30px;
         }
     }
     /* --------------------------------------------------------- */

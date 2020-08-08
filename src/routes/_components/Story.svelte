@@ -5,7 +5,7 @@
 <section class='story'>
     <SectionHeader title={'Our Story'}/>
     <div>
-        <p>Once upon a time there was a king and a viking princess. They did not know it, but the gods had set the table for them to be together.</p>
+        <p><span>Once upon a time...</span> there was a king and a viking princess. They did not know it, but the gods had set the table for them to be together.</p>
         <p>As the gods planned out their destiny, they couldn't quite agree on the path these two should take to get there. One of the gods set up their first meeting. As they were both looking to learn more about the world around them, they attended the Academy at the same time. The first god set it up so that they lived in close proximity. Once the other gods noticed, they intervened and kept them from meeting each other. It was not their time yet.</p>
         <p>Both the king and the viking princess went on to have families of their own. Another one of the gods thought that this was the time and moved them to the same town. Both of their families grew up at the same time. The king had two daughters and the viking princess had two sons and two daughters. The kids grew up with each other and became friends. The eldest viking son and the eldest princess of the king both pursued the bardic arts together. The youngest viking daughter and the youngest princess of the king battled for the raiders through volley after volley of balls flung by the invading armies. Through all of this the other gods decided it was not time for the king and the viking princess to meet, and kept them apart. It was not their time yet.</p>
         <p>A third god decided to make his move and arranged it so the viking princess joined the Parent Teacher Student Guild along with the Queen. Both were valiant champions in making sure the children of the kingdom were getting the appropriate education. Throughout their many meetings and public events, the other gods decided to intervene and not allow the king and viking princess to cross paths. It was not their time yet.</p>
@@ -19,6 +19,9 @@
 </section>
 
 <style lang='scss'>
+    @import 'https://fonts.googleapis.com/css?family=Princess+Sofia';
+    @import '../../../static/theme.scss';
+
     /* Smartphones (portrait and landscape) -------------------- */
     @media only screen 
     and (min-device-width : 320px) 
@@ -39,6 +42,19 @@
         p {
             text-align: left;
             font-size: 20px;
+        }
+
+        span {
+            font-family: 'Princess Sofia';
+            font-size: 32px;
+        } 
+        
+        div {
+            margin: auto;
+            padding: 20px;
+            width: 100%;
+            background-color: $background-color;
+            line-height: 24px;
         }
     }
     /* --------------------------------------------------------- */
