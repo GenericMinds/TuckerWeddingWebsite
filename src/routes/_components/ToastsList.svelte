@@ -3,7 +3,7 @@
     import { ToastModel } from '../_models/ToastModel';
     import SectionHeader from './SectionHeader.svelte';
     import { createEventDispatcher } from 'svelte';
-    import {Modal, Button, Card} from 'svelte-chota';
+    import {Modal} from 'svelte-chota';
 
 	const dispatch = createEventDispatcher();
 
@@ -41,19 +41,21 @@ let open:boolean = false;
 
 <section class='toasts'>
     <SectionHeader title={'Toasts'}/>
-    <div>
+    <div class='toasts'>
         {#each toasts as toast}
             <p>{toast.toastContent}</p>
             <p> - {toast.toasterName}, {toast.toasterRelationship} of the {toast.toasterAssociation}
             {#if isLoggedIn && isAuthor(toast.toasterFacebookId)}
                 <button on:click={() => {editToast(toast)}}>Edit</button>
-                <Button on:click={e => open=true}>Delete</Button>
+                <button on:click={e => open=true}>Delete</button>
                 <Modal bind:open>
-                    <Card>
+                    <div>
                         Are you sure you want to delete this toast?
-                        <Button on:click={deleteToast(toast.toastId)}>Delete</Button>
-                        <Button on:click={e => open=false}>Cancel</Button>
-                    </Card>
+                        <div>
+                            <button on:click={deleteToast(toast.toastId)}>Delete</button>
+                            <button on:click={e => open=false}>Cancel</button>
+                        </div>
+                    </div>
                 </Modal>
             {/if}
             </p> 
@@ -80,7 +82,7 @@ let open:boolean = false;
 
     /* Desktops and Laptops ------------------------------------ */
     @media only screen
-    and (min-width : 1224px) {
+    and (min-width : 1025px) {
         button {
             border-radius: 5px;
             border: none;
@@ -93,8 +95,9 @@ let open:boolean = false;
         }
 
         div {
+            padding: 20px 20px 0 20px;
+            font-size: 20px;
             background-color: $background-color;
-            padding: 20px;
         }
     }
     /* --------------------------------------------------------- */

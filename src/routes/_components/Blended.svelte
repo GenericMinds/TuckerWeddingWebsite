@@ -32,7 +32,9 @@
     </div>
 </section>
 
-<style>
+<style lang='scss'>
+    @import '../../../static/theme.scss';
+
     /* Smartphones (portrait and landscape) -------------------- */
     @media only screen 
     and (min-device-width : 320px) 
@@ -49,7 +51,18 @@
 
     /* Desktops and Laptops ------------------------------------ */
     @media only screen
-    and (min-width : 1224px) {
+    and (min-width : 1025px) {
+        div {
+            background-color: $background-color;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        p {
+            padding: 0;
+            font-size: 20px;
+            line-height: 20px;
+            margin: 0;
+        }
     }
     /* --------------------------------------------------------- */
 

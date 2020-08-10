@@ -18,7 +18,7 @@
 
     /* Desktops and Laptops ------------------------------------ */
     @media only screen
-    and (min-width : 1224px) {
+    and (min-width : 1025px) {
         img {
             padding-left: 35%;
             padding-right: 35%;

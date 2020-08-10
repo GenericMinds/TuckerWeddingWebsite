@@ -5,7 +5,8 @@
 
 	let carousels = [
 		{
-			perPage: 1
+            perPage: 1,
+            dots: false
 		}
     ]
     
@@ -61,39 +62,71 @@
 </section>
 
 <style lang='scss'>
-        @import '../../../static/theme.scss';
-    .wrapper {
-        height: 600px;
-        width: 100%;
-        background-color:red;
-        background-color: $accent-color-green;
+    @import '../../../static/theme.scss';
+
+    /* Smartphones (portrait and landscape) -------------------- */
+    @media only screen 
+    and (min-device-width : 320px) 
+    and (max-device-width : 480px) {   
     }
-    
-	.demo,.carousel {
-		margin: 0 auto;
-		height: 600px;
-		width: 600px;
-        overflow:hidden;
-	}
-	
-	.control :global(svg) {
-		width: 100%;
-		height: 100%;
-		color: #fff;
-		border: 2px solid #fff;
-		border-radius: 32px;
-	}
-	
-	.slide-content {
-		border: 1px solid #eee;
-		display: flex;
-		flex-direction: column;
-		height: 600px;
-	}
-	
-    img {
-        position: relative;
-        top: 50%;
-        transform: translateY(-50%);
+    /* --------------------------------------------------------- */
+
+    /* iPads (portrait and landscape) -------------------------- */
+    @media only screen 
+    and (min-device-width : 768px) 
+    and (max-device-width : 1024px) {
     }
+    /* --------------------------------------------------------- */
+
+    /* Desktops and Laptops ------------------------------------ */
+    @media only screen
+    and (min-width : 1025px) {
+        .wrapper {
+            height: 600px;
+            width: 100%;
+            background-color:red;
+            background-color: $accent-color-green;
+            padding-bottom: 20px;
+            box-sizing: content-box;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px; 
+        }
+        
+        .demo {
+            margin: 0 auto;
+            height: 600px;
+            width: 600px;
+            overflow:hidden;
+            background-color: $background-color;
+        }
+        
+        .control :global(svg) {
+            width: 100%;
+            height: 100%;
+            color: $accent-color-green;
+            border: 2px solid $accent-color-green;
+            border-radius: 32px;
+        }
+        
+        .slide-content {
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+        
+        img {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+    /* --------------------------------------------------------- */
+
+    /* iPhone 4 ----------- */
+    @media
+    only screen and (-webkit-min-device-pixel-ratio : 1.5),
+    only screen and (min-device-pixel-ratio : 1.5) {
+    }
+    /* --------------------------------------------------------- */
 </style>

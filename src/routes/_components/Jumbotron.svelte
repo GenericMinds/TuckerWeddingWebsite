@@ -19,7 +19,7 @@
 
     /* Desktops and Laptops ------------------------------------ */
     @media only screen
-    and (min-width : 1224px) {
+    and (min-width : 1025px) {
         img {
             width: 100%;
             object-fit: cover;

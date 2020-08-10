@@ -93,7 +93,7 @@
 
     /* Desktops and Laptops ------------------------------------ */
     @media only screen
-    and (min-width : 1224px) {
+    and (min-width : 1025px) {
         .menu {
             position: absolute;
             top: 65px;
@@ -123,12 +123,15 @@
             }
         }
 
-        li div {
+        li {
+            height: 10%;
+        }
+        div {
             display: block;
             height: 100%;
             text-align:center;
-            height: 150px;
-            line-height: 150px;
+            font-size: 32px;
+            line-height: 32px;
         }
 
         .arrow {
@@ -137,7 +140,6 @@
         }
 
         img {
-            padding-top: 50px;
             width: 100%; 
         }
 

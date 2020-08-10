@@ -43,7 +43,10 @@
 
     /* Desktops and Laptops ------------------------------------ */
     @media only screen
-    and (min-width : 1224px) {
+    and (min-width : 1025px) {
+        * {
+            z-index: 999;
+        }
         div {
             background-color: $accent-color-green;
             height: 65px;
@@ -52,11 +55,11 @@
             top: 0;
             grid-column: 1/4;
             grid-column-start: 1;
-  grid-column-end: 4;
-  grid-row-start: 1;
-  grid-row-end: 3;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+            grid-column-end: 4;
+            grid-row-start: 1;
+            grid-row-end: 3;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
         }
 
         p {
