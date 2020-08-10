@@ -50,6 +50,13 @@
             width: 100%;
             position: absolute;
             top: 0;
+            grid-column: 1/4;
+            grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
         }
 
         p {

@@ -36,5 +36,6 @@ html {
 
 #sapper {
 	height: 100%;
-
+	display: grid;
+	grid-template-columns: 25% 50% 25%;
 }

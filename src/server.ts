@@ -37,8 +37,8 @@ const ssl_port = 3000;
 
 const options = {
   // The path & file names could be different.
-  key: readFileSync('D:/Projects/tuckerweddingwebsite/client-1.local.key'),
-  cert: readFileSync('D:/Projects/tuckerweddingwebsite/client-1.local.crt')
+  key: readFileSync('./client-1.local.key'),
+  cert: readFileSync('./client-1.local.crt')
 };
 
 const { handler } = polka()
