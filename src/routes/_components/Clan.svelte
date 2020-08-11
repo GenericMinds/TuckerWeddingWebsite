@@ -38,11 +38,11 @@
 
 <section class='clan'>
     <SectionHeader title={'Our Clan'}/>
-    <div class='wrapper'>
+    <div class='wrapper2'>
     <div class="demo">
         {#each carousels as carousel}
         <Carousel {...carousel}>
-            <span class="control" slot="left-control">
+            <span class="control left" slot="left-control">
                 <ChevronLeftIcon />
             </span>
             {#each photos as photo}
@@ -50,7 +50,7 @@
                 <img src={photo} alt='pic'>
             </div>
             {/each}
-            <span class="control" slot="right-control">
+            <span class="control right" slot="right-control">
                 <ChevronRightIcon />
             </span>
         </Carousel>
@@ -64,24 +64,59 @@
 <style lang='scss'>
     @import '../../../static/theme.scss';
 
-    /* Smartphones (portrait and landscape) -------------------- */
     @media only screen 
-    and (min-device-width : 320px) 
-    and (max-device-width : 480px) {   
-    }
-    /* --------------------------------------------------------- */
+    and (min-width : 320px) 
+    and (max-width : 450px) {   
+            .wrapper2 {
+            height: 300px;
+            width: 100%;
+            background-color:red;
+            background-color: $accent-color-green;
+            padding-bottom: 20px;
+            box-sizing: content-box;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px; 
+        }
+        
+        .demo {
+            margin: 0 auto;
+            height: 300px;
+            width: 300px;
+            overflow:hidden;
+            background-color: $background-color;
+            border-radius: 10px;
+        }
+        
+        .control :global(svg) {
+            width: 50%;
+            height: 50%;
+            color: $accent-color-green;
+        }
 
-    /* iPads (portrait and landscape) -------------------------- */
+        .left {
+            float: left;
+        }
+        
+        .right {
+            float: right;
+        }
+        .slide-content {
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            height: 300px;
+        }
+        
+        img {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+    
     @media only screen 
-    and (min-device-width : 768px) 
-    and (max-device-width : 1024px) {
-    }
-    /* --------------------------------------------------------- */
-
-    /* Desktops and Laptops ------------------------------------ */
-    @media only screen
-    and (min-width : 1025px) {
-        .wrapper {
+    and (min-width : 451px) {
+        .wrapper2 {
             height: 600px;
             width: 100%;
             background-color:red;
@@ -98,6 +133,7 @@
             width: 600px;
             overflow:hidden;
             background-color: $background-color;
+            border-radius: 10px;
         }
         
         .control :global(svg) {
@@ -121,12 +157,4 @@
             transform: translateY(-50%);
         }
     }
-    /* --------------------------------------------------------- */
-
-    /* iPhone 4 ----------- */
-    @media
-    only screen and (-webkit-min-device-pixel-ratio : 1.5),
-    only screen and (min-device-pixel-ratio : 1.5) {
-    }
-    /* --------------------------------------------------------- */
 </style>

@@ -63,20 +63,21 @@
     @import '../../static/global.scss';
 
     @media only screen 
-    and (min-device-width : 320px) 
-    and (max-device-width : 1100px) {   
+    and (min-width : 320px) 
+    and (max-width : 1100px) {   
         .pageDecorator {
             position: fixed;
             pointer-events: none;
+            width: 0%;
+            height: 0%;
         }
 
         .wrapper {
             width: 100%;
             display: grid;
             grid-template-columns: 0% 100% 0%;
-        }
-        div {
-            overflow:hidden;
+            margin-top: 65px;
+            padding: 20px;
         }
     }
 
@@ -98,9 +99,11 @@
         }
 
         .wrapper {
-            width: calc(100% - 18px);
+            width: 100%;
             display: grid;
             grid-template-columns: 25% 50% 25%;
+            margin-top: 65px;
+            padding: 20px 0 20px 0;
         }
     }
 </style>

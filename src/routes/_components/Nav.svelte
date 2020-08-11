@@ -21,7 +21,7 @@
 <div>
     <p>#blameitonfate</p>
     <MenuIcon on:handleToggle={handleToggle} isOpen={isOpen}/>
-    <Menu isLoggedIn={isLoggedIn} on:toggleLogIn={forward} isOpen={isOpen}/>
+    <Menu on:handleToggle={handleToggle} isLoggedIn={isLoggedIn} on:toggleLogIn={forward} isOpen={isOpen}/>
 </div>
 
 <style lang='scss'>
@@ -29,7 +29,7 @@
 
     @media only screen 
     and (min-width : 320px) 
-    and (max-width : 1100px) {   
+    and (max-width : 450px) {   
         * {
             z-index: 999;
         }
@@ -51,7 +51,7 @@
     }
 
     @media only screen
-    and (min-width : 1101px) {
+    and (min-width : 451px) {
         * {
             z-index: 999;
         }

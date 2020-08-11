@@ -6,19 +6,19 @@
     const dispatch = createEventDispatcher();
     export let isLoggedIn: boolean;
     export let isOpen: boolean;
-
+    
     function logOut() {
         dispatch("toggleLogIn");
         handleSectionSelection('home');
     }
 
     function handleSectionSelection(section): void {
-        isOpen = false;
+        dispatch('handleToggle');
         if (section == 'home') {
             animateScroll.scrollToTop();
             return;
         }
-        animateScroll.scrollTo({element: '.' + section, offset: -62.5});
+        animateScroll.scrollTo({element: '.' + section, offset: -65});
     }
 </script>
 
@@ -79,12 +79,12 @@
 
     @media only screen 
     and (min-width : 320px) 
-    and (max-width : 1100px) {  
+    and (max-width : 450px) {  
         .menu {
             position: absolute;
             top: 65px;
             right: 0;
-            width: 25%;
+            width: 100%;
             height: 100vh;
             background-color: $accent-color-green;
             color: $accent-color-cream;
@@ -95,7 +95,7 @@
             text-align: center;
             font-size: 35px;
             overflow: hidden;
-            padding: 0;
+            padding: 20px 0 0 0;
             margin: 0;
             list-style: none;
             height: 100%;
@@ -122,7 +122,7 @@
 
         .arrow {
             float: left;
-            width:6.25%;
+            width:0%;
         }
 
         img {
@@ -130,13 +130,13 @@
         }
 
         .section {
-            width: 93.75%;
+            width: 100%;
             float: right;
         }
     }
     
     @media only screen
-    and (min-width : 1101px) {
+    and (min-width : 451px) {
         .menu {
             position: absolute;
             top: 65px;
@@ -152,7 +152,7 @@
             text-align: center;
             font-size: 35px;
             overflow: hidden;
-            padding: 0;
+            padding: 20px 0 0 0;
             margin: 0;
             list-style: none;
             height: 100%;
