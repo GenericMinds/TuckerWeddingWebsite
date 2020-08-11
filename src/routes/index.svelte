@@ -48,9 +48,9 @@
         return isConnected;
     }
 </script>
-
 <Nav isLoggedIn={isLoggedIn} on:toggleLogIn={toggleLogIn}/>
-<div><img src='PageLeftDecorator.png' alt='decoration' class='left pageDecorator'></div>
+<div class='wrapper'>
+    <div><img src='PageLeftDecorator.png' alt='decoration' class='left pageDecorator'></div>
 <div class='content'>
     <Jumbotron />
     <Story />
@@ -59,21 +59,48 @@
     <Blended />
 </div>
 <div><img src='PageRightDecorator.png' alt='decoration' class='right pageDecorator'></div>
-<style global lang='scss'>
+</div><style global lang='scss'>
     @import '../../static/global.scss';
 
-    .pageDecorator {
-        position: fixed;
-        pointer-events: none;
+    @media only screen 
+    and (min-device-width : 320px) 
+    and (max-device-width : 1100px) {   
+        .pageDecorator {
+            position: fixed;
+            pointer-events: none;
+        }
+
+        .wrapper {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 0% 100% 0%;
+        }
+        div {
+            overflow:hidden;
+        }
     }
 
-    .left {
-        top: 65px;
-        left:0px;
-    }
+    @media only screen
+    and (min-width : 1101px) {
+        .pageDecorator {
+            position: fixed;
+            pointer-events: none;
+        }
 
-    .right {
-        bottom: 0px;
-        right: 0px;
+        .left {
+            top: 65px;
+            left:0px;
+        }
+
+        .right {
+            bottom: 0px;
+            right: 18px;
+        }
+
+        .wrapper {
+            width: calc(100% - 18px);
+            display: grid;
+            grid-template-columns: 25% 50% 25%;
+        }
     }
 </style>

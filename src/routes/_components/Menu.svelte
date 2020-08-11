@@ -77,23 +77,9 @@
     @import 'https://fonts.googleapis.com/css?family=Princess+Sofia';
     @import '../../../static/theme.scss';
 
-    /* Smartphones (portrait and landscape) -------------------- */
     @media only screen 
-    and (min-device-width : 320px) 
-    and (max-device-width : 480px) {   
-    }
-    /* --------------------------------------------------------- */
-
-    /* iPads (portrait and landscape) -------------------------- */
-    @media only screen 
-    and (min-device-width : 768px) 
-    and (max-device-width : 1024px) {
-    }
-    /* --------------------------------------------------------- */
-
-    /* Desktops and Laptops ------------------------------------ */
-    @media only screen
-    and (min-width : 1025px) {
+    and (min-width : 320px) 
+    and (max-width : 1100px) {  
         .menu {
             position: absolute;
             top: 65px;
@@ -148,12 +134,61 @@
             float: right;
         }
     }
-    /* --------------------------------------------------------- */
+    
+    @media only screen
+    and (min-width : 1101px) {
+        .menu {
+            position: absolute;
+            top: 65px;
+            right: 0;
+            width: 25%;
+            height: 100vh;
+            background-color: $accent-color-green;
+            color: $accent-color-cream;
+            z-index: 999;
+        }
 
-    /* iPhone 4 ----------- */
-    @media
-    only screen and (-webkit-min-device-pixel-ratio : 1.5),
-    only screen and (min-device-pixel-ratio : 1.5) {
+        ul {
+            text-align: center;
+            font-size: 35px;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            height: 100%;
+        }
+
+        li:hover {
+            background-color: #2E4A2E;
+            div {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+
+        li {
+            height: 10%;
+        }
+        div {
+            display: block;
+            height: 100%;
+            text-align:center;
+            font-size: 32px;
+            line-height: 32px;
+        }
+
+        .arrow {
+            float: left;
+            width:6.25%;
+        }
+
+        img {
+            width: 100%; 
+        }
+
+        .section {
+            width: 93.75%;
+            float: right;
+        }
     }
-    /* --------------------------------------------------------- */
 </style>

@@ -26,24 +26,10 @@
 
 <style lang='scss'>
     @import '../../../static/theme.scss';
-    
-    /* Smartphones (portrait and landscape) -------------------- */
-    @media only screen 
-    and (min-device-width : 320px) 
-    and (max-device-width : 480px) {   
-    }
-    /* --------------------------------------------------------- */
 
-    /* iPads (portrait and landscape) -------------------------- */
     @media only screen 
-    and (min-device-width : 768px) 
-    and (max-device-width : 1024px) {
-    }
-    /* --------------------------------------------------------- */
-
-    /* Desktops and Laptops ------------------------------------ */
-    @media only screen
-    and (min-width : 1025px) {
+    and (min-width : 320px) 
+    and (max-width : 1100px) {   
         * {
             z-index: 999;
         }
@@ -53,13 +39,6 @@
             width: 100%;
             position: absolute;
             top: 0;
-            grid-column: 1/4;
-            grid-column-start: 1;
-            grid-column-end: 4;
-            grid-row-start: 1;
-            grid-row-end: 3;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
         }
 
         p {
@@ -70,12 +49,26 @@
             margin: 17.5px 0 0 30px;
         }
     }
-    /* --------------------------------------------------------- */
 
-    /* iPhone 4 ----------- */
-    @media
-    only screen and (-webkit-min-device-pixel-ratio : 1.5),
-    only screen and (min-device-pixel-ratio : 1.5) {
+    @media only screen
+    and (min-width : 1101px) {
+        * {
+            z-index: 999;
+        }
+        div {
+            background-color: $accent-color-green;
+            height: 65px;
+            width: calc(100% - 18px) !important;
+            position: absolute;
+            top: 0;
+        }
+
+        p {
+            color: $accent-color-cream;
+            font-weight: bold;
+            font-size: 30px;
+            line-height: 30px;
+            margin: 17.5px 0 0 30px;
+        }
     }
-    /* --------------------------------------------------------- */
 </style>
