@@ -34,7 +34,6 @@
     div {
         background-color: $accent-color-green;
         height: 65px;
-        width: calc(100% - 18px) !important;
         position: absolute;
         top: 0;
     }
