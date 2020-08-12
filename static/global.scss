@@ -3,28 +3,21 @@
 @import './theme.scss';
 
 body {
-	background-color: $background-color;
+	background-color: #dfe1e0 !important;
 	margin: 0;
 	overflow: auto;
 	height: 100%;
 	line-height: 0 !important;
+	font-family: 'Rokkit' !important;
 }
 
 h1 {
-	font-size: 50px !important;
-	line-height: 50px;
-	padding-top: 12.5px !important;
-	color: $accent-color-cream;
-	margin: 0 !important;
 	font-family: 'Princess Sofia';
 }
 
 section {
 	line-height: 100%;
 	text-align: center;
-	div {
-		padding: 20px;
-	}
 }
 
 p, a, li {
@@ -35,4 +28,20 @@ html {
     position: absolute;
     height: 100%;
     overflow: hidden;
+}
+@media only screen 
+and (min-width : 320px) 
+and (max-width : 450px) { 
+	#sapper {
+		width: 100vw;
+		height: 100vh;
+	}
+}
+
+@media only screen
+and (min-width : 451) {
+	#sapper {
+	width: calc(100vw - 18px);
+	height: 100vh;
+	}
 }

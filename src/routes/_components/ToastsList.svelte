@@ -1,8 +1,9 @@
 <script lang='typescript'>
     import { onMount } from "svelte";
     import { ToastModel } from '../_models/ToastModel';
+    import SectionHeader from './SectionHeader.svelte';
     import { createEventDispatcher } from 'svelte';
-    import {Modal, Button, Card} from 'svelte-chota';
+    import {Modal} from 'svelte-chota';
 
 	const dispatch = createEventDispatcher();
 
@@ -39,21 +40,22 @@ let open:boolean = false;
 </script>
 
 <section class='toasts'>
-    <h1>Toasts</h1>
-    <img alt='Heading Decoration' src='./HeadingDecorator.png'/>
-    <div>
+    <SectionHeader title={'Toasts'}/>
+    <div class='toasts'>
         {#each toasts as toast}
             <p>{toast.toastContent}</p>
             <p> - {toast.toasterName}, {toast.toasterRelationship} of the {toast.toasterAssociation}
             {#if isLoggedIn && isAuthor(toast.toasterFacebookId)}
                 <button on:click={() => {editToast(toast)}}>Edit</button>
-                <Button on:click={e => open=true}>Delete</Button>
+                <button on:click={e => open=true}>Delete</button>
                 <Modal bind:open>
-                    <Card>
+                    <div>
                         Are you sure you want to delete this toast?
-                        <Button on:click={deleteToast(toast.toastId)}>Delete</Button>
-                        <Button on:click={e => open=false}>Cancel</Button>
-                    </Card>
+                        <div>
+                            <button on:click={deleteToast(toast.toastId)}>Delete</button>
+                            <button on:click={e => open=false}>Cancel</button>
+                        </div>
+                    </div>
                 </Modal>
             {/if}
             </p> 
@@ -61,42 +63,19 @@ let open:boolean = false;
     </div>
 </section>
 
-<style>
+<style lang='scss'>    
+    @import '../../../static/theme.scss';
     button {
         border-radius: 5px;
         border: none;
         background-color: #375637;
         color: #ddd499;
         padding: 6px 12px;
-        text-align: center;
-        text-decoration: none;
-        margin-bottom: 20px;
     }
-    
-    /* Smartphones (portrait and landscape) -------------------- */
-    @media only screen 
-    and (min-device-width : 320px) 
-    and (max-device-width : 480px) {   
-    }
-    /* --------------------------------------------------------- */
 
-    /* iPads (portrait and landscape) -------------------------- */
-    @media only screen 
-    and (min-device-width : 768px) 
-    and (max-device-width : 1024px) {
+    div {
+        padding: 20px 20px 20px 20px;
+        font-size: 20px;
+        background-color: $background-color;
     }
-    /* --------------------------------------------------------- */
-
-    /* Desktops and Laptops ------------------------------------ */
-    @media only screen
-    and (min-width : 1224px) {
-    }
-    /* --------------------------------------------------------- */
-
-    /* iPhone 4 ----------- */
-    @media
-    only screen and (-webkit-min-device-pixel-ratio : 1.5),
-    only screen and (min-device-pixel-ratio : 1.5) {
-    }
-    /* --------------------------------------------------------- */
 </style>

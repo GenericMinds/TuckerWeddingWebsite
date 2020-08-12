@@ -48,14 +48,62 @@
         return isConnected;
     }
 </script>
-
 <Nav isLoggedIn={isLoggedIn} on:toggleLogIn={toggleLogIn}/>
-<Jumbotron />
-<Story />
-<Clan />
-<Toasts isLoggedIn={isLoggedIn} facebookUserId={facebookUserId} on:toggleLogIn={toggleLogIn}/>
-<Blended />
-
-<style global lang='scss'>
+<div class='wrapper'>
+    <div><img src='PageLeftDecorator.png' alt='decoration' class='left pageDecorator'></div>
+<div class='content'>
+    <Jumbotron />
+    <Story />
+    <Clan />
+    <Toasts isLoggedIn={isLoggedIn} facebookUserId={facebookUserId} on:toggleLogIn={toggleLogIn}/>
+    <Blended />
+</div>
+<div><img src='PageRightDecorator.png' alt='decoration' class='right pageDecorator'></div>
+</div><style global lang='scss'>
     @import '../../static/global.scss';
+
+    @media only screen 
+    and (min-width : 320px) 
+    and (max-width : 1100px) {   
+        .pageDecorator {
+            position: fixed;
+            pointer-events: none;
+            width: 0%;
+            height: 0%;
+        }
+
+        .wrapper {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 0% 100% 0%;
+            margin-top: 65px;
+            padding: 20px;
+        }
+    }
+
+    @media only screen
+    and (min-width : 1101px) {
+        .pageDecorator {
+            position: fixed;
+            pointer-events: none;
+        }
+
+        .left {
+            top: 65px;
+            left:0px;
+        }
+
+        .right {
+            bottom: 0px;
+            right: 18px;
+        }
+
+        .wrapper {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 25% 50% 25%;
+            margin-top: 65px;
+            padding: 20px 0 20px 0;
+        }
+    }
 </style>

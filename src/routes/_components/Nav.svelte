@@ -21,50 +21,44 @@
 <div>
     <p>#blameitonfate</p>
     <MenuIcon on:handleToggle={handleToggle} isOpen={isOpen}/>
-    <Menu isLoggedIn={isLoggedIn} on:toggleLogIn={forward} isOpen={isOpen}/>
+    <Menu on:handleToggle={handleToggle} isLoggedIn={isLoggedIn} on:toggleLogIn={forward} isOpen={isOpen}/>
 </div>
 
 <style lang='scss'>
     @import '../../../static/theme.scss';
     
-    /* Smartphones (portrait and landscape) -------------------- */
-    @media only screen 
-    and (min-device-width : 320px) 
-    and (max-device-width : 480px) {   
+    * {
+        z-index: 999;
     }
-    /* --------------------------------------------------------- */
-
-    /* iPads (portrait and landscape) -------------------------- */
-    @media only screen 
-    and (min-device-width : 768px) 
-    and (max-device-width : 1024px) {
+    
+    div {
+        background-color: $accent-color-green;
+        height: 65px;
+        width: calc(100% - 18px) !important;
+        position: absolute;
+        top: 0;
     }
-    /* --------------------------------------------------------- */
 
-    /* Desktops and Laptops ------------------------------------ */
-    @media only screen
-    and (min-width : 1224px) {
+    p {
+        color: $accent-color-cream;
+        font-weight: bold;
+        font-size: 30px;
+        line-height: 30px;
+        margin: 17.5px 0 0 30px;
+    }
+
+    @media only screen 
+    and (min-width : 320px) 
+    and (max-width : 450px) {   
         div {
-            background-color: $accent-color-green;
-            height: 75px;
             width: 100%;
-            position: absolute;
-        }
-
-        p {
-            color: $accent-color-cream;
-            font-weight: bold;
-            font-size: 40px;
-            line-height: 40px;
-            margin: 17.5px;
         }
     }
-    /* --------------------------------------------------------- */
 
-    /* iPhone 4 ----------- */
-    @media
-    only screen and (-webkit-min-device-pixel-ratio : 1.5),
-    only screen and (min-device-pixel-ratio : 1.5) {
+    @media only screen
+    and (min-width : 451px) {
+        div {
+            width: calc(100% - 18px) !important;
+        }
     }
-    /* --------------------------------------------------------- */
 </style>

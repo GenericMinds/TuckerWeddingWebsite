@@ -3,42 +3,43 @@
     export let title: string;
 </script>
 
-<div>
+<div class='SectionHeaderOutterWrapper'>
     <h1>{title}</h1>
+    <HeadingDecorator />
 </div>
+
 <style lang='scss'>
     @import '../../../static/theme.scss';
+    div {
+        background-color: $accent-color-green;
+        width: 100%;
+        margin-top: 20px;
+        padding: 0;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }  
     
-    /* Smartphones (portrait and landscape) -------------------- */
-    @media only screen 
-    and (min-device-width : 320px) 
-    and (max-device-width : 480px) {   
+    h1 {
+        color: $accent-color-cream;
+        margin: 0 !important;
+        padding-top: 12px !important;
     }
-    /* --------------------------------------------------------- */
 
-    /* iPads (portrait and landscape) -------------------------- */
     @media only screen 
-    and (min-device-width : 768px) 
-    and (max-device-width : 1024px) {
-    }
-    /* --------------------------------------------------------- */
-
-    /* Desktops and Laptops ------------------------------------ */
-    @media only screen
-    and (min-width : 1224px) {
-        div {
-            background-color: $accent-color-green;
-            height: 75px;
-            line-height: 75px;
-            padding: 0;
+    and (min-width : 0px) 
+    and (max-width : 450px) {   
+        h1 {
+            font-size: 32px !important;
+            line-height: 32px;
+            padding-top: 12px !important;
         }
     }
-    /* --------------------------------------------------------- */
 
-    /* iPhone 4 ----------- */
-    @media
-    only screen and (-webkit-min-device-pixel-ratio : 1.5),
-    only screen and (min-device-pixel-ratio : 1.5) {
+    @media only screen
+    and (min-width : 451px) {
+        h1 {
+            font-size: 70px !important;
+            line-height: 70px;
+        }
     }
-    /* --------------------------------------------------------- */
 </style>

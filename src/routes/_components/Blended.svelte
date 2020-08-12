@@ -1,6 +1,9 @@
+<script >
+    import SectionHeader from './SectionHeader.svelte';
+</script>
+
 <section class='blended'>
-    <h1>Blended Family Recipe</h1>
-    <img alt='Heading Decoration' src='./HeadingDecorator.png'/>
+    <SectionHeader title={'Blended Family Recipe'}/>
     <div>
         <p>Put a good and honest man</p>
         <p>into a mixing pan.</p>
@@ -29,31 +32,18 @@
     </div>
 </section>
 
-<style>
-    /* Smartphones (portrait and landscape) -------------------- */
-    @media only screen 
-    and (min-device-width : 320px) 
-    and (max-device-width : 480px) {   
+<style lang='scss'>
+    @import '../../../static/theme.scss';
+    
+    div {
+        background-color: $background-color;
+        padding: 20px;
+        margin-bottom: 20px;
     }
-    /* --------------------------------------------------------- */
-
-    /* iPads (portrait and landscape) -------------------------- */
-    @media only screen 
-    and (min-device-width : 768px) 
-    and (max-device-width : 1024px) {
+    
+    p {
+        font-size: 20px;
+        line-height: 20px;
+        margin: 0;
     }
-    /* --------------------------------------------------------- */
-
-    /* Desktops and Laptops ------------------------------------ */
-    @media only screen
-    and (min-width : 1224px) {
-    }
-    /* --------------------------------------------------------- */
-
-    /* iPhone 4 ----------- */
-    @media
-    only screen and (-webkit-min-device-pixel-ratio : 1.5),
-    only screen and (min-device-pixel-ratio : 1.5) {
-    }
-    /* --------------------------------------------------------- */
-    </style>
+</style>
