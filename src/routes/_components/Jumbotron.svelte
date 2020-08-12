@@ -1,7 +1,10 @@
-<div><img src='LisaTimMainPhoto.jpg' alt='Lisa and Tim posing during a hike in the woods.'/></div>
+<div>
+    <img src='LisaTimMainPhoto.jpg' alt='Lisa and Tim posing during a hike in the woods.'/>
+</div>
 
 <style lang='scss'>
     @import '../../../static/theme.scss';
+    
     img {
         width: 100%;
         object-fit: cover;

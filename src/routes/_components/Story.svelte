@@ -21,22 +21,19 @@
 <style lang='scss'>
     @import 'https://fonts.googleapis.com/css?family=Princess+Sofia';
     @import '../../../static/theme.scss';
+    p {
+        text-align: left;
+        font-size: 20px;
+    }
 
-        p {
-            text-align: left;
-            font-size: 20px;
-        }
-
-        span {
-            font-family: 'Princess Sofia';
-            font-size: 32px;
-        } 
-        
-        div {
-            margin: auto;
-            padding: 20px;
-            width: 100%;
-            background-color: $background-color;
-            line-height: 24px;
-        }
+    span {
+        font-family: 'Princess Sofia';
+        font-size: 32px;
+    } 
+    
+    div {
+        padding: 20px;
+        background-color: $background-color;
+        line-height: 24px;
+    }
 </style>

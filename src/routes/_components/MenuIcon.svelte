@@ -9,7 +9,7 @@
     }
 </script>
 
-<img on:click={handleToggle} src='./134216-32.png' alt='hamburger menu'/>     
+<img on:click={handleToggle} src='./MenuIcon.png' alt='Menu Icon'/>     
 
 <style>    
     img {

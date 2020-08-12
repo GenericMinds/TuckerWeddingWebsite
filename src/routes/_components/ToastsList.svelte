@@ -65,23 +65,17 @@ let open:boolean = false;
 
 <style lang='scss'>    
     @import '../../../static/theme.scss';
+    button {
+        border-radius: 5px;
+        border: none;
+        background-color: #375637;
+        color: #ddd499;
+        padding: 6px 12px;
+    }
 
-
-        button {
-            border-radius: 5px;
-            border: none;
-            background-color: #375637;
-            color: #ddd499;
-            padding: 6px 12px;
-            text-align: center;
-            text-decoration: none;
-            margin-bottom: 20px;
-        }
-
-        div {
-            padding: 20px 20px 20px 20px;
-            font-size: 20px;
-            background-color: $background-color;
-        }
-    
+    div {
+        padding: 20px 20px 20px 20px;
+        font-size: 20px;
+        background-color: $background-color;
+    }
 </style>

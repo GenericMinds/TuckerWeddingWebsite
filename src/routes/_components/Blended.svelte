@@ -34,16 +34,16 @@
 
 <style lang='scss'>
     @import '../../../static/theme.scss';
-
-        div {
-            background-color: $background-color;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        p {
-            padding: 0;
-            font-size: 20px;
-            line-height: 20px;
-            margin: 0;
-        }
+    
+    div {
+        background-color: $background-color;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    p {
+        font-size: 20px;
+        line-height: 20px;
+        margin: 0;
+    }
 </style>

@@ -56,12 +56,12 @@
                 <option value='Friend'>Friend</option>
             </select>
         <p>of the</p>
-            <select defaultValue='Select Bride or Groom' class='form-element' disabled={!isLoggedIn} bind:value={toast.toasterAssociation}>
+            <select class='form-element' disabled={!isLoggedIn} bind:value={toast.toasterAssociation}>
                 <option selected disabled hidden>Select Bride or Groom</option>
                 <option value='Groom'>Groom</option>
                 <option value='Bride'>Bride</option>
             </select>
-        <textarea class='form-element' disabled={!isLoggedIn} bind:value={toast.toastContent} rows='7' placeholder='Message'></textarea>
+        <textarea class='form-element' disabled={!isLoggedIn} bind:value={toast.toastContent} rows={7} placeholder='Toast'></textarea>
         {#if !isLoggedIn}
             <button class='facebook-button' on:click={logIn}>Log in with Facebook to Propose</button>
         {/if}
@@ -77,45 +77,37 @@
 
 <style lang='scss'>
     @import '../../../static/theme.scss';
+    ::placeholder {
+        color: black;
+    }
 
-        
-        ::placeholder {
-            color: black;
-        }
+    :disabled {
+        opacity: .5;
+    }
 
-        :disabled {
-            opacity: .5;
-        }
-        div {
-            padding: 20px;
-            border: 2px solid $accent-color-green;
-        }
+    div {
+        padding: 20px;
+        border: 2px solid $accent-color-green;
+    }
 
-        p {
-            margin-bottom: 20px;
-        }
+    .form-element {
+        background-color: $background-color;
+        border: 2px solid $accent-color-green !important;
+        margin-bottom: 20px;
+    }
 
-        .form-element {
-            background-color: $background-color;
-            border: 2px solid $accent-color-green !important;
-            margin-bottom: 20px;
-            color: black;
-        }
-        button {
-            border-radius: 5px;
-            border: none;
-            color: $accent-color-cream;
-            padding: 6px 32px;
-            text-align: center;
-            text-decoration: none;
-        }
+    button {
+        border-radius: 5px;
+        border: none;
+        color: $accent-color-cream;
+        padding: 6px 32px;
+    }
 
-        .facebook-button {
-            background-color: #3578e5;
-        }
+    .facebook-button {
+        background-color: #3578e5;
+    }
 
-        .propose-button {
-            background-color: $accent-color-green;
-        }
-
+    .propose-button {
+        background-color: $accent-color-green;
+    }
 </style>
