@@ -18,7 +18,7 @@
             animateScroll.scrollToTop();
             return;
         }
-        animateScroll.scrollTo({element: '.' + section, offset: -65});
+        animateScroll.scrollTo({element: '.' + section, offset: -85});
     }
 </script>
 
