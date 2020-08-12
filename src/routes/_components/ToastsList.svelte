@@ -48,7 +48,7 @@ let open:boolean = false;
             {#if isLoggedIn && isAuthor(toast.toasterFacebookId)}
                 <button on:click={() => {editToast(toast)}}>Edit</button>
                 <button on:click={e => open=true}>Delete</button>
-                <Modal class='ModalBackground' bind:open>
+                <Modal bind:open>
                     <div>
                         Are you sure you want to delete this toast?
                         <div>
