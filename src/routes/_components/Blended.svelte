@@ -1,4 +1,4 @@
-<script >
+<script>
     import SectionHeader from './SectionHeader.svelte';
 </script>
 
@@ -33,12 +33,13 @@
 </section>
 
 <style lang='scss'>
-    @import '../../../static/theme.scss';
-    
+    @import '../../../static/theme.scss';   
     div {
-        background-color: $background-color;
+        background-color: $tertiary-color;
         padding: 20px;
         margin-bottom: 20px;
+        background-color: $quaternary-color;
+        border: 2px solid $primary-color;
     }
     
     p {

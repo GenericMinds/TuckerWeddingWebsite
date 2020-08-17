@@ -1,62 +1,39 @@
-<script>
-    import SectionHeader from './SectionHeader.svelte';
+<script lang='typescript'>
+    import { onMount } from 'svelte';
 	import Carousel from '@beyonk/svelte-carousel';
     import { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons';
+    import SectionHeader from './SectionHeader.svelte';
+    import { configureAws, getPhotosFromAws } from '../api/awsController';
+    import { S3ImageDataModel } from '../_models/S3ImageDataModel';
 
-	let carouselOptions = [
-		{
-            perPage: 1,
-            dots: false
-		}
-    ]
-    
-    let photos = [
-        'https://lisaandtimpictures.s3.amazonaws.com/GrandchildrenWithBarb.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/Cheese.jpg',	
-        'https://lisaandtimpictures.s3.amazonaws.com/MovingDay.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/FireAndIce.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/WithLiam.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/Lake.jpg',	
-        'https://lisaandtimpictures.s3.amazonaws.com/WithNora.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/Masks.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/CarenaAndDog.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/Masks2.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/RhiannahAndAdam.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/SportsBar.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/SummerAndClan.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/StPatricksDay.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/ToryAndCarenaAndBri.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/ToryAndClan.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/AustinAndClan.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/Grandchildren.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/ShannonAndClan.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/WithRhiannah.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/LisaAndAdam.jpg',
-        'https://lisaandtimpictures.s3.amazonaws.com/NanaAndPoppop.jpg'
-    ];
+    let photos: S3ImageDataModel[];
+
+    onMount(async (): Promise<void> => {
+        photos = await getPhotosFromAws();
+    });
 </script>
 
 <section class='clan'>
     <SectionHeader title={'Our Clan'}/>
     <div class='outterWrapper'>
         <div class='innerWrapper'>
-            {#each carouselOptions as carousel}
-            <Carousel {...carousel}>
-                <span class="control left" slot="left-control">
-                    <ChevronLeftIcon />
-                </span>
-                {#each photos as photo}
-                <div class="slide-content">
-                    <img src={photo} alt="Lisa and Tim's Family">
-                </div>
-                {/each}
-                <span class="control right" slot="right-control">
-                    <ChevronRightIcon />
-                </span>
-            </Carousel>
-            <br/>
-            <br/>
-            {/each}
+            {#if photos}        
+                <Carousel perPage={1} dots={false}>
+                    <span class="control left" slot="left-control">
+                        <ChevronLeftIcon />
+                    </span>
+                        {#each photos as photo}
+                            <div class="slide-content">
+                                <img src={photo && photo.url} alt={photo && photo.alt}>
+                            </div>
+                        {/each}
+                    <span class="control right" slot="right-control">
+                        <ChevronRightIcon />
+                    </span>
+                </Carousel> 
+                <br/>
+                <br/>
+            {/if}
         </div>
     </div>
 </section>
@@ -65,7 +42,7 @@
     @import '../../../static/theme.scss';
     
     .outterWrapper {
-        background-color: $accent-color-green;
+        background-color: $primary-color !important;
         padding-bottom: 20px;
         box-sizing: content-box;
         border-bottom-right-radius: 10px;
@@ -77,12 +54,12 @@
         height: 300px;
         width: 300px;
         overflow:hidden;
-        background-color: $background-color;
+        background-color: $primary-color !important;
         border-radius: 10px;
     } 
 
     .control :global(svg) {
-        color: $accent-color-green;
+        color: $secondary-color;
     }
 
     .left {
@@ -94,7 +71,6 @@
     }
 
     .slide-content {
-        border: 1px solid #eee;
         display: flex;
         flex-direction: column;
         height: 300px;
@@ -104,6 +80,10 @@
         position: relative;
         top: 50%;
         transform: translateY(-50%);
+        object-fit: contain;
+        max-width: 100%;
+        max-height: 100%;
+        background-color: $primary-color !important;
     }
 
     @media only screen 
@@ -124,7 +104,7 @@
             height: 300px;
         }
     }
-
+    
     @media only screen 
     and (min-width : 451px)
     and (max-width : 1224px) {        
@@ -153,7 +133,7 @@
         .control :global(svg) {
             width: 100%;
             height: 100%;
-            border: 2px solid $accent-color-green;
+            border: 2px solid $secondary-color;
             border-radius: 32px;
         }
         

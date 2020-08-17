@@ -1,42 +1,46 @@
 <script lang='typescript'>
     import { onMount } from "svelte";
-    import { ToastModel } from '../_models/ToastModel';
-    import SectionHeader from './SectionHeader.svelte';
     import { createEventDispatcher } from 'svelte';
     import {Modal} from 'svelte-chota';
+    import { ToastModel } from '../_models/ToastModel';
+    import SectionHeader from './SectionHeader.svelte';
 
-	const dispatch = createEventDispatcher();
+	const dispatch: any = createEventDispatcher();
 
-let open:boolean = false;
-    let toasts: ToastModel[] = [];
-    
     export let isLoggedIn: boolean;
     export let facebookUserId: string;
 
-    function isAuthor(toasterFacebookId: string) {
-        return facebookUserId === toasterFacebookId;
-    }
-
-    function editToast(toast) {
-        dispatch('editToast', toast);
-    }
-
-    onMount(async () => {
-        await fetch('api/toastController', { method: 'GET' })
+    let open: boolean = false;
+    let toasts: ToastModel[] = [];
+    
+    onMount(async (): Promise<void> => {
+        await fetch('api/toastController', 
+            { 
+                method: 'GET' 
+            })
         .then(toasts => toasts.json())
         .then(toastsData => {
             toasts = toastsData;
         });
-    })
+    });
 
-    async function deleteToast (toastId) {
-        await fetch('/api/toastController', {
-            method: 'DELETE',
-            body: JSON.stringify({toastId}),
-            headers: {"Content-type": "application/json"}
-        }).then(response => window.location.reload());
+    function isAuthor(toasterFacebookId: string): boolean {
+        return facebookUserId === toasterFacebookId;
     }
 
+    function editToast(toast: ToastModel): void {
+        dispatch('editToast', toast);
+    }
+
+    async function deleteToast (toastId: number): Promise<void>{
+        await fetch('/api/toastController', 
+            {
+                method: 'DELETE',
+                body: JSON.stringify({toastId}),
+                headers: {"Content-type": "application/json"}
+            })
+        .then(response => window.location.reload());
+    }
 </script>
 
 <section class='toasts'>
@@ -44,31 +48,33 @@ let open:boolean = false;
     <div class='toasts'>
         {#each toasts as toast}
             <p>{toast.toastContent}</p>
-            <p> - {toast.toasterName}, {toast.toasterRelationship} of the {toast.toasterAssociation}
+            <p> - {toast.toasterName}, {toast.toasterRelationship} of the {toast.toasterAssociation}</p>
             {#if isLoggedIn && isAuthor(toast.toasterFacebookId)}
-                <button on:click={() => {editToast(toast)}}>Edit</button>
-                <button on:click={e => open=true}>Delete</button>
-                <Modal bind:open>
-                    <div>
-                        Are you sure you want to delete this toast?
+                <p>
+                    <button on:click={() => {editToast(toast)}}>Edit</button>
+                    <button on:click={e => open=true}>Delete</button>
+                    <Modal bind:open>
                         <div>
-                            <button on:click={deleteToast(toast.toastId)}>Delete</button>
-                            <button on:click={e => open=false}>Cancel</button>
+                            Are you sure you want to delete this toast?
+                            <div>
+                                <button on:click={e => deleteToast(toast.toastId)}>Delete</button>
+                                <button on:click={e => open=false}>Cancel</button>
+                            </div>
                         </div>
-                    </div>
-                </Modal>
+                    </Modal>
+                </p>
             {/if}
-            </p> 
         {/each}
     </div>
 </section>
 
 <style lang='scss'>    
     @import '../../../static/theme.scss';
+    
     button {
         border-radius: 5px;
         border: none;
-        background-color: #375637;
+        background-color: $primary-color;
         color: #ddd499;
         padding: 6px 12px;
     }
@@ -76,6 +82,7 @@ let open:boolean = false;
     div {
         padding: 20px 20px 20px 20px;
         font-size: 20px;
-        background-color: $background-color;
+        background-color: $quaternary-color;
+        border: 2px solid $primary-color;
     }
 </style>

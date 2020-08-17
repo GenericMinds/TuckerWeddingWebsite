@@ -1,8 +1,7 @@
 <script lang='typescript'>
     import { createEventDispatcher } from 'svelte';
 
-    const dispatch = createEventDispatcher();
-    let isOpen: boolean = false;
+    const dispatch: any = createEventDispatcher();
 
     function handleToggle(): void {
         dispatch('handleToggle');

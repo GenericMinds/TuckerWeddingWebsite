@@ -10,8 +10,9 @@
 
 <style lang='scss'>
     @import '../../../static/theme.scss';
+    
     div {
-        background-color: $accent-color-green;
+        background-color: $primary-color;
         width: 100%;
         margin-top: 20px;
         padding: 0;
@@ -20,14 +21,12 @@
     }  
     
     h1 {
-        color: $accent-color-cream;
+        color: $tertiary-color;
         margin: 0 !important;
         padding-top: 12px !important;
     }
 
-    @media only screen 
-    and (min-width : 0px) 
-    and (max-width : 450px) {   
+    @media screen and (min-width : 0px) and (max-width : 450px) {   
         h1 {
             font-size: 32px !important;
             line-height: 32px;
@@ -35,8 +34,7 @@
         }
     }
 
-    @media only screen
-    and (min-width : 451px) {
+    @media screen and (min-width : 451px) {
         h1 {
             font-size: 70px !important;
             line-height: 70px;

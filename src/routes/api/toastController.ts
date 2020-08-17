@@ -9,6 +9,7 @@ const config = {
     database: 'TuckerWeddingWebsite'
 }
 
+
 export async function get(req, res): Promise<void> {
     let toasts: ToastModel[];
     

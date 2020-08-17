@@ -1,15 +1,15 @@
 <script lang='typescript'>
+    import { createEventDispatcher } from 'svelte';
     import ToastForm from './ToastForm.svelte';
     import ToastsList from './ToastsList.svelte';
     import { ToastModel } from '../_models/ToastModel';
-    import { createEventDispatcher } from 'svelte';
 
-	const dispatch = createEventDispatcher();
+	const dispatch: any = createEventDispatcher();
 
     export let isLoggedIn: boolean;
     export let facebookUserId: string;
+    
     let isEdittingToast = false;
-
     let toast: ToastModel = {
         toastId: null,
         toasterName: '',
@@ -19,11 +19,11 @@
         toasterFacebookId: ''
     };
 
-    function forward() {
+    function forward(): void {
         dispatch('toggleLogIn');
     }
 
-    function editToast(event) {
+    function editToast(event: any): void {
         toast = {...event.detail};
         isEdittingToast = true;
     }

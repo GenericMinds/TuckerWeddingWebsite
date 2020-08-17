@@ -1,74 +1,74 @@
 <script lang='typescript'>
+    import { createEventDispatcher } from 'svelte';
     import Overlay from 'svelte-overlay';
     import * as animateScroll from 'svelte-scrollto';
-    import { createEventDispatcher } from 'svelte';
 
-    const dispatch = createEventDispatcher();
+    const dispatch: any = createEventDispatcher();
     export let isLoggedIn: boolean;
     export let isOpen: boolean;
     
-    function logOut() {
+    function logOut(): void {
         dispatch("toggleLogIn");
         handleSectionSelection('home');
     }
 
-    function handleSectionSelection(section): void {
+    function handleSectionSelection(section: string): void {
         dispatch('handleToggle');
         if (section == 'home') {
             animateScroll.scrollToTop();
             return;
         }
-        animateScroll.scrollTo({element: '.' + section, offset: -85});
+        animateScroll.scrollTo({ element: '.' + section, offset: -85 });
     }
 </script>
 
 {#if isOpen}
     <div class='menu'>
         <ul>
-            <li on:click={() => {handleSectionSelection('home')}}>
+            <li on:click={() => { handleSectionSelection('home') }}>
                 <div class='arrow'>
                     <img src='./MenuArrowIcon.png' alt='Menu Arrow Icon'/>
                 </div>
                 <div class='section'>Home</div>
             </li>
-            <li on:click={() => {handleSectionSelection('story')}}>
+            <li on:click={() => { handleSectionSelection('story') }}>
                 <div class='arrow'>
                     <img src='./MenuArrowIcon.png' alt='Menu Arrow Icon'/>
                 </div>
                 <div class='section'>Our Story</div>
             </li>
-            <li on:click={() => {handleSectionSelection('clan')}}>                
+            <li on:click={() => { handleSectionSelection('clan') }}>                
                 <div class='arrow'>
                     <img src='./MenuArrowIcon.png' alt='Menu Arrow Icon'/>
                 </div>
                 <div class='section'>Our Clan</div>
             </li>
-            <li on:click={() => {handleSectionSelection('toasts')}}>
+            <li on:click={() => { handleSectionSelection('toasts') }}>
                 <div class='arrow'>
                     <img src='./MenuArrowIcon.png' alt='Menu Arrow Icon'/>
                 </div>
                 <div class='section'>Toasts</div>
             </li>
-            <li on:click={() => {handleSectionSelection('propose')}}>
+            <li on:click={() => { handleSectionSelection('propose') }}>
                 <div class='arrow'>
                     <img src='./MenuArrowIcon.png' alt='Menu Arrow Icon'/>
                 </div>
                 <div class='section'>Propose a Toast</div>
             </li>
-            <li on:click={() => {handleSectionSelection('blended')}}>
+            <li on:click={() => { handleSectionSelection('blended') }}>
                 <div class='arrow'>
                     <img src='./MenuArrowIcon.png' alt='Menu Arrow Icon'/>
                 </div>
                 <div class='section'>Blended Family</div>
             </li>
-        {#if isLoggedIn}
-            <li on:click={logOut}>
-                <div class='arrow'>
-                    <img src='./MenuArrowIcon.png' alt='Menu Arrow Icon'/>
-                </div>
-                <div class='section'>Log out</div>
-            </li>
-        {/if}
+            {#if isLoggedIn}
+                <li on:click={logOut}>
+                    <div class='arrow'>
+                        <img src='./MenuArrowIcon.png' alt='Menu Arrow Icon'/>
+                    </div>
+                    <div class='section'>Log out</div>
+                </li>
+            {/if}
         </ul>
     </div>
 {/if}
@@ -82,8 +82,8 @@
         top: 65px;
         right: 0;
         height: 100vh;
-        background-color: $accent-color-green;
-        color: $accent-color-cream;
+        background-color: $secondary-color;
+        color: $primary-color;
         z-index: 999;
     }
 
@@ -129,9 +129,7 @@
         float: right;
     }
     
-    @media only screen 
-    and (min-width : 320px) 
-    and (max-width : 450px) {  
+    @media screen and (min-width : 320px) and (max-width : 450px) {  
         .menu {
             width: 100%;
         }
@@ -145,8 +143,7 @@
         }
     }
     
-    @media only screen
-    and (min-width : 451px) {
+    @media screen and (min-width : 451px) {
         .menu {
             width: 25%;
         }

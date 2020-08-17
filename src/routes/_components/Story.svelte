@@ -21,6 +21,7 @@
 <style lang='scss'>
     @import 'https://fonts.googleapis.com/css?family=Princess+Sofia';
     @import '../../../static/theme.scss';
+    
     p {
         text-align: left;
         font-size: 20px;
@@ -33,7 +34,8 @@
     
     div {
         padding: 20px;
-        background-color: $background-color;
+        background-color: $quaternary-color;
         line-height: 24px;
+        border: 2px solid $primary-color;
     }
 </style>

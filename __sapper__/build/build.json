@@ -1,1 +1,1 @@
-{"bundler":"rollup","shimport":"1.0.1","assets":{"main":"client.fe7b8ca3.js"},"css":{"main":null,"chunks":{"index.svelte":["index.324a2875.css","client.fe7b8ca3.css"]}}}
+{"bundler":"webpack","shimport":null,"assets":{"index":"998dc668be68467c83ed/index.0.js","main":"998dc668be68467c83ed/main.js","vendors~index":"998dc668be68467c83ed/vendors~index.2.js"},"css":{"chunks":{"index.svelte":[]}}}

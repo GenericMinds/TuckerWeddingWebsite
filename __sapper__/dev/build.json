@@ -1,16 +1,14 @@
 {
-  "bundler": "rollup",
-  "shimport": "1.0.1",
+  "bundler": "webpack",
+  "shimport": null,
   "assets": {
-    "main": "client.b2392296.js"
+    "index": "6e4eeadcb8966af320ae/index.index.js",
+    "main": "6e4eeadcb8966af320ae/main.js",
+    "vendors~index": "6e4eeadcb8966af320ae/vendors~index.vendors~index.js"
   },
   "css": {
-    "main": null,
     "chunks": {
-      "index.svelte": [
-        "index.10e5d7a0.css",
-        "client.b2392296.css"
-      ]
+      "index.svelte": []
     }
   }
 }

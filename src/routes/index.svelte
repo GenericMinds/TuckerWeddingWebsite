@@ -7,64 +7,47 @@
     import Clan from './_components/Clan.svelte';
     import Toasts from './_components/Toasts.svelte';
     import Nav from './_components/Nav.svelte';
+    import { initializeFacebook, getFacebookConnection, toggleFacebookLogIn } from './api/facebookController';
+    import { FacebookUserConnectionModel } from './_models/FacebookUserConnectionModel';
 
-    declare const FB: any;
-    let isLoggedIn: boolean = false;
-    let facebookUserId: string;
+    let facebookUser: FacebookUserConnectionModel = {isLoggedIn: false, facebookUserId: ''};
 
-    onMount( () => {
-            FB.init({
-                appId      : '652761382263352',
-                cookie     : true,
-                xfbml      : true,
-                version    : 'v7.0'
+    onMount(async () => {
+            await initializeFacebook().then(() => {
+                getFacebookConnection().then((facebookConnectionUser: FacebookUserConnectionModel) => {
+                    facebookUser = facebookConnectionUser;
             });
-            
-            FB.getLoginStatus(function(response) {
-                isLoggedIn = (response.status === 'connected');
-                facebookUserId = response.authResponse.userID;
-            })
+        });
     });
     
-    function toggleLogIn() {
-        if (isFacebookConnected()) {
-            FB.logout(function(response) {
-                facebookUserId = '';
-                isLoggedIn = false;
-            }); 
-        } else {
-            FB.login(function(response) {
-                facebookUserId = response.authResponse.userID;
-                isLoggedIn = true;
-            })
-        }
-    }
-
-    function isFacebookConnected(): boolean {
-        let isConnected: boolean = false;
-        FB.getLoginStatus(function(response) {
-            isConnected = (response.status === 'connected');
+    async function toggleLogIn() {
+        toggleFacebookLogIn().then((userAfterToggleLogin: FacebookUserConnectionModel) => {
+            facebookUser = userAfterToggleLogin;
         });
-        return isConnected;
     }
 </script>
-<Nav isLoggedIn={isLoggedIn} on:toggleLogIn={toggleLogIn}/>
+
+<Nav isLoggedIn={facebookUser.isLoggedIn} on:toggleLogIn={toggleLogIn}/>
 <div class='wrapper'>
-    <div><img src='PageLeftDecorator.png' alt='decoration' class='left pageDecorator'></div>
-<div class='content'>
-    <Jumbotron />
-    <Story />
-    <Clan />
-    <Toasts isLoggedIn={isLoggedIn} facebookUserId={facebookUserId} on:toggleLogIn={toggleLogIn}/>
-    <Blended />
+    <div>
+        <img src='PageLeftDecorator.png' alt='decoration' class='left pageDecorator'>
+    </div>
+    <div class='content'>
+        <Jumbotron />
+        <Story />
+        <Clan />
+        <Toasts isLoggedIn={facebookUser.isLoggedIn} facebookUserId={facebookUser.facebookUserId} on:toggleLogIn={toggleLogIn}/>
+        <Blended />
+    </div>
+    <div>
+        <img src='PageRightDecorator.png' alt='decoration' class='right pageDecorator'>
+    </div>
 </div>
-<div><img src='PageRightDecorator.png' alt='decoration' class='right pageDecorator'></div>
-</div><style global lang='scss'>
+
+<style global lang='scss'>
     @import '../../static/global.scss';
 
-    @media only screen 
-    and (min-width : 320px) 
-    and (max-width : 1100px) {   
+    @media screen and (min-width : 320px) and (max-width : 1100px) {   
         .pageDecorator {
             position: fixed;
             pointer-events: none;
@@ -81,21 +64,21 @@
         }
     }
 
-    @media only screen
-    and (min-width : 1101px) {
+    @media screen and (min-width : 1101px) {
         .pageDecorator {
             position: fixed;
             pointer-events: none;
+            height: 35%;
         }
 
         .left {
-            top: 65px;
-            left:0px;
+            top: 85px;
+            left:20px;
         }
 
         .right {
-            bottom: 0px;
-            right: 18px;
+            bottom: 20px;
+            right: 38px;
         }
 
         .wrapper {
