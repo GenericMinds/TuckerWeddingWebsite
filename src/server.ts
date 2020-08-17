@@ -1,4 +1,4 @@
-/* FOR ELASTIC BEANSTALK DEPLOY 
+/* FOR ELASTIC BEANSTALK DEPLOY */
 
 import sirv from 'sirv';
 import polka from 'polka';
@@ -20,8 +20,8 @@ polka()
 	.listen(PORT, err => {
 		if (err) { throw err };
     });
-*/
-/* FOR LOCAL */
+
+/* FOR LOCAL 
 import sirv from 'sirv';
 import polka from 'polka';
 import compression from 'compression';
@@ -57,3 +57,4 @@ const { handler } = polka()
 createServer(options, handler).listen(ssl_port, _ => {
     console.log(`> Running on https://localhost:${ssl_port}`);
 });
+*/
