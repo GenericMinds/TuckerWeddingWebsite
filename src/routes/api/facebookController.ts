@@ -3,7 +3,7 @@ import { FacebookUserConnectionModel } from '../_models/FacebookUserConnectionMo
 declare const FB: any;
 
 export async function initializeFacebook(): Promise<void> {
-    console.log(process.env);
+    console.log(process.env.FACEBOOK_APP_ID);
     await FB.init({
         appId      : process.env.FACEBOOK_APP_ID,
         cookie     : true,

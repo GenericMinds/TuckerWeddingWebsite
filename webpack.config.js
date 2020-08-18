@@ -55,7 +55,8 @@ module.exports = {
         plugins: [
             new webpack.DefinePlugin({
                 "process.browser": true,
-                "process.env.NODE_ENV": JSON.stringify(mode)
+                "process.env.NODE_ENV": JSON.stringify(mode),
+                "process.env.FACEBOOK_APP_ID": JSON.stringify(process.env.FACEBOOK_APP_ID)
             })
         ].filter(Boolean),
         devtool: dev && "inline-source-map"
