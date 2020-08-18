@@ -10,6 +10,9 @@ const config = {
 }
 
 export async function get(req, res): Promise<void> {
+    console.log(process.env);
+    console.log(process.env.RDS_HOSTNAME);
+    console.log(process.env.FACEBOOK_APP_ID);
     let toasts: ToastModel[];
     
     sql.connect(config, function(err) {

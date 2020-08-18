@@ -4,7 +4,6 @@ const config = require("sapper/config/webpack.js");
 const pkg = require("./package.json");
 const { preprocess } = require("./svelte.config");
 const autoPreprocess = require("svelte-preprocess");
-const Dotenv = require('dotenv-webpack');
 
 const mode = process.env.NODE_ENV;
 const dev = mode === "development";
@@ -12,11 +11,6 @@ const dev = mode === "development";
 const alias = { svelte: path.resolve("node_modules", "svelte") };
 const extensions = [ ".mjs", ".ts", ".js", ".json", ".svelte", ".html" ];
 const mainFields = [ "svelte", "module", "browser", "main" ];
-
-const envKeys = Object.keys(process.env).reduce((prev, next) => {
-    prev[`process.env.${next}`] = JSON.stringify(process.env[next]);
-    return prev;
-  }, {});
 
 module.exports = {
     client: {
@@ -59,10 +53,9 @@ module.exports = {
         },
         mode,
         plugins: [
-            new Dotenv(),
             new webpack.DefinePlugin({
                 "process.browser": true,
-                envKeys
+                "process.env.NODE_ENV": JSON.stringify(mode),
             })
         ].filter(Boolean),
         devtool: dev && "inline-source-map"
