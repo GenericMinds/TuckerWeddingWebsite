@@ -4,6 +4,7 @@ const config = require("sapper/config/webpack.js");
 const pkg = require("./package.json");
 const { preprocess } = require("./svelte.config");
 const autoPreprocess = require("svelte-preprocess");
+const Dotenv = require('dotenv-webpack');
 
 const mode = process.env.NODE_ENV;
 const dev = mode === "development";
@@ -53,10 +54,10 @@ module.exports = {
         },
         mode,
         plugins: [
+            new Dotenv(),
             new webpack.DefinePlugin({
                 "process.browser": true,
                 "process.env.NODE_ENV": JSON.stringify(mode),
-                "process.env.FACEBOOK_APP_ID": JSON.stringify(process.env.FACEBOOK_APP_ID)
             })
         ].filter(Boolean),
         devtool: dev && "inline-source-map"
