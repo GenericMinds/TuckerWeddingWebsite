@@ -9,6 +9,7 @@ const s3Options: S3OptionsModel = {
 let s3: any; 
 
 export function configureAws(): void {
+    console.log(process.env.IDENTITY_POOL_ID);
     AWS.config.region = 'us-east-1'; // Region
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
         IdentityPoolId: process.env.IDENTITY_POOL_ID,

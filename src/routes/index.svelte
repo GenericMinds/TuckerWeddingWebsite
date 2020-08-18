@@ -68,7 +68,7 @@
         .pageDecorator {
             position: fixed;
             pointer-events: none;
-            height: 35%;
+            width: 250px;
         }
 
         .left {
