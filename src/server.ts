@@ -8,7 +8,6 @@ import bodyParser from 'body-parser';
 
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
-console.log(process.env);
 polka()
 	.use(bodyParser.urlencoded({ extended: true }))
 	.use(bodyParser.json())

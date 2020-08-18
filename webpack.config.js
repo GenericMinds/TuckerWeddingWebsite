@@ -13,6 +13,11 @@ const alias = { svelte: path.resolve("node_modules", "svelte") };
 const extensions = [ ".mjs", ".ts", ".js", ".json", ".svelte", ".html" ];
 const mainFields = [ "svelte", "module", "browser", "main" ];
 
+const envKeys = Object.keys(process.env).reduce((prev, next) => {
+    prev[`process.env.${next}`] = JSON.stringify(process.env[next]);
+    return prev;
+  }, {});
+
 module.exports = {
     client: {
         entry: config.client.entry(),
@@ -57,7 +62,7 @@ module.exports = {
             new Dotenv(),
             new webpack.DefinePlugin({
                 "process.browser": true,
-                "process.env.NODE_ENV": JSON.stringify(mode),
+                envKeys
             })
         ].filter(Boolean),
         devtool: dev && "inline-source-map"
