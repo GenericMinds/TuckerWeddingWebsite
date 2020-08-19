@@ -1,11 +1,3 @@
-<script context="module" lang="typescript">
-console.log('hi')
-export async function preload(page,session) {
-    console.log('hi x2');
-    return {hello: 1}
-}
-</script>
-
 <script lang='typescript'>
     import { onMount } from "svelte";
     import { createEventDispatcher } from 'svelte';
@@ -16,17 +8,13 @@ export async function preload(page,session) {
 	const dispatch: any = createEventDispatcher();
     export let isLoggedIn: boolean;
     export let facebookUserId: string;
-    export let hello;
+
     let open: boolean = false;
     let toasts: ToastModel[] = [];
-
+    
     onMount(async (): Promise<void> => {
-        console.log(hello);
-        await fetch('api/toastController.json')
-        .then(toasts => toasts.json())
-        .then(toastsData => {
-            toasts = toastsData;
-        });
+        const res = await fetch('api/toastController')
+        toasts = await res.json();
     });
 
     function isAuthor(toasterFacebookId: string): boolean {

@@ -7,21 +7,27 @@
     import Clan from './_components/Clan.svelte';
     import Toasts from './_components/Toasts.svelte';
     import Nav from './_components/Nav.svelte';
-    import { initializeFacebook, getFacebookConnection, toggleFacebookLogIn } from './api/facebookController';
     import { FacebookUserConnectionModel } from './_models/FacebookUserConnectionModel';
-
-    let facebookUser: FacebookUserConnectionModel = {isLoggedIn: false, facebookUserId: ''};
+    import {initializeFacebook, getFacebookConnection, toggleFacebookLogIn} from './_services/facebookService';
+    
+    let facebookUser: FacebookUserConnectionModel = {
+        isLoggedIn: false, 
+        facebookUserId: ''
+    };
 
     onMount(async () => {
-            await initializeFacebook().then(() => {
-                getFacebookConnection().then((facebookConnectionUser: FacebookUserConnectionModel) => {
-                    facebookUser = facebookConnectionUser;
+        await initializeFacebook()
+        .then(() => {
+            getFacebookConnection()
+            .then((facebookConnectionUser: FacebookUserConnectionModel) => {
+                facebookUser = facebookConnectionUser;
             });
         });
     });
     
     async function toggleLogIn() {
-        toggleFacebookLogIn().then((userAfterToggleLogin: FacebookUserConnectionModel) => {
+        toggleFacebookLogIn()
+        .then((userAfterToggleLogin: FacebookUserConnectionModel) => {
             facebookUser = userAfterToggleLogin;
         });
     }

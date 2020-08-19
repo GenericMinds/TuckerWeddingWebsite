@@ -23,7 +23,7 @@ export function configureAws(): void {
     });
 }
 
-export async function getPhotosFromAws(): Promise<S3ImageDataModel[]> {
+export async function get(req, res): Promise<void> {
     configureAws();
 
     const s3Response = await s3.listObjects().promise();
@@ -40,5 +40,6 @@ export async function getPhotosFromAws(): Promise<S3ImageDataModel[]> {
 
     photos.shift();
     photos.sort(() => Math.random() - 0.5);
-    return photos;
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(photos));
 }
