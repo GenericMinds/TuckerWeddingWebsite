@@ -1,8 +1,8 @@
 /node_modules/
 .DS_STORE
 
-#Local Database Credentials
-secret.txt
+#Secret Environment Variables
+.env
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

@@ -39,7 +39,7 @@ const options = {
   key: readFileSync('./client-1.local.key'),
   cert: readFileSync('./client-1.local.crt')
 };
-console.log(process.env.FACEBOOK_APP_ID);
+
 const { handler } = polka()
 	.use(bodyParser.urlencoded({ extended: true }))
 	.use(bodyParser.json())
@@ -47,10 +47,7 @@ const { handler } = polka()
         compression({ threshold: 0 }),
         sirv('static', { dev }),
         sapper.middleware()
-    )
-    .get('*', (req, res) => {
-        res.end(`POLKA: Hello from ${req.pathname}`);
-    });
+    );
 
 // Mount Polka to HTTPS server
 createServer(options, handler).listen(ssl_port, _ => {

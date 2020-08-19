@@ -4,7 +4,7 @@ const config = require("sapper/config/webpack.js");
 const pkg = require("./package.json");
 const { preprocess } = require("./svelte.config");
 const autoPreprocess = require("svelte-preprocess");
-
+const dotenv = require('dotenv');
 const mode = process.env.NODE_ENV;
 const dev = mode === "development";
 
@@ -55,7 +55,7 @@ module.exports = {
         plugins: [
             new webpack.DefinePlugin({
                 "process.browser": true,
-                "process.env.NODE_ENV": JSON.stringify(mode),
+                "process.env": JSON.stringify(dotenv.config().parsed)
             })
         ].filter(Boolean),
         devtool: dev && "inline-source-map"
@@ -81,7 +81,8 @@ module.exports = {
                             preprocess,
                             css: false,
                             generate: "ssr",
-                            dev
+                            dev,
+                            hydratable: true
                         }         
                     }
                 },
@@ -97,11 +98,5 @@ module.exports = {
         performance: {
             hints: false // it doesn't matter if server.js is large
         }
-    },
-
-    serviceworker: {
-        entry: config.serviceworker.entry(),
-        output: config.serviceworker.output(),
-        mode: process.env.NODE_ENV,
     }
 };

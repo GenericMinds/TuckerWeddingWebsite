@@ -6,7 +6,6 @@
     import SectionHeader from './SectionHeader.svelte';
 
 	const dispatch: any = createEventDispatcher();
-
     export let isLoggedIn: boolean;
     export let facebookUserId: string;
 
@@ -14,14 +13,8 @@
     let toasts: ToastModel[] = [];
     
     onMount(async (): Promise<void> => {
-        await fetch('api/toastController', 
-            { 
-                method: 'GET' 
-            })
-        .then(toasts => toasts.json())
-        .then(toastsData => {
-            toasts = toastsData;
-        });
+        const res = await fetch('api/toastController')
+        toasts = await res.json();
     });
 
     function isAuthor(toasterFacebookId: string): boolean {
@@ -56,7 +49,7 @@
                     <Modal bind:open>
                         <div>
                             Are you sure you want to delete this toast?
-                            <div>
+                            <div class='buttonWrapper'>
                                 <button on:click={e => deleteToast(toast.toastId)}>Delete</button>
                                 <button on:click={e => open=false}>Cancel</button>
                             </div>
@@ -84,5 +77,10 @@
         font-size: 20px;
         background-color: $quaternary-color;
         border: 2px solid $primary-color;
+    }
+
+    .buttonWrapper {
+        padding-bottom: 0px;
+        border: none;
     }
 </style>

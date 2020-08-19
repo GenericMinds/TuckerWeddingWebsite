@@ -2,17 +2,14 @@ var sql = require("mssql");
 import { ToastModel } from '../_models/ToastModel';
 
 const config = {
-    server     : process.env.RDS_HOSTNAME,
-    user     : process.env.RDS_USERNAME,
-    password : process.env.RDS_PASSWORD,
-    port     : parseInt(process.env.RDS_PORT),
-    database: 'TuckerWeddingWebsite'
+    server: process.env.RDS_HOSTNAME,
+    user: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD,
+    port: parseInt(process.env.RDS_PORT),
+    database: process.env.RDS_DATABASE
 }
 
 export async function get(req, res): Promise<void> {
-    console.log(process.env);
-    console.log(process.env.RDS_HOSTNAME);
-    console.log(process.env.FACEBOOK_APP_ID);
     let toasts: ToastModel[];
     
     sql.connect(config, function(err) {

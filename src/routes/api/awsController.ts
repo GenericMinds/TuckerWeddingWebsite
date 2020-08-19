@@ -3,16 +3,15 @@ import { S3OptionsModel } from '../_models/S3OptionsModel';
 import { S3ImageDataModel } from '../_models/S3ImageDataModel';
 
 const s3Options: S3OptionsModel = {
-    bucketName: 'lisaandtimpictures',
-    albumName: 'album1/'
+    bucketName: process.env.S3_BUCKETNAME,
+    albumName: process.env.S3_ALBUMNAME
 };
 let s3: any; 
 
 export function configureAws(): void {
-    console.log(process.env.IDENTITY_POOL_ID);
     AWS.config.region = 'us-east-1'; // Region
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: process.env.IDENTITY_POOL_ID,
+        IdentityPoolId: process.env.S3_IDENTITY_POOL_ID,
     });
 
     s3 = new AWS.S3({
@@ -24,7 +23,7 @@ export function configureAws(): void {
     });
 }
 
-export async function getPhotosFromAws(): Promise<S3ImageDataModel[]> {
+export async function get(req, res): Promise<void> {
     configureAws();
 
     const s3Response = await s3.listObjects().promise();
@@ -41,5 +40,6 @@ export async function getPhotosFromAws(): Promise<S3ImageDataModel[]> {
 
     photos.shift();
     photos.sort(() => Math.random() - 0.5);
-    return photos;
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(photos));
 }

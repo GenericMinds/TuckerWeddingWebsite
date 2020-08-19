@@ -3,13 +3,13 @@
 	import Carousel from '@beyonk/svelte-carousel';
     import { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons';
     import SectionHeader from './SectionHeader.svelte';
-    import { configureAws, getPhotosFromAws } from '../api/awsController';
     import { S3ImageDataModel } from '../_models/S3ImageDataModel';
 
     let photos: S3ImageDataModel[];
 
     onMount(async (): Promise<void> => {
-        photos = await getPhotosFromAws();
+        const res = await fetch('api/awsController');
+        photos = await res.json();
     });
 </script>
 
