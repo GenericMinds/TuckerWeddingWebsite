@@ -49,7 +49,7 @@
                     <Modal bind:open>
                         <div>
                             Are you sure you want to delete this toast?
-                            <div>
+                            <div class='buttonWrapper'>
                                 <button on:click={e => deleteToast(toast.toastId)}>Delete</button>
                                 <button on:click={e => open=false}>Cancel</button>
                             </div>
@@ -77,5 +77,10 @@
         font-size: 20px;
         background-color: $quaternary-color;
         border: 2px solid $primary-color;
+    }
+
+    .buttonWrapper {
+        padding-bottom: 0px;
+        border: none;
     }
 </style>

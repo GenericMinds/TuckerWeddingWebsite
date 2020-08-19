@@ -11,7 +11,7 @@ let s3: any;
 export function configureAws(): void {
     AWS.config.region = 'us-east-1'; // Region
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: process.env.IDENTITY_POOL_ID,
+        IdentityPoolId: process.env.S3_IDENTITY_POOL_ID,
     });
 
     s3 = new AWS.S3({

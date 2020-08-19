@@ -82,8 +82,8 @@
         top: 65px;
         right: 0;
         height: 100vh;
-        background-color: $secondary-color;
-        color: $primary-color;
+        background-color: $primary-color;
+        color: $secondary-color;
         z-index: 999;
     }
 

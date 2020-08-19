@@ -32,14 +32,14 @@
     }
     
     div {
-        background-color: $secondary-color;
+        background-color: $primary-color;
         height: 65px;
         position: absolute;
         top: 0;
     }
 
     p {
-        color: $primary-color;
+        color: $secondary-color;
         font-weight: bold;
         font-size: 30px;
         line-height: 30px;
