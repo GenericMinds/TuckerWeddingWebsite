@@ -3,13 +3,12 @@ import { S3OptionsModel } from '../_models/S3OptionsModel';
 import { S3ImageDataModel } from '../_models/S3ImageDataModel';
 
 const s3Options: S3OptionsModel = {
-    bucketName: 'lisaandtimpictures',
-    albumName: 'album1/'
+    bucketName: process.env.S3_BUCKETNAME,
+    albumName: process.env.S3_ALBUMNAME
 };
 let s3: any; 
 
 export function configureAws(): void {
-    console.log(process.env.IDENTITY_POOL_ID);
     AWS.config.region = 'us-east-1'; // Region
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
         IdentityPoolId: process.env.IDENTITY_POOL_ID,
