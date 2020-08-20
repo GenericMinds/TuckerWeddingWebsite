@@ -4,11 +4,6 @@
 #Secret Environment Variables
 .env
 
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
-
 #Https Certs
 client-1.local.crt
 client-1.local.csr
