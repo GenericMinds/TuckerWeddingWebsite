@@ -10,7 +10,7 @@
   "devDependencies": {
     "@beyonk/svelte-carousel": "^2.8.0",
     "autoprefixer": "^9.8.6",
-    "aws-sdk": "^2.734.0",
+    "aws-sdk": "^2.814.0",
     "body-parser": "^1.19.0",
     "chota": "^0.8.0",
     "css-loader": "^4.2.1",
